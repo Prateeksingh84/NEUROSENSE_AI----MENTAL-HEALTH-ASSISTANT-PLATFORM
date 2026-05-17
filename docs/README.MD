@@ -781,3 +781,55 @@ MIT License — free for personal and academic use.
 If you are in crisis, please contact the helplines listed above.
 
 </div>
+
+---
+
+## 📸 Screenshots
+
+### 🏠 Landing Page
+![Landing Page](https://raw.githubusercontent.com/Prateeksingh84/NEUROSENSE_AI----MENTAL-HEALTH-ASSISTANT-PLATFORM/main/static/images/project_images/landing_page.png)
+
+### 🔐 Login Page
+![Login Page](https://raw.githubusercontent.com/Prateeksingh84/NEUROSENSE_AI----MENTAL-HEALTH-ASSISTANT-PLATFORM/main/static/images/project_images/login_page.png)
+
+### 🎯 Mode Selection
+![Mode Selection](https://raw.githubusercontent.com/Prateeksingh84/NEUROSENSE_AI----MENTAL-HEALTH-ASSISTANT-PLATFORM/main/static/images/project_images/Mode%20Selection.png)
+
+### 💡 Insights Dashboard
+![Insights Dashboard](https://raw.githubusercontent.com/Prateeksingh84/NEUROSENSE_AI----MENTAL-HEALTH-ASSISTANT-PLATFORM/main/static/images/project_images/Insights%20Dashboard.png)
+
+### 📊 Analytics
+![Analytics](https://raw.githubusercontent.com/Prateeksingh84/NEUROSENSE_AI----MENTAL-HEALTH-ASSISTANT-PLATFORM/main/static/images/project_images/Analytics.png)
+
+### 🕐 Session History
+![Session History](https://raw.githubusercontent.com/Prateeksingh84/NEUROSENSE_AI----MENTAL-HEALTH-ASSISTANT-PLATFORM/main/static/images/project_images/Session%20History.png)
+
+### 💬 Text Chat
+![Text Chat](https://raw.githubusercontent.com/Prateeksingh84/NEUROSENSE_AI----MENTAL-HEALTH-ASSISTANT-PLATFORM/main/static/images/project_images/Text%20Chat.png)
+
+### 🎤 Voice Therapy Chat
+![Voice Therapy Chat](https://raw.githubusercontent.com/Prateeksingh84/NEUROSENSE_AI----MENTAL-HEALTH-ASSISTANT-PLATFORM/main/static/images/project_images/Voice%20Therapy%20Chat.png)
+
+### 🤟 Hand Sign Chat
+![Hand Sign Chat](https://raw.githubusercontent.com/Prateeksingh84/NEUROSENSE_AI----MENTAL-HEALTH-ASSISTANT-PLATFORM/main/static/images/project_images/Hand%20Sign%20Chat.png)
+
+### 🔬 Research Chat
+![Research Chat](https://raw.githubusercontent.com/Prateeksingh84/NEUROSENSE_AI----MENTAL-HEALTH-ASSISTANT-PLATFORM/main/static/images/project_images/Research%20Chat.png)
+
+### 🧠 Knowledge Chat
+![Knowledge Chat](https://raw.githubusercontent.com/Prateeksingh84/NEUROSENSE_AI----MENTAL-HEALTH-ASSISTANT-PLATFORM/main/static/images/project_images/Knowledge%20Chat.png)
+
+### 🌿 Best Practices
+![Best Practices](https://raw.githubusercontent.com/Prateeksingh84/NEUROSENSE_AI----MENTAL-HEALTH-ASSISTANT-PLATFORM/main/static/images/project_images/Best%20Practices.png)
+
+### 🆘 Crisis Support
+![Crisis Support](https://raw.githubusercontent.com/Prateeksingh84/NEUROSENSE_AI----MENTAL-HEALTH-ASSISTANT-PLATFORM/main/static/images/project_images/Crisis%20Support.png)
+
+### 📋 Personalized Wellness Plan
+![Personalized Wellness Plan](https://raw.githubusercontent.com/Prateeksingh84/NEUROSENSE_AI----MENTAL-HEALTH-ASSISTANT-PLATFORM/main/static/images/project_images/Personalized%20Wellness%20Plan.png)
+
+### 👤 User Profile
+![User Profile](https://raw.githubusercontent.com/Prateeksingh84/NEUROSENSE_AI----MENTAL-HEALTH-ASSISTANT-PLATFORM/main/static/images/project_images/User%20Profile.png)
+
+### 🛡️ Admin Dashboard
+![Admin Dashboard](https://raw.githubusercontent.com/Prateeksingh84/NEUROSENSE_AI----MENTAL-HEALTH-ASSISTANT-PLATFORM/main/static/images/project_images/Admin%20Dashboard.png)
