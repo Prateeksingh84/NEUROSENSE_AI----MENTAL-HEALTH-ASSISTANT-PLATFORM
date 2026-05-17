@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NeuroSense AI • Research Chat</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/research_chat.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-brand-logo.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-ui-image.css') }}">
+</head>
+
+<body>
+
+<div class="bg-scene">
+    <div class="leaf-blob b1"></div>
+    <div class="leaf-blob b2"></div>
+    <div class="dot-grid"></div>
+</div>
+
+<header class="topbar">
+
+    <a href="/dashboard" class="brand">
+        <div class="brand-icon">🧠</div>
+
+        <div>
+            <strong>NeuroSense AI</strong>
+            <span>Guided by Science. Driven by Care.</span>
+        </div>
+    </a>
+
+    <nav class="nav">
+        <a href="/mode">↩ Mode</a>
+        <a href="/templates">📋 Templates</a>
+        <a href="/reports">📄 Reports</a>
+        <a href="/dashboard">📊 Dashboard</a>
+        <a href="/logout" class="danger">Logout</a>
+    </nav>
+
+</header>
+
+<main class="wrapper">
+
+    <section class="hero">
+
+        <div class="hero-copy">
+
+            <div class="badge">
+                <span class="pulse"></span>
+                OLLAMA POWERED
+            </div>
+
+            <h1>
+                Research Chat for
+                <span>safe mental wellness guidance</span>
+            </h1>
+
+            <p>
+                Ask structured questions about stress, sleep, anxiety-like feelings,
+                loneliness, academic pressure, emotional patterns, professional help,
+                and wellbeing practices. NeuroSense AI uses agents and local Ollama models
+                with strict safety guardrails.
+            </p>
+
+        </div>
+
+        <div class="hero-status-card">
+            <div class="status-icon">🛡️</div>
+            <strong>Safe Research Mode</strong>
+            <p>
+                Educational, supportive, non-diagnostic wellness guidance.
+            </p>
+        </div>
+
+    </section>
+
+    <section class="layout">
+
+        <aside class="side-card templates-panel">
+
+            <div class="side-head">
+                <div>
+                    <h2>Templates</h2>
+                    <p>Choose a guided wellness prompt.</p>
+                </div>
+
+                <a href="/templates">View all</a>
+            </div>
+
+            <div id="templateQuickList" class="template-list">
+                <div class="empty">Loading templates...</div>
+            </div>
+
+        </aside>
+
+        <section class="chat-card">
+
+            <div class="chat-head">
+
+                <div>
+                    <h2>Research Chat</h2>
+                    <p id="ollamaStatus">Checking Ollama...</p>
+                </div>
+
+                <button class="clear-btn" onclick="clearResearchHistory()">
+                    Clear
+                </button>
+
+            </div>
+
+            <div id="selectedTemplateBox" class="selected-template hidden">
+                <span>Selected Template:</span>
+                <strong id="selectedTemplateTitle">None</strong>
+                <button onclick="clearSelectedTemplate()">Remove</button>
+            </div>
+
+            <div id="researchMessages" class="messages">
+
+                <div class="message assistant">
+                    <div class="avatar">🧠</div>
+
+                    <div class="bubble">
+                        <strong>NeuroSense Research Agent</strong>
+
+                        <p>
+                            Ask me for safe mental wellness education or choose a template
+                            from the left. I do not diagnose or prescribe medication,
+                            but I can help you understand patterns and build supportive coping steps.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <form id="researchForm" class="composer">
+
+                <textarea
+                    id="researchInput"
+                    placeholder="Example: Explain how stress affects sleep and give me a safe 7-day routine..."
+                    rows="2"
+                    required
+                ></textarea>
+
+                <button type="submit">
+                    Send →
+                </button>
+
+            </form>
+
+        </section>
+
+        <aside class="side-card safety-panel">
+
+            <div class="side-head">
+                <div>
+                    <h2>Safety</h2>
+                    <p>Clear boundaries for user trust.</p>
+                </div>
+            </div>
+
+            <div class="safety-note">
+                <strong>NeuroSense AI is not a psychiatrist.</strong>
+
+                <p>
+                    It does not diagnose, prescribe medicine, or replace professional care.
+                    If you feel unsafe, contact emergency support or a crisis helpline immediately.
+                </p>
+            </div>
+
+            <div class="resource-box">
+                <h3>Helpful Contacts</h3>
+
+                <p>
+                    Tele MANAS:
+                    <strong>14416</strong>
+                </p>
+
+                <p>
+                    iCALL:
+                    <strong>9152987821</strong>
+                </p>
+
+                <p>
+                    Vandrevala:
+                    <strong>+91 9999 666 555</strong>
+                </p>
+            </div>
+
+            <a class="help-btn" href="/support">
+                Open Crisis Support
+            </a>
+
+        </aside>
+
+    </section>
+
+</main>
+
+<script src="{{ url_for('static', filename='js/research_chat.js') }}"></script>
+
+</body>
+</html>

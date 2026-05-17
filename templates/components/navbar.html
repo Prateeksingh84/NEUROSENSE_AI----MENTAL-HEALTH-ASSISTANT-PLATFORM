@@ -1,0 +1,549 @@
+<nav class="navbar">
+
+    <div class="nav-left">
+
+        <button class="mobile-menu-btn" id="sidebarToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <a href="/dashboard" class="logo">
+
+            <div class="logo-icon">
+                <i class="fas fa-brain"></i>
+            </div>
+
+            <div class="logo-text">
+                NeuroSense AI
+            </div>
+
+        </a>
+
+    </div>
+
+    <div class="nav-center">
+
+        <div class="search-box">
+
+            <i class="fas fa-search"></i>
+
+            <input
+                type="text"
+                placeholder="Search sessions, reports, emotions..."
+                id="globalSearch"
+            >
+
+        </div>
+
+    </div>
+
+    <div class="nav-right">
+
+        <div class="nav-clock" id="realtimeClock">
+            00:00
+        </div>
+
+        <button class="nav-icon-btn" id="notifyBtn">
+
+            <i class="fas fa-bell"></i>
+
+            <span class="notification-badge">
+                3
+            </span>
+
+        </button>
+
+        <button class="nav-icon-btn">
+
+            <i class="fas fa-moon"></i>
+
+        </button>
+
+        <div class="profile-menu">
+
+            <button class="profile-trigger">
+
+                <div class="profile-avatar">
+
+                    {% if profile and profile.avatar_url %}
+                        <img
+                            src="{{ profile.avatar_url }}"
+                            alt="Profile"
+                        >
+                    {% else %}
+                        <span>
+                            {{ current_user.email[0]|upper }}
+                        </span>
+                    {% endif %}
+
+                </div>
+
+                <div class="profile-meta">
+
+                    <h4>
+                        {{ profile.full_name if profile else "User" }}
+                    </h4>
+
+                    <small>
+                        {{ profile.role if profile else "user" }}
+                    </small>
+
+                </div>
+
+                <i class="fas fa-chevron-down"></i>
+
+            </button>
+
+            <div class="profile-dropdown">
+
+                <a href="/profile">
+
+                    <i class="fas fa-user"></i>
+
+                    My Profile
+
+                </a>
+
+                <a href="/settings">
+
+                    <i class="fas fa-cog"></i>
+
+                    Settings
+
+                </a>
+
+                <a href="/reports">
+
+                    <i class="fas fa-file-medical"></i>
+
+                    Reports
+
+                </a>
+
+                {% if is_admin %}
+
+                <a href="/admin">
+
+                    <i class="fas fa-shield-alt"></i>
+
+                    Admin Dashboard
+
+                </a>
+
+                {% endif %}
+
+                <div class="dropdown-divider"></div>
+
+                <a href="/logout" class="logout-link">
+
+                    <i class="fas fa-sign-out-alt"></i>
+
+                    Logout
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:wght@700;800&display=swap');
+
+:root {
+    --green-primary: #2D6A4F;
+    --green-secondary: #40916C;
+    --green-light: #74C69D;
+    --green-pale: #D8F3DC;
+    --green-xpale: #F0FAF4;
+    --green-accent: #52B788;
+    --text-primary: #1B3A2D;
+    --text-secondary: #4A7C6B;
+    --text-muted: #7FA894;
+    --border: #C8E6D4;
+    --bg-white: #FFFFFF;
+    --bg-surface: #F6FCF8;
+    --shadow-sm: 0 2px 8px rgba(45, 106, 79, 0.08);
+    --shadow-md: 0 8px 32px rgba(45, 106, 79, 0.12);
+    --shadow-lg: 0 20px 60px rgba(45, 106, 79, 0.16);
+}
+
+.navbar {
+    height: 72px;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 1.5rem;
+
+    background: rgba(255, 255, 255, 0.92);
+
+    border-bottom: 1px solid var(--border);
+
+    backdrop-filter: blur(20px);
+
+    position: sticky;
+    top: 0;
+
+    z-index: 999;
+
+    box-shadow: var(--shadow-sm);
+}
+
+.nav-left,
+.nav-center,
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.nav-left {
+    gap: 1rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    text-decoration: none;
+    color: var(--text-primary);
+}
+
+.logo-icon {
+    width: 44px;
+    height: 44px;
+
+    border-radius: 14px;
+
+    display: grid;
+    place-items: center;
+
+    background: linear-gradient(135deg, var(--green-primary), var(--green-light));
+
+    font-size: 1.15rem;
+    color: #fff;
+
+    box-shadow: 0 4px 16px rgba(45, 106, 79, 0.3);
+}
+
+.logo-text {
+    font-size: 1.2rem;
+    font-weight: 800;
+
+    font-family: 'Fraunces', serif;
+
+    color: var(--text-primary);
+
+    letter-spacing: -0.01em;
+}
+
+.mobile-menu-btn {
+    width: 44px;
+    height: 44px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    background: var(--bg-surface);
+
+    color: var(--text-secondary);
+
+    cursor: pointer;
+
+    display: none;
+}
+
+.search-box {
+    width: 400px;
+
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    padding: 0 1rem;
+
+    height: 46px;
+
+    border-radius: 14px;
+
+    background: var(--bg-surface);
+
+    border: 1px solid var(--border);
+
+    transition: 0.2s ease;
+}
+
+.search-box:focus-within {
+    border-color: var(--green-accent);
+    box-shadow: 0 0 0 3px rgba(82, 183, 136, 0.12);
+}
+
+.search-box i {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.search-box input {
+    flex: 1;
+
+    background: transparent;
+
+    border: none;
+
+    outline: none;
+
+    color: var(--text-primary);
+
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+}
+
+.search-box input::placeholder {
+    color: var(--text-muted);
+}
+
+.nav-right {
+    gap: 0.75rem;
+}
+
+.nav-clock {
+    padding: 0.6rem 1rem;
+
+    border-radius: 12px;
+
+    background: var(--bg-surface);
+
+    border: 1px solid var(--border);
+
+    font-weight: 700;
+    font-size: 0.88rem;
+
+    color: var(--text-secondary);
+}
+
+.nav-icon-btn {
+    width: 44px;
+    height: 44px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    background: var(--bg-surface);
+
+    color: var(--text-secondary);
+
+    cursor: pointer;
+
+    position: relative;
+
+    transition: 0.2s ease;
+}
+
+.nav-icon-btn:hover {
+    background: var(--green-pale);
+    border-color: var(--green-accent);
+    color: var(--green-primary);
+}
+
+.notification-badge {
+    position: absolute;
+
+    top: -5px;
+    right: -5px;
+
+    width: 18px;
+    height: 18px;
+
+    border-radius: 50%;
+
+    display: grid;
+    place-items: center;
+
+    background: #E63946;
+
+    color: #fff;
+
+    font-size: 0.65rem;
+    font-weight: 800;
+
+    border: 2px solid #fff;
+}
+
+.profile-menu {
+    position: relative;
+}
+
+.profile-trigger {
+    border: 1px solid var(--border);
+
+    background: var(--bg-surface);
+
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+
+    cursor: pointer;
+
+    color: var(--text-primary);
+
+    padding: 0.4rem 0.75rem 0.4rem 0.4rem;
+
+    transition: 0.2s ease;
+}
+
+.profile-trigger:hover {
+    border-color: var(--green-accent);
+    background: var(--green-xpale);
+}
+
+.profile-avatar {
+    width: 36px;
+    height: 36px;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    background: linear-gradient(135deg, var(--green-primary), var(--green-light));
+
+    display: grid;
+    place-items: center;
+
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-meta {
+    text-align: left;
+}
+
+.profile-meta h4 {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.profile-meta small {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-transform: capitalize;
+}
+
+.profile-trigger .fa-chevron-down {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+}
+
+.profile-dropdown {
+    position: absolute;
+
+    top: calc(100% + 10px);
+    right: 0;
+
+    width: 230px;
+
+    background: #fff;
+
+    border: 1px solid var(--border);
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(8px);
+
+    transition: 0.25s ease;
+
+    box-shadow: var(--shadow-lg);
+}
+
+.profile-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.profile-dropdown a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    padding: 0.85rem 1.1rem;
+
+    text-decoration: none;
+
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    transition: 0.18s;
+}
+
+.profile-dropdown a i {
+    width: 16px;
+    color: var(--text-muted);
+}
+
+.profile-dropdown a:hover {
+    background: var(--green-xpale);
+    color: var(--green-primary);
+}
+
+.profile-dropdown a:hover i {
+    color: var(--green-primary);
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: var(--border);
+}
+
+.logout-link {
+    color: #E63946 !important;
+}
+
+.logout-link i {
+    color: #E63946 !important;
+}
+
+@media (max-width: 980px) {
+    .search-box {
+        display: none;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+}
+
+@media (max-width: 640px) {
+    .profile-meta {
+        display: none;
+    }
+
+    .nav-clock {
+        display: none;
+    }
+}
+
+</style>

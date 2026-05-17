@@ -1,0 +1,501 @@
+<div class="report-card">
+
+    <div class="report-card-top">
+
+        <div class="report-icon-wrapper">
+
+            <div class="report-icon">
+
+                {% if report.report_type == "emotion" %}
+                    😊
+
+                {% elif report.report_type == "voice" %}
+                    🎤
+
+                {% elif report.report_type == "handsign" %}
+                    ✋
+
+                {% else %}
+                    📄
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        <div class="report-actions">
+
+            <button
+                class="report-action-btn"
+                onclick="downloadReport('pdf', '{{ report.id }}')"
+            >
+                <i class="fas fa-download"></i>
+            </button>
+
+            <button
+                class="report-action-btn"
+                onclick="viewReport('{{ report.id }}')"
+            >
+                <i class="fas fa-eye"></i>
+            </button>
+
+            <button
+                class="report-action-btn danger"
+                onclick="deleteReport('{{ report.id }}')"
+            >
+                <i class="fas fa-trash"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="report-content">
+
+        <div class="report-badge">
+
+            {{ report.report_type|capitalize if report.report_type else "Wellness" }}
+
+        </div>
+
+        <h3 class="report-title">
+
+            {{ report.title if report.title else "Mental Wellness Analysis Report" }}
+
+        </h3>
+
+        <p class="report-description">
+
+            {{ report.summary if report.summary else "AI-generated emotional wellness report with therapy insights and mood analysis." }}
+
+        </p>
+
+    </div>
+
+    <div class="report-stats">
+
+        <div class="report-stat">
+
+            <small>
+                Mood Score
+            </small>
+
+            <h4>
+                {{ report.mood_score if report.mood_score else "8.4" }}/10
+            </h4>
+
+        </div>
+
+        <div class="report-stat">
+
+            <small>
+                Sessions
+            </small>
+
+            <h4>
+                {{ report.total_sessions if report.total_sessions else "12" }}
+            </h4>
+
+        </div>
+
+        <div class="report-stat">
+
+            <small>
+                Emotion
+            </small>
+
+            <h4>
+                {{ report.top_emotion if report.top_emotion else "Calm" }}
+            </h4>
+
+        </div>
+
+    </div>
+
+    <div class="report-progress-section">
+
+        <div class="report-progress-top">
+
+            <span>
+                Emotional Stability
+            </span>
+
+            <span>
+                {{ report.stability if report.stability else "82" }}%
+            </span>
+
+        </div>
+
+        <div class="report-progress-bar">
+
+            <div
+                class="report-progress-fill"
+                style="width: {{ report.stability if report.stability else 82 }}%"
+            ></div>
+
+        </div>
+
+    </div>
+
+    <div class="report-footer">
+
+        <div class="report-date">
+
+            <i class="fas fa-calendar"></i>
+
+            {% if report.created_at %}
+                {{ report.created_at }}
+            {% else %}
+                Recently Generated
+            {% endif %}
+
+        </div>
+
+        <button
+            class="report-view-btn"
+            onclick="viewReport('{{ report.id }}')"
+        >
+
+            View Full Report
+
+            <i class="fas fa-arrow-right"></i>
+
+        </button>
+
+    </div>
+
+</div>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:wght@700;800&display=swap');
+
+:root {
+    --green-primary: #2D6A4F;
+    --green-secondary: #40916C;
+    --green-light: #74C69D;
+    --green-pale: #D8F3DC;
+    --green-xpale: #F0FAF4;
+    --green-accent: #52B788;
+    --text-primary: #1B3A2D;
+    --text-secondary: #4A7C6B;
+    --text-muted: #7FA894;
+    --border: #C8E6D4;
+    --bg-white: #FFFFFF;
+    --bg-surface: #F6FCF8;
+    --shadow-sm: 0 2px 8px rgba(45, 106, 79, 0.08);
+    --shadow-md: 0 8px 32px rgba(45, 106, 79, 0.12);
+    --shadow-lg: 0 20px 60px rgba(45, 106, 79, 0.14);
+}
+
+.report-card {
+    padding: 1.5rem;
+
+    border-radius: 20px;
+
+    background: #fff;
+
+    border: 1px solid var(--border);
+
+    box-shadow: var(--shadow-sm);
+
+    transition: 0.25s ease;
+
+    position: relative;
+
+    overflow: hidden;
+
+    font-family: 'DM Sans', sans-serif;
+}
+
+.report-card::before {
+    content: '';
+
+    position: absolute;
+
+    top: -70px;
+    right: -70px;
+
+    width: 160px;
+    height: 160px;
+
+    border-radius: 50%;
+
+    background: var(--green-xpale);
+}
+
+.report-card:hover {
+    transform: translateY(-4px);
+
+    border-color: var(--green-accent);
+
+    box-shadow: var(--shadow-md);
+}
+
+.report-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    margin-bottom: 1.4rem;
+}
+
+.report-icon {
+    width: 64px;
+    height: 64px;
+
+    border-radius: 18px;
+
+    display: grid;
+    place-items: center;
+
+    background: var(--green-xpale);
+
+    border: 1px solid var(--border);
+
+    font-size: 1.8rem;
+}
+
+.report-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.report-action-btn {
+    width: 40px;
+    height: 40px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    background: var(--bg-surface);
+
+    color: var(--text-secondary);
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+    font-size: 0.85rem;
+}
+
+.report-action-btn:hover {
+    background: var(--green-pale);
+    border-color: var(--green-accent);
+    color: var(--green-primary);
+}
+
+.report-action-btn.danger {
+    color: #E63946;
+}
+
+.report-action-btn.danger:hover {
+    background: #FFF5F5;
+    border-color: #FFCDD2;
+    color: #E63946;
+}
+
+.report-badge {
+    width: fit-content;
+
+    padding: 0.4rem 0.8rem;
+
+    border-radius: 999px;
+
+    background: rgba(45, 106, 79, 0.08);
+
+    border: 1px solid rgba(45, 106, 79, 0.2);
+
+    color: var(--green-primary);
+
+    font-size: 0.75rem;
+    font-weight: 700;
+
+    margin-bottom: 0.875rem;
+}
+
+.report-title {
+    font-size: 1.25rem;
+
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+
+    line-height: 1.35;
+
+    margin-bottom: 0.7rem;
+
+    color: var(--text-primary);
+}
+
+.report-description {
+    color: var(--text-muted);
+
+    line-height: 1.75;
+
+    font-size: 0.88rem;
+}
+
+.report-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 0.75rem;
+
+    margin-top: 1.4rem;
+}
+
+.report-stat {
+    padding: 0.875rem;
+
+    border-radius: 14px;
+
+    background: var(--bg-surface);
+
+    border: 1px solid var(--border);
+
+    text-align: center;
+}
+
+.report-stat small {
+    color: var(--text-muted);
+
+    font-size: 0.72rem;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.report-stat h4 {
+    margin-top: 0.4rem;
+
+    font-size: 1.2rem;
+
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+
+    color: var(--text-primary);
+}
+
+.report-progress-section {
+    margin-top: 1.4rem;
+}
+
+.report-progress-top {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 0.6rem;
+
+    font-size: 0.84rem;
+
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.report-progress-bar {
+    width: 100%;
+    height: 8px;
+
+    border-radius: 999px;
+
+    overflow: hidden;
+
+    background: var(--green-pale);
+}
+
+.report-progress-fill {
+    height: 100%;
+
+    border-radius: 999px;
+
+    background: linear-gradient(90deg, var(--green-primary), var(--green-light));
+}
+
+.report-footer {
+    margin-top: 1.5rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 1rem;
+}
+
+.report-date {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    color: var(--text-muted);
+
+    font-size: 0.82rem;
+}
+
+.report-date i {
+    color: var(--green-accent);
+}
+
+.report-view-btn {
+    height: 44px;
+
+    padding: 0 1.1rem;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: var(--green-primary);
+
+    color: #fff;
+
+    cursor: pointer;
+
+    font-weight: 700;
+    font-size: 0.88rem;
+
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    font-family: 'DM Sans', sans-serif;
+
+    transition: 0.2s ease;
+}
+
+.report-view-btn:hover {
+    background: var(--green-secondary);
+}
+
+@media (max-width: 760px) {
+    .report-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .report-footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .report-view-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+</style>
+
+<script>
+
+function viewReport(reportId) {
+
+    if (!reportId) {
+        return;
+    }
+
+    window.location.href = `/report/view/${reportId}`;
+}
+
+</script>

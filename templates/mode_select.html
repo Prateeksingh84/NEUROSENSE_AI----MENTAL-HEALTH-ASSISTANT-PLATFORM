@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NeuroSense AI • Choose Mode</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f8f4;--surface:#fff;--surface2:#f0f7f0;--surface3:#e8f3e8;
+  --border:#d0e8d0;--border2:#b8ddb8;
+  --text:#1a2e1a;--text2:#4a6b4a;--muted:#7a9e7a;
+  --accent:#2d8c4e;--accent2:#3aab63;
+  --green:#2d8c4e;--green2:#3aab63;
+  --danger:#d94f3c;
+  --orange:#c97a00;
+  --shadow:0 4px 20px rgba(45,140,78,.10);
+  --shadow-lg:0 12px 44px rgba(45,140,78,.13);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  min-height:100vh;font-family:Inter,sans-serif;color:var(--text);
+  background:
+    radial-gradient(circle at top right,rgba(45,140,78,.07),transparent 38%),
+    radial-gradient(circle at bottom left,rgba(58,171,99,.05),transparent 40%),
+    var(--bg);
+}
+.topbar{
+  height:72px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 2rem;border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,.92);backdrop-filter:blur(16px);
+  position:sticky;top:0;z-index:100;
+}
+.brand{display:flex;align-items:center;gap:.7rem;font-family:Outfit,sans-serif;font-size:1.2rem;font-weight:900;color:var(--text)}
+.brand span{color:var(--accent)}
+.top-actions{display:flex;align-items:center;gap:.75rem}
+.hello{color:var(--muted);font-size:.9rem}
+.hello strong{color:var(--text)}
+.nav-btn{
+  height:40px;padding:0 1rem;border-radius:10px;
+  border:1.5px solid var(--border);text-decoration:none;color:var(--text2);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:.88rem;background:var(--surface);transition:.2s;
+}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+.nav-btn.primary{background:var(--accent);color:#fff;border-color:transparent}
+.nav-btn.primary:hover{background:var(--accent2)}
+.nav-btn.danger{color:var(--danger);border-color:rgba(217,79,60,.28);background:rgba(217,79,60,.06)}
+.wrapper{width:min(1320px,92vw);margin:0 auto;padding:3rem 0 4rem}
+.hero{text-align:center;margin-bottom:3rem}
+.badge{
+  display:inline-flex;align-items:center;gap:.45rem;
+  padding:.5rem 1rem;border-radius:999px;
+  color:var(--accent);background:rgba(45,140,78,.1);
+  border:1.5px solid rgba(45,140,78,.25);
+  font-size:.78rem;font-weight:900;margin-bottom:1.4rem;
+}
+.hero h1{
+  font-family:Outfit,sans-serif;font-size:clamp(2.4rem,5.5vw,4.8rem);
+  line-height:1.04;font-weight:900;letter-spacing:-.04em;margin-bottom:1.2rem;color:var(--text);
+}
+.gradient{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero p{color:var(--muted);max-width:680px;margin:0 auto;line-height:1.8;font-size:1.04rem}
+.mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-bottom:2rem}
+.mode-card{
+  min-height:310px;padding:2rem;border-radius:24px;
+  background:var(--surface);border:1.5px solid var(--border);
+  box-shadow:var(--shadow);position:relative;overflow:hidden;transition:.28s ease;
+}
+.mode-card::before{
+  content:"";position:absolute;width:160px;height:160px;border-radius:50%;
+  right:-50px;top:-40px;background:rgba(45,140,78,.05);
+}
+.mode-card.voice::before{background:rgba(201,122,0,.05)}
+.mode-card.sign::before{background:rgba(45,140,78,.07)}
+.mode-card:hover{transform:translateY(-6px);border-color:var(--accent2);box-shadow:var(--shadow-lg)}
+.mode-icon{
+  width:68px;height:68px;border-radius:20px;display:grid;place-items:center;
+  font-size:1.9rem;margin-bottom:1.5rem;
+  background:rgba(45,140,78,.1);border:1.5px solid rgba(45,140,78,.22);
+}
+.mode-card.voice .mode-icon{background:rgba(201,122,0,.1);border-color:rgba(201,122,0,.22)}
+.mode-card.sign .mode-icon{background:rgba(45,140,78,.12);border-color:rgba(45,140,78,.28)}
+.mode-tag{
+  width:max-content;padding:.38rem .7rem;border-radius:999px;
+  background:rgba(45,140,78,.1);color:var(--accent);
+  font-size:.72rem;font-weight:900;margin-bottom:.85rem;
+  text-transform:uppercase;border:1px solid rgba(45,140,78,.2);
+}
+.mode-card.voice .mode-tag{background:rgba(201,122,0,.1);color:var(--orange);border-color:rgba(201,122,0,.2)}
+.mode-card h2{font-family:Outfit,sans-serif;font-size:1.5rem;margin-bottom:.65rem;color:var(--text)}
+.mode-card p{color:var(--muted);line-height:1.75;font-size:.94rem;margin-bottom:1.2rem}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.4rem}
+.chip{
+  padding:.32rem .6rem;border-radius:999px;color:var(--text2);
+  border:1px solid var(--border2);background:var(--surface2);font-size:.76rem;
+}
+.start-link{color:var(--accent);text-decoration:none;font-weight:900;font-size:.95rem}
+.mode-card.voice .start-link{color:var(--orange)}
+.assessment{
+  margin-top:2.5rem;padding:2rem;border-radius:28px;
+  background:var(--surface);border:1.5px solid var(--border);box-shadow:var(--shadow);
+}
+.assessment-head{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:1.8rem}
+.assessment-head h2{font-family:Outfit,sans-serif;font-size:1.9rem;margin-bottom:.42rem;color:var(--text)}
+.assessment-head p{color:var(--muted);line-height:1.7;max-width:720px}
+.assessment-pill{
+  white-space:nowrap;padding:.5rem .9rem;border-radius:999px;
+  background:rgba(45,140,78,.1);border:1.5px solid rgba(45,140,78,.25);
+  color:var(--accent);font-size:.78rem;font-weight:900;
+}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.question{padding:1.1rem;border-radius:20px;background:var(--surface2);border:1.5px solid var(--border)}
+.question.full{grid-column:1/-1}
+.question label{display:block;font-weight:800;margin-bottom:.75rem;line-height:1.5;color:var(--text)}
+.question small{display:block;color:var(--muted);margin-top:.32rem;line-height:1.5}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem}
+.scale input{display:none}
+.scale span{
+  height:44px;border-radius:13px;display:grid;place-items:center;
+  background:var(--surface3);border:1.5px solid var(--border);
+  color:var(--text2);cursor:pointer;font-weight:900;transition:.2s;
+}
+.scale input:checked+span{background:var(--accent);color:#fff;border-color:transparent}
+select,textarea,input[type="text"]{
+  width:100%;border:none;outline:none;border-radius:14px;
+  background:var(--surface);border:1.5px solid var(--border);
+  color:var(--text);padding:1rem;font-family:Inter,sans-serif;font-size:.94rem;
+  transition:border-color .2s;
+}
+select:focus,textarea:focus,input[type="text"]:focus{border-color:var(--accent)}
+textarea{min-height:116px;resize:vertical;line-height:1.7}
+.check-row{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem}
+.check-row label{
+  margin:0;padding:.82rem;border-radius:13px;
+  background:var(--surface);border:1.5px solid var(--border);
+  cursor:pointer;font-weight:700;color:var(--text2);transition:.2s;
+}
+.check-row label:hover{border-color:var(--accent)}
+.check-row input{margin-right:.4rem;accent-color:var(--accent)}
+.result-box{
+  margin-top:1.4rem;display:none;padding:1.2rem;border-radius:20px;
+  border:1.5px solid rgba(45,140,78,.25);background:rgba(45,140,78,.07);
+}
+.result-box.show{display:block}
+.result-box h3{font-family:Outfit,sans-serif;margin-bottom:.45rem;color:var(--accent)}
+.result-box p{color:var(--text2);line-height:1.8}
+.form-actions{display:flex;gap:1rem;justify-content:flex-end;margin-top:1.4rem}
+.btn{height:50px;padding:0 1.2rem;border:none;border-radius:14px;cursor:pointer;font-weight:900;font-family:Inter,sans-serif;transition:.2s}
+.btn.primary{background:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--accent2)}
+.btn.secondary{background:var(--surface2);border:1.5px solid var(--border);color:var(--text2)}
+.crisis-strip{
+  margin-top:2rem;padding:1.4rem 1.6rem;border-radius:22px;
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  background:rgba(217,79,60,.06);border:1.5px solid rgba(217,79,60,.2);
+}
+.crisis-strip strong{color:var(--text)}
+.crisis-strip p{color:var(--text2);line-height:1.7}
+.help-lines{display:flex;gap:.65rem;flex-wrap:wrap}
+.help-lines span{
+  padding:.6rem .85rem;border-radius:999px;color:var(--danger);
+  background:rgba(217,79,60,.08);border:1.5px solid rgba(217,79,60,.2);
+  font-weight:900;font-size:.82rem;
+}
+.professional-help-box{margin-top:1.4rem;display:none}
+.professional-help-box.show{display:block}
+.professional-card{padding:1.4rem;border-radius:22px;background:var(--surface);border:1.5px solid var(--border)}
+.professional-card.emergency{border-color:rgba(217,79,60,.3);background:rgba(217,79,60,.05)}
+.professional-card.urgent,.professional-card.soon{border-color:rgba(201,122,0,.28);background:rgba(201,122,0,.06)}
+.professional-card.routine{border-color:rgba(45,140,78,.22);background:rgba(45,140,78,.05)}
+.professional-head{display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;margin-bottom:1rem}
+.professional-head h3{font-family:Outfit,sans-serif;font-size:1.3rem;margin-bottom:.35rem;color:var(--text)}
+.professional-head p{color:var(--text2);line-height:1.7;font-size:.9rem}
+.urgency-pill{white-space:nowrap;padding:.42rem .72rem;border-radius:999px;font-size:.72rem;font-weight:900;border:1px solid var(--border)}
+.urgency-pill.emergency{color:var(--danger);background:rgba(217,79,60,.1);border-color:rgba(217,79,60,.28)}
+.urgency-pill.urgent,.urgency-pill.soon{color:var(--orange);background:rgba(201,122,0,.1);border-color:rgba(201,122,0,.28)}
+.urgency-pill.routine{color:var(--accent);background:rgba(45,140,78,.1);border-color:rgba(45,140,78,.22)}
+.professional-message{margin-bottom:1rem;padding:.9rem 1rem;border-radius:14px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);line-height:1.7}
+.issue-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+.issue-tags span{padding:.38rem .68rem;border-radius:999px;font-size:.76rem;font-weight:800;color:var(--accent);background:rgba(45,140,78,.1);border:1px solid rgba(45,140,78,.22)}
+.professional-section{margin-top:1rem}
+.professional-section h4{font-family:Outfit,sans-serif;font-size:1.05rem;margin-bottom:.65rem;color:var(--text)}
+.recommendation-list,.resource-list{display:grid;gap:.7rem}
+.recommendation-item,.resource-item{padding:.88rem 1rem;border-radius:14px;background:var(--surface2);border:1px solid var(--border)}
+.recommendation-item strong,.resource-item h5{color:var(--text);font-family:Outfit,sans-serif;font-size:1rem}
+.recommendation-item p,.resource-item p{color:var(--text2);line-height:1.7;font-size:.88rem;margin-top:.28rem}
+.resource-item a{color:var(--accent);text-decoration:none;font-weight:900}
+.professional-disclaimer,.professional-error,.professional-loading{margin-top:1rem;padding:.9rem 1rem;border-radius:14px;background:rgba(201,122,0,.07);border:1.5px solid rgba(201,122,0,.2);color:var(--orange);line-height:1.7;font-size:.86rem}
+@media(max-width:1050px){.mode-grid,.form-grid{grid-template-columns:1fr}.assessment-head,.crisis-strip{flex-direction:column;align-items:flex-start}}
+@media(max-width:720px){.topbar{height:auto;padding:1rem;flex-direction:column;align-items:flex-start;gap:.8rem}.check-row{grid-template-columns:1fr}.form-actions{flex-direction:column}.btn{width:100%}}
+</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-brand-logo.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-ui-image.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">🧠 <span>NeuroSense AI</span></div>
+  <div class="top-actions">
+    <div class="hello">Hello, <strong>{{ name|upper }}</strong></div>
+    <a class="nav-btn primary" href="/dashboard" onclick="if(window.stopAllVoiceAudio){stopAllVoiceAudio()}">📊 Dashboard</a>
+    <a class="nav-btn" href="/reports" onclick="if(window.stopAllVoiceAudio){stopAllVoiceAudio()}">📄 Reports</a>
+    <a class="nav-btn danger" href="/logout" onclick="if(window.stopAllVoiceAudio){stopAllVoiceAudio()}">Sign Out</a>
+  </div>
+</header>
+<main class="wrapper">
+  <section class="hero">
+    <div class="badge">✦ YOUR SAFE SPACE</div>
+    <h1>How would you like to<br><span class="gradient">connect today?</span></h1>
+    <p>Choose the mode that feels most natural. Complete a short wellbeing check-in so NeuroSense AI can understand your current mental and social state better.</p>
+  </section>
+  <section class="mode-grid">
+    <article class="mode-card">
+      <div class="mode-icon">💬</div>
+      <div class="mode-tag">Text Chat</div>
+      <h2>Express in Writing</h2>
+      <p>Type your thoughts while live emotion AI reads your facial expressions. Every response is emotionally aware and compassionate.</p>
+      <div class="chips"><span class="chip">⌨️ Text Input</span><span class="chip">🎭 Live Emotion</span><span class="chip">📷 Webcam</span><span class="chip">🌍 Multilingual</span></div>
+      <a class="start-link" href="/normal_chat" onclick="if(window.stopAllVoiceAudio){stopAllVoiceAudio()}">Start Chatting →</a>
+    </article>
+    <article class="mode-card voice">
+      <div class="mode-icon">🎤</div>
+      <div class="mode-tag">Voice Chat</div>
+      <h2>Speak Naturally</h2>
+      <p>Just talk — your voice is transcribed in real time, AI listens with empathy, and responds back with voice too.</p>
+      <div class="chips"><span class="chip">🎤 Voice Input</span><span class="chip">🔊 Voice Output</span><span class="chip">🎭 Live Emotion</span><span class="chip">🌍 Multilingual</span></div>
+      <a class="start-link" href="/voice_chat" onclick="if(window.stopAllVoiceAudio){stopAllVoiceAudio()}">Start Talking →</a>
+    </article>
+    <article class="mode-card sign">
+      <div class="mode-icon">🤟</div>
+      <div class="mode-tag">Sign Language</div>
+      <h2>Communicate with Signs</h2>
+      <p>Show trained hand signs to build sentences automatically. Perfect for accessibility or when speech feels too difficult.</p>
+      <div class="chips"><span class="chip">🤟 Hand Signs</span><span class="chip">📝 Auto Sentence</span><span class="chip">🤖 AI Response</span><span class="chip">🔊 Voice Out</span></div>
+      <a class="start-link" href="/hand_chat" onclick="if(window.stopAllVoiceAudio){stopAllVoiceAudio()}">Start Signing →</a>
+    </article>
+  </section>
+  <section class="assessment" id="wellbeingAssessment">
+    <div class="assessment-head">
+      <div>
+        <h2>Mental & Social Wellbeing Check-In</h2>
+        <p>This short check-in helps NeuroSense AI understand what may be going on inside you today. It is not a medical diagnosis, but it can guide better emotional support and coping suggestions.</p>
+      </div>
+      <div class="assessment-pill">Takes 2 minutes</div>
+    </div>
+    <form id="wellbeingForm">
+      <div class="form-grid">
+        <div class="question"><label>1. How is your mood right now?</label><select name="mood" required><option value="">Select mood</option><option value="happy">Happy</option><option value="calm">Calm</option><option value="neutral">Neutral</option><option value="sad">Sad</option><option value="anxious">Anxious</option><option value="angry">Angry</option><option value="overwhelmed">Overwhelmed</option></select></div>
+        <div class="question"><label>2. How stressed do you feel today?</label><div class="scale"><label><input type="radio" name="stress" value="1" required><span>1</span></label><label><input type="radio" name="stress" value="2"><span>2</span></label><label><input type="radio" name="stress" value="3"><span>3</span></label><label><input type="radio" name="stress" value="4"><span>4</span></label><label><input type="radio" name="stress" value="5"><span>5</span></label></div><small>1 = very low, 5 = very high</small></div>
+        <div class="question"><label>3. How connected do you feel with people around you?</label><div class="scale"><label><input type="radio" name="social_connection" value="1" required><span>1</span></label><label><input type="radio" name="social_connection" value="2"><span>2</span></label><label><input type="radio" name="social_connection" value="3"><span>3</span></label><label><input type="radio" name="social_connection" value="4"><span>4</span></label><label><input type="radio" name="social_connection" value="5"><span>5</span></label></div><small>1 = isolated, 5 = strongly connected</small></div>
+        <div class="question"><label>4. How was your sleep recently?</label><select name="sleep" required><option value="">Select sleep quality</option><option value="good">Good and refreshing</option><option value="okay">Okay / average</option><option value="poor">Poor sleep</option><option value="very_poor">Very poor / disturbed</option></select></div>
+        <div class="question full"><label>5. What are you currently dealing with?</label><div class="check-row"><label><input type="checkbox" name="concerns" value="academic_pressure"> Academic / work pressure</label><label><input type="checkbox" name="concerns" value="family_issues"> Family issues</label><label><input type="checkbox" name="concerns" value="relationship"> Relationship stress</label><label><input type="checkbox" name="concerns" value="loneliness"> Loneliness</label><label><input type="checkbox" name="concerns" value="self_doubt"> Self-doubt</label><label><input type="checkbox" name="concerns" value="health"> Health worries</label></div></div>
+        <div class="question"><label>6. How safe do you feel emotionally today?</label><div class="scale"><label><input type="radio" name="emotional_safety" value="1" required><span>1</span></label><label><input type="radio" name="emotional_safety" value="2"><span>2</span></label><label><input type="radio" name="emotional_safety" value="3"><span>3</span></label><label><input type="radio" name="emotional_safety" value="4"><span>4</span></label><label><input type="radio" name="emotional_safety" value="5"><span>5</span></label></div></div>
+        <div class="question"><label>7. Do you have someone you can talk to today?</label><select name="support_available" required><option value="">Select option</option><option value="yes">Yes</option><option value="maybe">Maybe</option><option value="no">No</option></select></div>
+        <div class="question full"><label>8. In one or two lines, what is on your mind right now?</label><textarea name="current_thoughts" placeholder="Write anything you want NeuroSense AI to understand..."></textarea></div>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn secondary" onclick="resetAssessment()">Reset</button>
+        <button type="submit" class="btn primary">Save Check-In</button>
+      </div>
+    </form>
+    <div class="result-box" id="assessmentResult"><h3 id="resultTitle">Check-In Saved</h3><p id="resultText">Your wellbeing check-in has been saved for this session.</p></div>
+    <div class="professional-help-box" id="professionalHelpBox"></div>
+  </section>
+  <section class="crisis-strip">
+    <div><strong>🆘 Need immediate support?</strong><p>Free 24/7 mental health helplines — confidential and always available. You are never alone.</p></div>
+    <div class="help-lines"><span>📞 iCall: 9152987821</span><span>📞 Vandrevala: 1860-2662-345</span><span>📞 NIMHANS: 14416</span></div>
+  </section>
+</main>
+<script src="{{ url_for('static', filename='js/professional_help.js') }}"></script>
+<script src="{{ url_for('static', filename='js/wellbeing.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NeuroSense AI • Assessment Report</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f7f2; --s1:#ffffff; --s2:#f0f6ee; --s3:#e4efe0;
+  --border:#d3e6cc; --border2:#b8d4ae;
+  --text:#1a2e18; --text2:#4a6645; --muted:#7a9e74;
+  --accent:#2d7a3a; --accent2:#3fa050; --accent-light:#e8f5e3; --accent-mid:#c3e6b8;
+  --red:#d94040; --orange:#f0973b; --shadow:0 20px 60px rgba(45,122,58,.10);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{min-height:100vh;font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:var(--bg)}
+.topbar{
+  height:72px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 2rem;border-bottom:1.5px solid var(--border);
+  background:rgba(255,255,255,.9);backdrop-filter:blur(20px);
+  position:sticky;top:0;z-index:100;
+}
+.brand{display:flex;align-items:center;gap:.7rem;font-family:'Outfit',sans-serif;font-size:1.15rem;font-weight:900;color:var(--text)}
+.brand span{color:var(--accent)}
+.nav{display:flex;align-items:center;gap:.6rem}
+.nav a{
+  height:40px;padding:0 1rem;border-radius:12px;border:1.5px solid var(--border);
+  color:var(--text2);text-decoration:none;display:flex;align-items:center;
+  font-weight:700;font-size:.87rem;background:var(--s2);transition:.2s;
+}
+.nav a.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#fff}
+.nav a:hover:not(.primary){border-color:var(--border2);color:var(--accent)}
+.wrapper{width:min(1160px,92vw);margin:0 auto;padding:3rem 0 4rem}
+.hero{margin-bottom:2rem}
+.badge{
+  display:inline-flex;align-items:center;gap:.45rem;padding:.5rem 1rem;border-radius:999px;
+  color:var(--accent);background:var(--accent-light);border:1.5px solid var(--accent-mid);
+  font-size:.78rem;font-weight:900;margin-bottom:1.2rem;
+}
+.hero h1{
+  font-family:'Outfit',sans-serif;font-size:clamp(2rem,5vw,4rem);
+  line-height:1.05;font-weight:900;letter-spacing:-.04em;margin-bottom:1rem;color:var(--text)
+}
+.hero h1 span{color:var(--accent)}
+.hero p{max-width:820px;color:var(--muted);line-height:1.8;font-size:.98rem}
+.actions{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.5rem}
+.btn{
+  height:46px;padding:0 1.2rem;border:none;border-radius:14px;cursor:pointer;
+  font-weight:800;color:#fff;background:rgba(45,122,58,.08);
+  border:1.5px solid var(--border2);color:var(--text2);transition:.2s;font-size:.88rem;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#fff;box-shadow:0 8px 22px rgba(45,122,58,.22)}
+.report-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:1.3rem;align-items:start}
+.card{
+  padding:1.5rem;border-radius:24px;
+  background:var(--s1);border:1.5px solid var(--border);box-shadow:var(--shadow);margin-bottom:1.3rem;
+}
+.card h2{font-family:'Outfit',sans-serif;font-size:1.3rem;margin-bottom:.8rem;color:var(--text)}
+.card p{color:var(--text2);line-height:1.8;font-size:.93rem}
+.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem}
+.metric{padding:1rem;border-radius:16px;background:var(--s2);border:1px solid var(--border)}
+.metric small{
+  display:block;color:var(--muted);font-weight:800;text-transform:uppercase;
+  font-size:.7rem;letter-spacing:.06em;margin-bottom:.35rem;
+}
+.metric strong{font-family:'Outfit',sans-serif;font-size:1.4rem;color:var(--accent)}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:560px}
+th,td{padding:.85rem;border-bottom:1px solid var(--border);text-align:left;color:var(--text2);vertical-align:top}
+th{color:var(--text);font-weight:800;background:var(--s2)}
+.risk{display:inline-flex;padding:.4rem .75rem;border-radius:999px;font-weight:800;font-size:.78rem}
+.risk.low{color:var(--accent);background:var(--accent-light);border:1px solid var(--accent-mid)}
+.risk.medium{color:var(--orange);background:#fef3e8;border:1px solid rgba(240,151,59,.25)}
+.risk.high{color:var(--red);background:#fdecea;border:1px solid rgba(217,64,64,.25)}
+.list{display:grid;gap:.7rem}
+.list-item{
+  padding:.9rem 1rem;border-radius:14px;
+  background:var(--s2);border:1px solid var(--border);color:var(--text2);line-height:1.7;
+}
+.disclaimer{
+  margin-top:1rem;padding:1rem 1.2rem;border-radius:18px;
+  background:#fdecea;border:1.5px solid rgba(217,64,64,.25);color:var(--red);line-height:1.8;font-size:.9rem;
+}
+.status-box{
+  margin-top:1rem;padding:1rem 1.2rem;border-radius:16px;display:none;
+  background:var(--s2);border:1.5px solid var(--border);color:var(--text2);
+}
+.status-box.show{display:block}
+.status-box.success{border-color:var(--accent-mid);background:var(--accent-light);color:var(--accent)}
+.status-box.error{border-color:rgba(217,64,64,.25);background:#fdecea;color:var(--red)}
+@media(max-width:950px){.report-layout{grid-template-columns:1fr}}
+@media(max-width:720px){
+  .topbar{height:auto;padding:1rem;flex-direction:column;align-items:flex-start;gap:1rem}
+  .nav{flex-wrap:wrap} .metrics{grid-template-columns:1fr}
+}
+</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-brand-logo.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-ui-image.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">🧠 <span>NeuroSense AI</span></div>
+  <nav class="nav">
+    <a href="/reports" class="primary">📄 Reports</a>
+    <a href="/dashboard">📊 Dashboard</a>
+    <a href="/mode">🔄 Mode</a>
+  </nav>
+</header>
+
+<main class="wrapper">
+  <section class="hero">
+    <div class="badge">✦ OBSERVATIONAL REPORT</div>
+    <h1>Mental Wellness <span>Assessment Report</span></h1>
+    <p>This page previews the assessment layer of NeuroSense AI. It summarizes session data, detected emotions, mood trend, wellbeing check-in responses, conversation history, engagement patterns, and support-risk level.</p>
+    <div class="actions">
+      <button class="btn primary" onclick="generateReport('assessment','pdf')">Download Assessment PDF</button>
+      <button class="btn" onclick="generateReport('assessment','csv')">Download Assessment CSV</button>
+    </div>
+    <div class="status-box" id="reportStatus">Preparing report...</div>
+  </section>
+
+  <section class="report-layout">
+    <div>
+      <article class="card">
+        <h2>1. Session Overview</h2>
+        <div class="metrics">
+          <div class="metric"><small>Total Sessions</small><strong>{{ total_sessions | default(0) }}</strong></div>
+          <div class="metric"><small>Total Messages</small><strong>{{ total_messages | default(0) }}</strong></div>
+          <div class="metric"><small>Engagement Streak</small><strong>{{ streak | default(0) }} days</strong></div>
+          <div class="metric"><small>Average Mood</small><strong>{{ avg_mood | default(5.0) }}/10</strong></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>2. Detected Emotions</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Emotion</th><th>Count</th></tr></thead>
+            <tbody>
+              {% if emotion_freq %}{% for emotion, count in emotion_freq.items() %}<tr><td>{{ emotion|capitalize }}</td><td>{{ count }}</td></tr>{% endfor %}
+              {% else %}<tr><td>No emotion data</td><td>0</td></tr>{% endif %}
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:.8rem">Dominant detected emotion: <strong style="color:var(--accent)">{{ top_emotion | default("neutral") | capitalize }}</strong>. This is based on available emotion-detection logs and should not be treated as diagnosis.</p>
+      </article>
+
+      <article class="card">
+        <h2>3. Mood Trend</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Date</th><th>Mood Score</th></tr></thead>
+            <tbody>
+              {% if daily_labels and mood_timeline %}{% for label in daily_labels %}<tr><td>{{ label }}</td><td>{{ mood_timeline[loop.index0] if mood_timeline[loop.index0] is not none else "No data" }}</td></tr>{% endfor %}
+              {% else %}<tr><td>No data</td><td>No data</td></tr>{% endif %}
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>4. Conversation History Summary</h2>
+        {% if recent_sessions %}
+          <div class="list">
+            {% for s in recent_sessions[:5] %}
+            <div class="list-item">
+              <strong>{{ s.date }} • {{ s.mode }}</strong><br>
+              {% for m in s.messages %}{% if m.role == "user" %}{{ m.content[:180] }}{% if not loop.last %}<br>{% endif %}{% endif %}{% endfor %}
+            </div>
+            {% endfor %}
+          </div>
+        {% else %}<p>No recent conversation history available.</p>{% endif %}
+      </article>
+    </div>
+
+    <aside>
+      <article class="card">
+        <h2>5. Wellbeing Check-In</h2>
+        {% if latest_wellbeing_checkin %}{% set c = latest_wellbeing_checkin %}
+          <div class="metrics">
+            <div class="metric"><small>Score</small><strong>{{ c.wellbeing_score | default("—") }}/100</strong></div>
+            <div class="metric"><small>Risk Level</small><strong><span class="risk {{ c.risk_level | default('low') }}">{{ c.risk_level | default("low") | upper }}</span></strong></div>
+          </div>
+          <div class="list" style="margin-top:1rem">
+            <div class="list-item">Mood: <strong>{{ c.mood | default("neutral") }}</strong></div>
+            <div class="list-item">Stress: <strong>{{ c.stress | default("—") }}/5</strong></div>
+            <div class="list-item">Social Connection: <strong>{{ c.social_connection | default("—") }}/5</strong></div>
+            <div class="list-item">Sleep: <strong>{{ c.sleep | default("—") }}</strong></div>
+            <div class="list-item">Support Available: <strong>{{ c.support_available | default("—") }}</strong></div>
+          </div>
+        {% else %}<p>No wellbeing check-in is available yet.</p>{% endif %}
+      </article>
+
+      <article class="card">
+        <h2>6. Engagement Patterns</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Date</th><th>Messages</th></tr></thead>
+            <tbody>
+              {% if daily_labels and daily_counts %}{% for label in daily_labels %}<tr><td>{{ label }}</td><td>{{ daily_counts[loop.index0] }}</td></tr>{% endfor %}
+              {% else %}<tr><td>No data</td><td>0</td></tr>{% endif %}
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <div class="disclaimer">
+        <strong>Important:</strong> This assessment report is observational only. It is not a clinical diagnosis, psychiatric evaluation, medical advice, or treatment plan.
+      </div>
+    </aside>
+  </section>
+</main>
+
+<script src="{{ url_for('static', filename='js/report.js') }}"></script>
+</body>
+</html>

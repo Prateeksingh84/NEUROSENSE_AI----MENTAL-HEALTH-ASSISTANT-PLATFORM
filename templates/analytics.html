@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NeuroSense AI • Analytics</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root{
+  --bg:#f4f7f2; --panel:#ffffff; --panel2:#f0f6ee;
+  --border:#d3e6cc; --border2:#b8d4ae;
+  --text:#1a2e18; --text2:#4a6645; --muted:#7a9e74;
+  --accent:#2d7a3a; --accent2:#3fa050;
+  --accent-light:#e8f5e3; --accent-mid:#c3e6b8;
+  --green:#2d7a3a; --cyan:#3b82c4; --red:#d94040; --yellow:#c8880a; --orange:#f0973b;
+  --shadow:0 20px 60px rgba(45,122,58,.10);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  min-height:100vh; font-family:'Plus Jakarta Sans',sans-serif;
+  background:radial-gradient(circle at top left,rgba(45,122,58,.07),transparent 34%),
+    radial-gradient(circle at bottom right,rgba(45,122,58,.05),transparent 35%), var(--bg);
+  color:var(--text);
+}
+.wrap{max-width:1440px;margin:auto;padding:36px 22px 60px}
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:28px}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;
+  background:var(--accent-light);border:1.5px solid var(--accent-mid);
+  color:var(--accent);font-weight:900;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;
+}
+h1{font-family:'Outfit',sans-serif;font-size:46px;line-height:1;margin:0 0 10px;letter-spacing:-.03em;color:var(--text)}
+p{color:var(--text2);line-height:1.7}
+.btn{
+  color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent2));
+  padding:13px 20px;border-radius:999px;text-decoration:none;font-weight:800;
+  white-space:nowrap;box-shadow:0 8px 24px rgba(45,122,58,.25);display:inline-block;
+}
+.notice{
+  margin-bottom:22px;padding:16px 18px;border-radius:16px;
+  background:var(--yellow-light,#fef8e3);border:1.5px solid rgba(200,136,10,.25);
+  color:var(--yellow);line-height:1.7;
+}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:18px}
+.card{
+  background:var(--panel);border:1.5px solid var(--border);
+  border-radius:20px;padding:20px;box-shadow:var(--shadow);min-height:130px;
+}
+.card h2{margin:0 0 12px;font-size:13px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.value{font-family:'Outfit',sans-serif;font-size:34px;line-height:1;font-weight:900;color:var(--accent)}
+.value.green{color:var(--green)} .value.red{color:var(--red)}
+.value.yellow{color:var(--yellow)} .value.cyan{color:var(--cyan)}
+.sub{margin-top:10px;color:var(--muted);font-size:13px;line-height:1.5}
+.progress{width:100%;height:7px;border-radius:999px;overflow:hidden;background:var(--accent-mid,#c3e6b8);margin-top:14px}
+.progress span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.progress.red span{background:linear-gradient(90deg,var(--red),var(--orange))}
+.progress.yellow span{background:linear-gradient(90deg,var(--yellow),var(--orange))}
+.section-title{margin:34px 0 16px;display:flex;align-items:center;gap:10px}
+.section-title h2{font-family:'Outfit',sans-serif;font-size:24px;letter-spacing:-.02em;color:var(--text)}
+.section-title span{width:4px;height:22px;border-radius:999px;background:var(--accent)}
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.chart-card{
+  background:var(--panel);border:1.5px solid var(--border);
+  border-radius:22px;padding:22px;min-height:380px;box-shadow:var(--shadow);
+}
+.chart-card h3{font-family:'Outfit',sans-serif;font-size:20px;margin-bottom:8px;color:var(--text)}
+.chart-card p{font-size:13px;color:var(--muted);margin-bottom:16px}
+.chart-box{height:270px;position:relative}
+.insight-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.insight-card{
+  background:var(--panel);border:1.5px solid var(--border);
+  border-radius:20px;padding:20px;min-height:165px;
+}
+.insight-card h3{font-family:'Outfit',sans-serif;font-size:17px;margin-bottom:8px;color:var(--text)}
+.badge{
+  display:inline-flex;align-items:center;padding:6px 12px;border-radius:999px;
+  font-size:12px;font-weight:800;margin-bottom:10px;
+  background:var(--accent-light);color:var(--accent);border:1px solid var(--accent-mid);
+}
+.badge.green{background:var(--accent-light);color:var(--green);border-color:var(--accent-mid)}
+.badge.yellow{background:#fef8e3;color:var(--yellow);border-color:rgba(200,136,10,.25)}
+.badge.red{background:#fdecea;color:var(--red);border-color:rgba(217,64,64,.25)}
+.recommendation{display:grid;grid-template-columns:1.2fr 1fr;gap:18px;margin-top:18px}
+.reco-card{
+  background:linear-gradient(135deg,var(--accent-light),var(--s1,#fff));
+  border:1.5px solid var(--accent-mid);border-radius:22px;padding:24px;box-shadow:var(--shadow);
+}
+.reco-card h3{font-family:'Outfit',sans-serif;font-size:22px;margin-bottom:12px;color:var(--text)}
+.list{display:grid;gap:12px;margin-top:14px}
+.list-item{
+  padding:14px;border-radius:14px;
+  background:var(--bg2,#eef4eb);border:1px solid var(--border);
+}
+.list-item strong{display:block;margin-bottom:5px;color:var(--text)}
+.table-card{
+  background:var(--panel);border:1.5px solid var(--border);
+  border-radius:22px;padding:22px;box-shadow:var(--shadow);overflow:hidden;
+}
+.table-card h3{font-family:'Outfit',sans-serif;font-size:20px;margin-bottom:14px;color:var(--text)}
+.kv{display:grid;gap:8px}
+.kv-row{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:14px;padding:12px 0;border-bottom:1px solid var(--border);
+}
+.kv-row:last-child{border-bottom:none}
+.kv-row span{color:var(--muted)} .kv-row strong{text-align:right;color:var(--text)}
+.footer-note{
+  margin-top:28px;padding:18px;border-radius:16px;
+  background:#fdecea;border:1.5px solid rgba(217,64,64,.25);color:var(--red);line-height:1.7;
+}
+@media(max-width:1100px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .chart-grid,.recommendation{grid-template-columns:1fr}
+  .insight-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:720px){
+  .top{flex-direction:column} h1{font-size:34px}
+  .grid,.insight-grid{grid-template-columns:1fr}
+  .chart-box{height:220px}
+}
+</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-brand-logo.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-ui-image.css') }}">
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div>
+      <div class="eyebrow">🧠 Wellness Intelligence</div>
+      <h1>📈 Analytics</h1>
+      <p>Hello {{ name or 'User' }}, here are your NeuroSense AI emotional and wellbeing analytics.</p>
+    </div>
+    <a href="/dashboard" class="btn">← Dashboard</a>
+  </div>
+
+  <div class="notice">
+    These analytics are supportive wellness indicators only. They are not a medical diagnosis, clinical correlation, or psychiatric evaluation.
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Total Messages</h2>
+      <div class="value">{{ analytics.total_messages }}</div>
+      <div class="sub">Conversation activity across your NeuroSense AI usage.</div>
+    </div>
+    <div class="card">
+      <h2>Total Sessions</h2>
+      <div class="value cyan">{{ analytics.total_sessions }}</div>
+      <div class="sub">Saved sessions and wellness interactions.</div>
+    </div>
+    <div class="card">
+      <h2>Average Mood</h2>
+      <div class="value yellow">{{ analytics.avg_mood }}/10</div>
+      <div class="sub">{{ analytics.mood_trend.emoji }} {{ analytics.mood_trend.label }}</div>
+    </div>
+    <div class="card">
+      <h2>Dominant Emotion</h2>
+      <div class="value green">{{ analytics.dominant_emotion }}</div>
+      <div class="sub">Based on detected/session emotion frequency.</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Emotional Stability</h2>
+      <div class="value green">{{ analytics.emotional_stability }}%</div>
+      <div class="progress"><span style="width:{{ analytics.emotional_stability }}%"></span></div>
+      <div class="sub">Supportive indicator from mood variation and stress load.</div>
+    </div>
+    <div class="card">
+      <h2>Stress Load Estimate</h2>
+      <div class="value red">{{ analytics.stress_load }}%</div>
+      <div class="progress red"><span style="width:{{ analytics.stress_load }}%"></span></div>
+      <div class="sub">Estimated from challenging emotions and average mood.</div>
+    </div>
+    <div class="card">
+      <h2>Positive Mood Ratio</h2>
+      <div class="value cyan">{{ analytics.positive_mood_ratio }}%</div>
+      <div class="progress"><span style="width:{{ analytics.positive_mood_ratio }}%"></span></div>
+      <div class="sub">Share of positive/calm emotion signals.</div>
+    </div>
+    <div class="card">
+      <h2>Support Need Level</h2>
+      <div class="value {{ analytics.support_need.color }}">{{ analytics.support_need.label }}</div>
+      <div class="progress {{ analytics.support_need.color }}"><span style="width:{{ analytics.support_need.level }}%"></span></div>
+      <div class="sub">{{ analytics.support_need.message }}</div>
+    </div>
+  </div>
+
+  <div class="section-title"><span></span><h2>Emotional Pattern Analysis</h2></div>
+  <div class="chart-grid">
+    <div class="chart-card"><h3>Emotion Distribution</h3><p>Frequency of detected/session emotions.</p><div class="chart-box"><canvas id="emotionChart"></canvas></div></div>
+    <div class="chart-card"><h3>7-Day Mood Trend</h3><p>Supportive mood pattern across recent days.</p><div class="chart-box"><canvas id="moodChart"></canvas></div></div>
+    <div class="chart-card"><h3>Mode Usage</h3><p>How the user engages with NeuroSense AI modes.</p><div class="chart-box"><canvas id="modeChart"></canvas></div></div>
+    <div class="chart-card"><h3>Concern Pattern</h3><p>Repeated wellbeing themes found in conversation patterns.</p><div class="chart-box"><canvas id="concernChart"></canvas></div></div>
+    <div class="chart-card"><h3>Mood vs Engagement</h3><p>Supportive pattern insight, not a clinical correlation.</p><div class="chart-box"><canvas id="engagementChart"></canvas></div></div>
+    <div class="chart-card"><h3>Wellness Indicator Mix</h3><p>Combined view of stability, stress load, support need, and positivity.</p><div class="chart-box"><canvas id="radarChart"></canvas></div></div>
+  </div>
+
+  <div class="section-title"><span></span><h2>Wellbeing Insights</h2></div>
+  <div class="insight-grid">
+    <div class="insight-card"><div class="badge">Mood Trend</div><h3>{{ analytics.mood_trend.emoji }} {{ analytics.mood_trend.label }}</h3><p>{{ analytics.mood_trend.description }}</p></div>
+    <div class="insight-card"><div class="badge">Emotion Volatility</div><h3>{{ analytics.volatility.label }}</h3><p>{{ analytics.volatility.description }}</p></div>
+    <div class="insight-card"><div class="badge">Repeated Concern</div><h3>{{ analytics.concern_data.top }}</h3><p>{{ analytics.concern_data.message }}</p></div>
+    <div class="insight-card"><div class="badge green">Dominant Mode</div><h3>{{ analytics.mode_data.dominant }}</h3><p>This shows the most used communication style in recent activity.</p></div>
+    <div class="insight-card"><div class="badge yellow">Latest Check-in</div><h3>{{ analytics.checkin.score }}/100</h3><p>{{ analytics.checkin.message }}</p></div>
+    <div class="insight-card"><div class="badge {{ analytics.support_need.color }}">Support Need</div><h3>{{ analytics.support_need.label }}</h3><p>{{ analytics.support_need.message }}</p></div>
+  </div>
+
+  <div class="section-title"><span></span><h2>Support Recommendation Engine</h2></div>
+  <div class="recommendation">
+    <div class="reco-card">
+      <h3>Suggested Next Step Today</h3>
+      <p>{{ analytics.suggested_action }}</p>
+      <div class="list">
+        {% for item in analytics.pattern_insights %}
+        <div class="list-item"><strong>{{ item.title }}</strong><p>{{ item.text }}</p></div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="table-card">
+      <h3>Check-in Indicators</h3>
+      <div class="kv">
+        <div class="kv-row"><span>Check-in Score</span><strong>{{ analytics.checkin.score }}/100</strong></div>
+        <div class="kv-row"><span>Sleep Quality</span><strong>{{ analytics.checkin.sleep }}</strong></div>
+        <div class="kv-row"><span>Social Support</span><strong>{{ analytics.checkin.social }}</strong></div>
+        <div class="kv-row"><span>Pressure Indicator</span><strong>{{ analytics.checkin.pressure }}</strong></div>
+        <div class="kv-row"><span>Professional Help Note</span><strong>{{ analytics.professional_help_note }}</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <strong>Safety Boundary:</strong> NeuroSense AI analytics are designed for self-awareness and supportive guidance. They do not diagnose mental health conditions, prescribe treatment, or replace a psychiatrist, psychologist, counsellor, or emergency service.
+  </div>
+</div>
+
+<script>
+const emotionFreq = {{ emotion_freq|tojson }};
+const moodTimeline = {{ mood_timeline|tojson }};
+const dailyLabels = {{ daily_labels|tojson }};
+const modeLabels = {{ mode_labels|tojson }};
+const modeValues = {{ mode_values|tojson }};
+const concernLabels = {{ concern_labels|tojson }};
+const concernValues = {{ concern_values|tojson }};
+const engagementPointsRaw = {{ engagement_points|tojson }};
+const analytics = {{ analytics|tojson }};
+
+const chartTextColor = "#4a6645";
+const gridColor = "rgba(45,122,58,.12)";
+const palette = ["#2d7a3a","#3fa050","#f0973b","#3b82c4","#c8880a","#7a9e74","#d94040"];
+
+const emotionLabels = Object.keys(emotionFreq || {});
+const emotionValues = Object.values(emotionFreq || {});
+
+new Chart(document.getElementById("emotionChart"),{type:"doughnut",data:{labels:emotionLabels.length?emotionLabels.map(e=>e.charAt(0).toUpperCase()+e.slice(1)):["Neutral"],datasets:[{data:emotionValues.length?emotionValues:[1],backgroundColor:palette,borderColor:"#ffffff",borderWidth:4}]},options:{responsive:true,maintainAspectRatio:false,cutout:"62%",plugins:{legend:{position:"right",labels:{color:chartTextColor}}}}});
+new Chart(document.getElementById("moodChart"),{type:"line",data:{labels:dailyLabels.length?dailyLabels:["Today"],datasets:[{label:"Mood",data:moodTimeline.length?moodTimeline:[5],borderColor:"#2d7a3a",backgroundColor:"rgba(45,122,58,.12)",pointBackgroundColor:"#2d7a3a",pointRadius:5,tension:.35,fill:true}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{min:0,max:10,ticks:{color:chartTextColor,callback:v=>v+"/10"},grid:{color:gridColor}},x:{ticks:{color:chartTextColor},grid:{color:gridColor}}},plugins:{legend:{display:false}}}});
+new Chart(document.getElementById("modeChart"),{type:"bar",data:{labels:modeLabels,datasets:[{label:"Usage",data:modeValues,backgroundColor:palette,borderRadius:10}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true,ticks:{color:chartTextColor},grid:{color:gridColor}},x:{ticks:{color:chartTextColor},grid:{display:false}}},plugins:{legend:{display:false}}}});
+new Chart(document.getElementById("concernChart"),{type:"bar",data:{labels:concernLabels,datasets:[{label:"Mentions",data:concernValues,backgroundColor:["#f0973b","#2d7a3a","#3fa050","#d94040","#3b82c4"],borderRadius:10}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:"y",scales:{x:{beginAtZero:true,ticks:{color:chartTextColor},grid:{color:gridColor}},y:{ticks:{color:chartTextColor},grid:{display:false}}},plugins:{legend:{display:false}}}});
+const engagementPoints=(engagementPointsRaw||[]).map(i=>({x:i.x||0,y:i.y||0}));
+new Chart(document.getElementById("engagementChart"),{type:"scatter",data:{datasets:[{label:"Mood vs Engagement",data:engagementPoints,backgroundColor:"#3fa050",pointRadius:6}]},options:{responsive:true,maintainAspectRatio:false,scales:{x:{title:{display:true,text:"Estimated Message Activity",color:chartTextColor},ticks:{color:chartTextColor},grid:{color:gridColor}},y:{min:0,max:10,title:{display:true,text:"Mood /10",color:chartTextColor},ticks:{color:chartTextColor},grid:{color:gridColor}}},plugins:{legend:{labels:{color:chartTextColor}}}}});
+new Chart(document.getElementById("radarChart"),{type:"radar",data:{labels:["Stability","Positive Ratio","Mood","Low Stress","Low Support Need"],datasets:[{label:"Wellness Indicators",data:[analytics.emotional_stability||0,analytics.positive_mood_ratio||0,(analytics.avg_mood||0)*10,100-(analytics.stress_load||0),100-(analytics.support_need.level||0)],borderColor:"#2d7a3a",backgroundColor:"rgba(45,122,58,.15)",pointBackgroundColor:"#3fa050"}]},options:{responsive:true,maintainAspectRatio:false,scales:{r:{min:0,max:100,angleLines:{color:gridColor},grid:{color:gridColor},pointLabels:{color:chartTextColor},ticks:{color:chartTextColor,backdropColor:"transparent"}}},plugins:{legend:{labels:{color:chartTextColor}}}}});
+</script>
+</body>
+</html>

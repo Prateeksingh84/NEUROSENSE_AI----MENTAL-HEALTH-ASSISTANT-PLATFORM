@@ -1,0 +1,246 @@
+<div class="usage-card">
+
+    <div class="usage-top">
+
+        <div class="usage-icon">
+
+            {% if icon %}
+                <i class="{{ icon }}"></i>
+            {% else %}
+                <i class="fas fa-chart-line"></i>
+            {% endif %}
+
+        </div>
+
+        <div class="usage-badge">
+
+            {{ growth if growth else "+12%" }}
+
+        </div>
+
+    </div>
+
+    <div class="usage-content">
+
+        <small>
+            {{ title if title else "Usage" }}
+        </small>
+
+        <h2
+            data-stat="{{ value if value else 0 }}"
+        >
+            {{ value if value else 0 }}
+        </h2>
+
+        <p>
+            {{ subtitle if subtitle else "Real-time wellness analytics" }}
+        </p>
+
+    </div>
+
+    <div class="usage-progress">
+
+        <div class="usage-progress-bar">
+
+            <div
+                class="usage-progress-fill"
+                style="width: {{ progress if progress else 70 }}%"
+            ></div>
+
+        </div>
+
+        <div class="usage-progress-text">
+
+            <span>
+                {{ progress if progress else 70 }}% Used
+            </span>
+
+            <span>
+                {{ limit if limit else "100%" }}
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:wght@700;800;900&display=swap');
+
+:root {
+    --green-primary: #2D6A4F;
+    --green-secondary: #40916C;
+    --green-light: #74C69D;
+    --green-pale: #D8F3DC;
+    --green-xpale: #F0FAF4;
+    --green-accent: #52B788;
+    --text-primary: #1B3A2D;
+    --text-secondary: #4A7C6B;
+    --text-muted: #7FA894;
+    --border: #C8E6D4;
+    --bg-white: #FFFFFF;
+    --bg-surface: #F6FCF8;
+    --shadow-sm: 0 2px 8px rgba(45, 106, 79, 0.08);
+    --shadow-md: 0 8px 32px rgba(45, 106, 79, 0.12);
+    --shadow-lg: 0 20px 60px rgba(45, 106, 79, 0.14);
+}
+
+.usage-card {
+    padding: 1.5rem;
+
+    border-radius: 20px;
+
+    background: #fff;
+
+    border: 1px solid var(--border);
+
+    box-shadow: var(--shadow-sm);
+
+    transition: 0.25s ease;
+
+    position: relative;
+
+    overflow: hidden;
+
+    font-family: 'DM Sans', sans-serif;
+}
+
+.usage-card::before {
+    content: '';
+
+    position: absolute;
+
+    width: 140px;
+    height: 140px;
+
+    border-radius: 50%;
+
+    background: var(--green-xpale);
+
+    top: -70px;
+    right: -70px;
+}
+
+.usage-card:hover {
+    transform: translateY(-4px);
+
+    border-color: var(--green-accent);
+
+    box-shadow: var(--shadow-md);
+}
+
+.usage-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 1.25rem;
+}
+
+.usage-icon {
+    width: 52px;
+    height: 52px;
+
+    border-radius: 14px;
+
+    background: var(--green-xpale);
+
+    border: 1px solid var(--border);
+
+    color: var(--green-primary);
+
+    display: grid;
+    place-items: center;
+
+    font-size: 1.2rem;
+}
+
+.usage-badge {
+    padding: 0.4rem 0.8rem;
+
+    border-radius: 999px;
+
+    background: rgba(45, 106, 79, 0.08);
+
+    border: 1px solid rgba(45, 106, 79, 0.18);
+
+    color: var(--green-primary);
+
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.usage-content small {
+    color: var(--text-muted);
+
+    font-size: 0.8rem;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.05em;
+}
+
+.usage-content h2 {
+    margin-top: 0.4rem;
+
+    font-size: 2.4rem;
+
+    font-family: 'Fraunces', serif;
+
+    font-weight: 900;
+
+    color: var(--text-primary);
+
+    line-height: 1;
+}
+
+.usage-content p {
+    margin-top: 0.4rem;
+
+    color: var(--text-muted);
+
+    font-size: 0.88rem;
+
+    line-height: 1.6;
+}
+
+.usage-progress {
+    margin-top: 1.4rem;
+}
+
+.usage-progress-bar {
+    width: 100%;
+    height: 8px;
+
+    border-radius: 999px;
+
+    overflow: hidden;
+
+    background: var(--green-pale);
+}
+
+.usage-progress-fill {
+    height: 100%;
+
+    border-radius: 999px;
+
+    background: linear-gradient(90deg, var(--green-primary), var(--green-light));
+}
+
+.usage-progress-text {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 0.5rem;
+
+    color: var(--text-muted);
+
+    font-size: 0.78rem;
+    font-weight: 500;
+}
+
+</style>

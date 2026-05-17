@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NeuroSense AI • Best Practices</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#f4f7f2;
+    --panel:#ffffff;
+    --panel2:#f0f6ee;
+    --soft:#e8f5e3;
+    --border:#d3e6cc;
+    --border2:#b8d4ae;
+
+    --text:#1a2e18;
+    --text2:#4a6645;
+    --muted:#7a9e74;
+
+    --accent:#2d7a3a;
+    --accent2:#3fa050;
+
+    --green:#2d7a3a;
+    --cyan:#3fa050;
+
+    --red:#d94040;
+    --yellow:#f0973b;
+    --orange:#f5b35f;
+
+    --accent-light:#e8f5e3;
+    --accent-mid:#c3e6b8;
+
+    --danger-soft:#fdecec;
+    --warning-soft:#fff7e8;
+
+    --shadow:0 20px 60px rgba(45,122,58,.10);
+    --shadow-sm:0 8px 26px rgba(45,122,58,.08);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    font-family:Inter,sans-serif;
+    background:
+        radial-gradient(circle at top left,rgba(63,160,80,.12),transparent 34%),
+        radial-gradient(circle at bottom right,rgba(195,230,184,.45),transparent 35%),
+        var(--bg);
+    color:var(--text);
+}
+
+.wrap{
+    max-width:1350px;
+    margin:0 auto;
+    padding:36px 22px 70px;
+}
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:22px;
+    margin-bottom:26px;
+}
+
+.eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 12px;
+    border-radius:999px;
+    background:var(--accent-light);
+    border:1.5px solid var(--accent-mid);
+    color:var(--accent);
+    font-weight:900;
+    font-size:12px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    margin-bottom:14px;
+}
+
+h1{
+    font-family:Outfit,sans-serif;
+    font-size:clamp(36px,5vw,58px);
+    line-height:1;
+    letter-spacing:-.04em;
+    margin-bottom:10px;
+    color:var(--text);
+}
+
+h2,
+h3{
+    font-family:Outfit,sans-serif;
+    color:var(--text);
+}
+
+p{
+    color:var(--text2);
+    line-height:1.7;
+}
+
+a{
+    color:var(--accent);
+    text-decoration:none;
+}
+
+.btn,
+button{
+    border:none;
+    cursor:pointer;
+    font-family:Inter,sans-serif;
+}
+
+.btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    min-height:44px;
+    padding:0 16px;
+    border-radius:14px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#ffffff;
+    font-weight:900;
+    box-shadow:0 14px 35px rgba(45,122,58,.20);
+    white-space:nowrap;
+    transition:.2s ease;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
+    box-shadow:0 18px 42px rgba(45,122,58,.24);
+}
+
+.btn.secondary{
+    background:#ffffff;
+    color:var(--accent);
+    border:1.5px solid var(--accent-mid);
+    box-shadow:none;
+}
+
+.btn.secondary:hover{
+    background:var(--accent-light);
+}
+
+.btn.green{
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#ffffff;
+}
+
+.btn.red{
+    background:linear-gradient(135deg,var(--red),#f06b7c);
+    color:#ffffff;
+}
+
+.btn.yellow{
+    background:linear-gradient(135deg,var(--yellow),var(--orange));
+    color:#1a2e18;
+}
+
+.hero{
+    background:
+        radial-gradient(circle at top right,rgba(195,230,184,.55),transparent 32%),
+        linear-gradient(135deg,#ffffff,#f0f6ee);
+    border:1.5px solid var(--accent-mid);
+    border-radius:26px;
+    padding:26px;
+    box-shadow:var(--shadow);
+    margin-bottom:20px;
+}
+
+.hero-grid{
+    display:grid;
+    grid-template-columns:1.25fr .75fr;
+    gap:18px;
+    align-items:stretch;
+}
+
+.quick-panel,
+.card{
+    background:#ffffff;
+    border:1.5px solid var(--border);
+    border-radius:22px;
+    padding:22px;
+    box-shadow:var(--shadow-sm);
+}
+
+.quick-panel{
+    background:var(--panel2);
+    border-color:var(--border);
+    box-shadow:none;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-top:18px;
+}
+
+.stat{
+    border:1.5px solid var(--border);
+    border-radius:18px;
+    padding:16px;
+    background:#ffffff;
+}
+
+.stat span{
+    display:block;
+    color:var(--muted);
+    font-size:12px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    margin-bottom:8px;
+}
+
+.stat strong{
+    font-family:Outfit,sans-serif;
+    font-size:28px;
+    color:var(--accent);
+}
+
+.mood-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:14px;
+}
+
+.mood-chip{
+    padding:10px 13px;
+    border-radius:999px;
+    background:#ffffff;
+    border:1.5px solid var(--border);
+    color:var(--text2);
+    font-weight:900;
+    transition:.16s;
+}
+
+.mood-chip.active,
+.mood-chip:hover{
+    background:var(--accent-light);
+    border-color:var(--accent-mid);
+    color:var(--accent);
+}
+
+.reco-box{
+    margin-top:16px;
+    padding:16px;
+    border-radius:18px;
+    background:var(--accent-light);
+    border:1.5px solid var(--accent-mid);
+}
+
+.reco-box h3{
+    font-size:20px;
+    margin-bottom:6px;
+}
+
+.reco-box strong{
+    color:var(--accent);
+}
+
+.section-title{
+    margin:28px 0 15px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.section-title span{
+    width:4px;
+    height:24px;
+    border-radius:999px;
+    background:var(--accent);
+}
+
+.section-title h2{
+    font-size:28px;
+    letter-spacing:-.025em;
+}
+
+.tools-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.card h3{
+    font-size:22px;
+    margin-bottom:8px;
+}
+
+.card .desc{
+    color:var(--muted);
+    font-size:14px;
+    margin-bottom:16px;
+}
+
+.input-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin:12px 0;
+}
+
+label{
+    display:block;
+    color:var(--text2);
+    font-size:13px;
+    font-weight:800;
+    margin-bottom:7px;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    border:1.5px solid var(--border);
+    background:#ffffff;
+    color:var(--text);
+    border-radius:14px;
+    padding:12px 13px;
+    outline:none;
+    font-family:Inter,sans-serif;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+    border-color:var(--accent-mid);
+    box-shadow:0 0 0 4px rgba(63,160,80,.12);
+}
+
+textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+input[type="range"]{
+    padding:0;
+    accent-color:var(--accent);
+}
+
+.range-row{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:12px;
+    align-items:center;
+}
+
+.range-val{
+    min-width:52px;
+    text-align:center;
+    padding:9px 10px;
+    border-radius:12px;
+    background:var(--accent-light);
+    border:1.5px solid var(--accent-mid);
+    color:var(--accent);
+    font-weight:900;
+}
+
+.timer-circle{
+    width:170px;
+    height:170px;
+    margin:18px auto;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:
+        radial-gradient(circle,rgba(63,160,80,.18),rgba(232,245,227,.80));
+    border:1.5px solid var(--accent-mid);
+    box-shadow:0 0 55px rgba(45,122,58,.14);
+    transition:transform .7s ease;
+}
+
+.timer-circle.expand{
+    transform:scale(1.12);
+}
+
+.timer-circle.contract{
+    transform:scale(.92);
+}
+
+.timer-main{
+    text-align:center;
+}
+
+.timer-main strong{
+    display:block;
+    font-family:Outfit,sans-serif;
+    font-size:34px;
+    color:var(--accent);
+}
+
+.timer-main span{
+    color:var(--text2);
+    font-size:13px;
+    font-weight:800;
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:14px;
+}
+
+.checklist{
+    display:grid;
+    gap:10px;
+    margin-top:12px;
+}
+
+.check-item{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:12px;
+    border-radius:15px;
+    background:var(--panel2);
+    border:1.5px solid var(--border);
+}
+
+.check-item input{
+    width:auto;
+    margin-top:3px;
+    accent-color:var(--accent);
+}
+
+.check-item span{
+    color:var(--text2);
+    line-height:1.5;
+}
+
+.check-item strong{
+    color:var(--text);
+}
+
+.copy-box{
+    padding:14px;
+    border-radius:16px;
+    background:var(--panel2);
+    border:1.5px solid var(--border);
+    color:var(--text2);
+    line-height:1.6;
+}
+
+.log-grid{
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:18px;
+}
+
+.log-list{
+    display:grid;
+    gap:10px;
+    max-height:380px;
+    overflow:auto;
+    padding-right:4px;
+}
+
+.log-list::-webkit-scrollbar{
+    width:7px;
+}
+
+.log-list::-webkit-scrollbar-thumb{
+    background:var(--accent-mid);
+    border-radius:999px;
+}
+
+.log-item{
+    padding:13px;
+    border-radius:16px;
+    background:var(--panel2);
+    border:1.5px solid var(--border);
+}
+
+.log-item strong{
+    display:block;
+    margin-bottom:5px;
+    color:var(--text);
+}
+
+.log-item small{
+    color:var(--muted);
+    font-weight:800;
+}
+
+.note{
+    margin-top:24px;
+    padding:18px;
+    border-radius:16px;
+    background:var(--warning-soft);
+    border:1.5px solid rgba(240,151,59,.25);
+    color:#835014;
+    line-height:1.7;
+}
+
+.toast{
+    position:fixed;
+    right:22px;
+    bottom:22px;
+    padding:14px 16px;
+    border-radius:16px;
+    background:#ffffff;
+    border:1.5px solid var(--accent-mid);
+    color:var(--text);
+    box-shadow:var(--shadow);
+    z-index:9999;
+    font-weight:800;
+    max-width:360px;
+}
+
+@media(max-width:1050px){
+    .hero-grid,
+    .tools-grid,
+    .log-grid{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:720px){
+    .top{
+        flex-direction:column;
+    }
+
+    .input-row{
+        grid-template-columns:1fr;
+    }
+
+    .timer-circle{
+        width:150px;
+        height:150px;
+    }
+}
+</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-brand-logo.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-ui-image.css') }}">
+</head>
+
+<body>
+<div class="wrap">
+
+    <div class="top">
+        <div>
+            <div class="eyebrow">🌱 Real-time Wellness Practice Hub</div>
+            <h1>Best Practices</h1>
+            <p>Safe, interactive self-care tools supported by NeuroSense AI. These practices are for wellbeing support only, not diagnosis or medical treatment.</p>
+        </div>
+        <a href="/dashboard" class="btn">← Dashboard</a>
+    </div>
+
+    <section class="hero">
+        <div class="hero-grid">
+            <div>
+                <h2>Recommended practice right now</h2>
+                <p>Select your current mood and stress level. NeuroSense AI will suggest a safe practice you can do immediately.</p>
+
+                <div class="mood-row" id="moodRow">
+                    <button class="mood-chip active" data-mood="neutral">😐 Neutral</button>
+                    <button class="mood-chip" data-mood="stressed">😣 Stressed</button>
+                    <button class="mood-chip" data-mood="anxious">😟 Anxious</button>
+                    <button class="mood-chip" data-mood="sad">😔 Sad</button>
+                    <button class="mood-chip" data-mood="angry">😤 Angry</button>
+                    <button class="mood-chip" data-mood="tired">😴 Tired</button>
+                </div>
+
+                <div class="input-row">
+                    <div>
+                        <label>Stress before practice</label>
+                        <div class="range-row">
+                            <input type="range" id="stressBefore" min="0" max="10" value="5">
+                            <div class="range-val" id="stressBeforeVal">5/10</div>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Stress after practice</label>
+                        <div class="range-row">
+                            <input type="range" id="stressAfter" min="0" max="10" value="5">
+                            <div class="range-val" id="stressAfterVal">5/10</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reco-box">
+                    <h3 id="recoTitle">🫁 Box Breathing</h3>
+                    <p id="recoText">Start with one minute of slow breathing. Keep your attention on the count, not on forcing calm.</p>
+                    <div class="actions">
+                        <button class="btn green" onclick="scrollToTool('breathingCard')">Start recommended practice</button>
+                        <button class="btn secondary" onclick="saveQuickPractice()">Save quick check-in</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-panel">
+                <h2>Practice Progress</h2>
+                <p>Your local practice activity is stored so it can support your analytics and session review.</p>
+                <div class="stats">
+                    <div class="stat"><span>Today</span><strong id="todayCompleted">{{ practice_stats.today_completed if practice_stats else 0 }}</strong></div>
+                    <div class="stat"><span>Streak</span><strong id="practiceStreak">{{ practice_stats.practice_streak if practice_stats else 0 }}d</strong></div>
+                    <div class="stat"><span>Total</span><strong id="totalCompleted">{{ practice_stats.total_completed if practice_stats else 0 }}</strong></div>
+                </div>
+                <div class="note" style="margin-top:16px;">
+                    Most used practice: <strong id="mostUsedPractice">{{ practice_stats.most_used_practice if practice_stats else 'Not enough data' }}</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-title"><span></span><h2>Real-time Practice Tools</h2></div>
+
+    <section class="tools-grid">
+
+        <article class="card" id="breathingCard">
+            <h3>1. Box Breathing Timer</h3>
+            <p class="desc">Follow 4 seconds in, 4 seconds hold, 4 seconds out, 4 seconds hold for 60 seconds.</p>
+            <div class="timer-circle" id="breathingCircle">
+                <div class="timer-main">
+                    <strong id="breathTime">60</strong>
+                    <span id="breathPhase">Ready</span>
+                </div>
+            </div>
+            <div class="actions">
+                <button class="btn green" onclick="startBreathing()">Start</button>
+                <button class="btn secondary" onclick="pauseBreathing()">Pause</button>
+                <button class="btn secondary" onclick="resetBreathing()">Reset</button>
+                <button class="btn" onclick="completePractice('Box Breathing',60,'Completed a 60-second breathing practice.')">Mark Complete</button>
+            </div>
+        </article>
+
+        <article class="card" id="groundingCard">
+            <h3>2. 5-4-3-2-1 Grounding Checklist</h3>
+            <p class="desc">Use your senses to return attention to the present moment.</p>
+            <div class="checklist" id="groundingList">
+                <label class="check-item"><input type="checkbox"><span><strong>5 things you can see</strong><br>Name five visible objects around you.</span></label>
+                <label class="check-item"><input type="checkbox"><span><strong>4 things you can feel</strong><br>Notice your feet, clothes, chair, or air.</span></label>
+                <label class="check-item"><input type="checkbox"><span><strong>3 things you can hear</strong><br>Listen for nearby or distant sounds.</span></label>
+                <label class="check-item"><input type="checkbox"><span><strong>2 things you can smell</strong><br>Notice any smell, or name two smells you like.</span></label>
+                <label class="check-item"><input type="checkbox"><span><strong>1 thing you can taste</strong><br>Notice your mouth, water, mint, or a neutral taste.</span></label>
+            </div>
+            <div class="actions">
+                <button class="btn green" onclick="completeGrounding()">Save Grounding Practice</button>
+                <button class="btn secondary" onclick="resetChecklist('groundingList')">Reset</button>
+            </div>
+        </article>
+
+        <article class="card">
+            <h3>3. Stress Before/After Slider</h3>
+            <p class="desc">Measure how your stress changes after a practice. A small reduction still counts.</p>
+            <div class="input-row">
+                <div>
+                    <label>Before</label>
+                    <div class="range-row"><input type="range" id="beforeOnly" min="0" max="10" value="5"><div class="range-val" id="beforeOnlyVal">5/10</div></div>
+                </div>
+                <div>
+                    <label>After</label>
+                    <div class="range-row"><input type="range" id="afterOnly" min="0" max="10" value="5"><div class="range-val" id="afterOnlyVal">5/10</div></div>
+                </div>
+            </div>
+            <p id="stressDeltaText">Stress change: 0 points.</p>
+            <div class="actions">
+                <button class="btn green" onclick="saveStressPractice()">Save Stress Check</button>
+            </div>
+        </article>
+
+        <article class="card">
+            <h3>4. Mood Check-in</h3>
+            <p class="desc">A quick non-diagnostic check-in to notice your current state.</p>
+            <div class="input-row">
+                <div>
+                    <label>Current mood</label>
+                    <select id="moodCheck">
+                        <option value="neutral">Neutral</option>
+                        <option value="stressed">Stressed</option>
+                        <option value="anxious">Anxious</option>
+                        <option value="sad">Sad</option>
+                        <option value="angry">Angry</option>
+                        <option value="tired">Tired</option>
+                        <option value="hopeful">Hopeful</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Energy level</label>
+                    <select id="energyCheck">
+                        <option>Low</option>
+                        <option selected>Medium</option>
+                        <option>High</option>
+                    </select>
+                </div>
+            </div>
+            <textarea id="moodNote" placeholder="What do you notice in your body, thoughts, or needs right now?"></textarea>
+            <div class="actions"><button class="btn green" onclick="saveMoodCheckin()">Save Mood Check-in</button></div>
+        </article>
+
+        <article class="card">
+            <h3>5. 3-minute Journaling</h3>
+            <p class="desc">Write briefly. You do not need perfect words.</p>
+            <textarea id="journalText" placeholder="What am I feeling? What triggered it? What is one helpful next step?"></textarea>
+            <div class="actions">
+                <button class="btn green" onclick="startJournalTimer()">Start 3-min Timer</button>
+                <button class="btn secondary" onclick="saveJournal()">Save Reflection</button>
+                <span class="range-val" id="journalTimer">3:00</span>
+            </div>
+        </article>
+
+        <article class="card">
+            <h3>6. Thought Reframe</h3>
+            <p class="desc">A supportive CBT-style exercise. This is not diagnosis; it helps create a balanced alternative thought.</p>
+            <label>Unhelpful thought</label>
+            <textarea id="unhelpfulThought" placeholder="Example: I cannot handle this."></textarea>
+            <label style="margin-top:12px;">Balanced thought</label>
+            <textarea id="balancedThought" placeholder="Example: This is difficult, but I can take one small step."></textarea>
+            <div class="actions">
+                <button class="btn secondary" onclick="suggestReframe()">Suggest Example</button>
+                <button class="btn green" onclick="saveReframe()">Save Reframe</button>
+            </div>
+        </article>
+
+        <article class="card">
+            <h3>7. Sleep Wind-down Checklist</h3>
+            <p class="desc">A short evening routine to reduce overload before sleep.</p>
+            <div class="checklist" id="sleepList">
+                <label class="check-item"><input type="checkbox"><span>Dim lights or reduce screen brightness.</span></label>
+                <label class="check-item"><input type="checkbox"><span>Write tomorrow’s top 3 tasks.</span></label>
+                <label class="check-item"><input type="checkbox"><span>Do 3 slow breaths.</span></label>
+                <label class="check-item"><input type="checkbox"><span>Avoid heavy problem-solving now.</span></label>
+                <label class="check-item"><input type="checkbox"><span>Choose one calming activity for 5 minutes.</span></label>
+            </div>
+            <div class="actions">
+                <button class="btn green" onclick="completeSleepWinddown()">Save Sleep Wind-down</button>
+                <button class="btn secondary" onclick="resetChecklist('sleepList')">Reset</button>
+            </div>
+        </article>
+
+        <article class="card">
+            <h3>8. Social Support Message Copier</h3>
+            <p class="desc">Copy a message to send to someone you trust.</p>
+            <select id="supportTemplate" onchange="updateSupportMessage()">
+                <option value="talk">I’m feeling overwhelmed. Can we talk for a few minutes?</option>
+                <option value="listen">I don’t need advice right now, just someone to listen.</option>
+                <option value="checkin">Can you check in on me later today?</option>
+                <option value="company">I’m having a hard moment. Could you stay with me or call me?</option>
+            </select>
+            <div class="copy-box" id="supportMessage">I’m feeling overwhelmed. Can we talk for a few minutes?</div>
+            <div class="actions">
+                <button class="btn green" onclick="copySupportMessage()">Copy Message</button>
+                <button class="btn secondary" onclick="completePractice('Social Support Message',0,'Copied a trusted-person support message.')">Save Practice</button>
+            </div>
+        </article>
+
+        <article class="card">
+            <h3>9. Gratitude Note</h3>
+            <p class="desc">Name small things. They do not need to be big or perfect.</p>
+            <textarea id="gratitudeText" placeholder="Today I appreciate...&#10;One small thing that helped was...&#10;One person/thing I value is..."></textarea>
+            <div class="actions"><button class="btn green" onclick="saveGratitude()">Save Gratitude Note</button></div>
+        </article>
+
+        <article class="card">
+            <h3>10. Task Breakdown Practice</h3>
+            <p class="desc">Reduce overwhelm by turning a large task into tiny next actions.</p>
+            <label>Big task</label>
+            <input id="bigTask" placeholder="Example: Finish project presentation">
+            <label style="margin-top:12px;">Tiny next steps</label>
+            <textarea id="taskSteps" placeholder="1. Open the file&#10;2. Write title slide&#10;3. Add three bullet points"></textarea>
+            <div class="actions">
+                <button class="btn secondary" onclick="generateTaskSteps()">Generate Example Steps</button>
+                <button class="btn green" onclick="saveTaskBreakdown()">Save Task Breakdown</button>
+            </div>
+        </article>
+
+    </section>
+
+    <div class="section-title"><span></span><h2>Recent Practice Log</h2></div>
+
+    <section class="log-grid">
+        <article class="card">
+            <h3>Latest completed practices</h3>
+            <p class="desc">These are local supportive wellness logs. They can help you notice patterns over time.</p>
+            <div class="log-list" id="practiceLogList">
+                {% if practice_logs %}
+                    {% for item in practice_logs %}
+                    <div class="log-item">
+                        <strong>{{ item.practice }}</strong>
+                        <small>{{ item.date }} • {{ item.time }} • Mood: {{ item.mood }} • Stress {{ item.stress_before }}/10 → {{ item.stress_after }}/10</small>
+                        {% if item.notes %}<p>{{ item.notes }}</p>{% endif %}
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="log-item">
+                        <strong>No practice logs yet</strong>
+                        <small>Complete any practice above to create your first log.</small>
+                    </div>
+                {% endif %}
+            </div>
+        </article>
+
+        <article class="card">
+            <h3>Safety boundary</h3>
+            <p>These practices can support emotional regulation, grounding, stress management, sleep hygiene, reflection, and social connection.</p>
+            <div class="note">
+                NeuroSense AI does not diagnose, prescribe medication, or replace a counsellor, psychologist, psychiatrist, doctor, or emergency service. If you feel unsafe, use Crisis Support or contact local emergency services immediately.
+            </div>
+            <div class="actions">
+                <a class="btn red" href="/support">Open Crisis Support</a>
+                <a class="btn secondary" href="/research_chat">Open Research Chat</a>
+            </div>
+        </article>
+    </section>
+
+</div>
+
+<script>
+let selectedMood = "{{ latest_emotion|default('neutral') }}" || "neutral";
+let breathingInterval = null;
+let breathingSeconds = 60;
+let breathingPhaseIndex = 0;
+let journalInterval = null;
+let journalSeconds = 180;
+
+const moodPracticeMap = {
+    neutral:{title:"🎯 Values-Based Action",text:"Choose one small action aligned with what matters today, or use box breathing to stay grounded.",target:"breathingCard"},
+    stressed:{title:"🫁 Box Breathing",text:"Use one minute of structured breathing to reduce physical stress load.",target:"breathingCard"},
+    anxious:{title:"🧭 5-4-3-2-1 Grounding",text:"Use your senses to bring attention back to the present moment.",target:"groundingCard"},
+    sad:{title:"📝 3-minute Journaling",text:"Write gently about what you feel and one small caring action.",target:"journalText"},
+    angry:{title:"⏸ Pause and Reframe",text:"Pause, name the feeling, and try a balanced thought before reacting.",target:"unhelpfulThought"},
+    tired:{title:"😴 Sleep Wind-down",text:"Use the evening checklist or reduce stimulation for a few minutes.",target:"sleepList"},
+    hopeful:{title:"🙏 Gratitude Note",text:"Capture what helped today so you can repeat it later.",target:"gratitudeText"}
+};
+
+function $(id){return document.getElementById(id);}
+
+function toast(message){
+    const old = document.querySelector('.toast');
+    if(old) old.remove();
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.textContent = message;
+    document.body.appendChild(t);
+    setTimeout(() => { t.style.opacity = '0'; t.style.transition = '.25s'; setTimeout(() => t.remove(), 280); }, 2600);
+}
+
+function bindRange(id, outId, cb){
+    const el = $(id), out = $(outId);
+    if(!el || !out) return;
+    const update = () => { out.textContent = el.value + '/10'; if(cb) cb(); };
+    el.addEventListener('input', update);
+    update();
+}
+
+bindRange('stressBefore','stressBeforeVal');
+bindRange('stressAfter','stressAfterVal');
+bindRange('beforeOnly','beforeOnlyVal', updateStressDelta);
+bindRange('afterOnly','afterOnlyVal', updateStressDelta);
+
+function updateStressDelta(){
+    const before = Number($('beforeOnly').value || 0);
+    const after = Number($('afterOnly').value || 0);
+    const delta = before - after;
+    $('stressDeltaText').textContent = delta >= 0
+        ? `Stress reduced by ${delta} point${delta === 1 ? '' : 's'}.`
+        : `Stress increased by ${Math.abs(delta)} point${Math.abs(delta) === 1 ? '' : 's'}. Notice what support you may need.`;
+}
+
+function setMood(mood){
+    selectedMood = mood;
+    document.querySelectorAll('.mood-chip').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mood === mood);
+    });
+    const reco = moodPracticeMap[mood] || moodPracticeMap.neutral;
+    $('recoTitle').textContent = reco.title;
+    $('recoText').textContent = reco.text;
+}
+
+document.querySelectorAll('.mood-chip').forEach(btn => {
+    btn.addEventListener('click', () => setMood(btn.dataset.mood));
+});
+setMood(selectedMood in moodPracticeMap ? selectedMood : 'neutral');
+
+function scrollToTool(id){
+    const reco = moodPracticeMap[selectedMood] || moodPracticeMap.neutral;
+    const target = document.getElementById(id || reco.target);
+    if(target) target.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+async function savePracticeLog(payload){
+    try{
+        const res = await fetch('/api/practices/log', {
+            method:'POST',
+            headers:{'Content-Type':'application/json','Accept':'application/json'},
+            body:JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if(!res.ok || !data.ok) throw new Error(data.error || 'Could not save practice log');
+        updateLogUI(data.logs || []);
+        updateStats(data.stats || {});
+        toast('Practice saved successfully');
+        return data.entry;
+    }catch(err){
+        console.error(err);
+        toast(err.message || 'Practice log failed');
+        return null;
+    }
+}
+
+function currentStressPayload(){
+    return {
+        mood:selectedMood,
+        stress_before:Number($('stressBefore').value || 5),
+        stress_after:Number($('stressAfter').value || $('stressBefore').value || 5)
+    };
+}
+
+function updateStats(stats){
+    if('today_completed' in stats) $('todayCompleted').textContent = stats.today_completed;
+    if('practice_streak' in stats) $('practiceStreak').textContent = stats.practice_streak + 'd';
+    if('total_completed' in stats) $('totalCompleted').textContent = stats.total_completed;
+    if('most_used_practice' in stats) $('mostUsedPractice').textContent = stats.most_used_practice;
+}
+
+function updateLogUI(logs){
+    const box = $('practiceLogList');
+    if(!box) return;
+    if(!logs.length){
+        box.innerHTML = '<div class="log-item"><strong>No practice logs yet</strong><small>Complete any practice above to create your first log.</small></div>';
+        return;
+    }
+    box.innerHTML = logs.map(item => `
+        <div class="log-item">
+            <strong>${escapeHtml(item.practice || 'Practice')}</strong>
+            <small>${escapeHtml(item.date || '')} • ${escapeHtml(item.time || '')} • Mood: ${escapeHtml(item.mood || 'neutral')} • Stress ${item.stress_before}/10 → ${item.stress_after}/10</small>
+            ${item.notes ? `<p>${escapeHtml(item.notes)}</p>` : ''}
+        </div>
+    `).join('');
+}
+
+function escapeHtml(text){
+    return String(text || '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
+}
+
+function completePractice(practice, duration, notes){
+    return savePracticeLog({
+        ...currentStressPayload(),
+        practice,
+        duration_seconds:duration || 0,
+        notes:notes || '',
+        completed:true
+    });
+}
+
+function saveQuickPractice(){
+    const reco = moodPracticeMap[selectedMood] || moodPracticeMap.neutral;
+    completePractice('Quick Mood-Based Practice', 0, reco.title + ': ' + reco.text);
+}
+
+function startBreathing(){
+    if(breathingInterval) return;
+    fetch('/api/practices/log', {method:'GET'}).catch(()=>{});
+    const phases = ['Breathe in', 'Hold', 'Breathe out', 'Hold'];
+    breathingInterval = setInterval(() => {
+        breathingSeconds--;
+        const phase = phases[breathingPhaseIndex % phases.length];
+        $('breathTime').textContent = breathingSeconds;
+        $('breathPhase').textContent = phase;
+        $('breathingCircle').classList.toggle('expand', phase === 'Breathe in');
+        $('breathingCircle').classList.toggle('contract', phase === 'Breathe out');
+        if(breathingSeconds % 4 === 0) breathingPhaseIndex++;
+        if(breathingSeconds <= 0){
+            pauseBreathing();
+            $('breathPhase').textContent = 'Complete';
+            completePractice('Box Breathing',60,'Completed a 60-second box breathing timer.');
+        }
+    }, 1000);
+}
+
+function pauseBreathing(){
+    clearInterval(breathingInterval);
+    breathingInterval = null;
+}
+
+function resetBreathing(){
+    pauseBreathing();
+    breathingSeconds = 60;
+    breathingPhaseIndex = 0;
+    $('breathTime').textContent = '60';
+    $('breathPhase').textContent = 'Ready';
+    $('breathingCircle').classList.remove('expand','contract');
+}
+
+function resetChecklist(id){
+    const box = $(id);
+    if(!box) return;
+    box.querySelectorAll('input[type="checkbox"]').forEach(c => c.checked = false);
+}
+
+function completeGrounding(){
+    const checked = document.querySelectorAll('#groundingList input:checked').length;
+    completePractice('5-4-3-2-1 Grounding',0,`Completed ${checked}/5 grounding steps.`);
+}
+
+function saveStressPractice(){
+    savePracticeLog({
+        practice:'Stress Before/After Check',
+        mood:selectedMood,
+        stress_before:Number($('beforeOnly').value || 5),
+        stress_after:Number($('afterOnly').value || 5),
+        notes:$('stressDeltaText').textContent,
+        completed:true
+    });
+}
+
+function saveMoodCheckin(){
+    savePracticeLog({
+        practice:'Mood Check-in',
+        mood:$('moodCheck').value,
+        stress_before:Number($('stressBefore').value || 5),
+        stress_after:Number($('stressAfter').value || 5),
+        notes:`Energy: ${$('energyCheck').value}. ${$('moodNote').value}`,
+        completed:true
+    });
+}
+
+function startJournalTimer(){
+    clearInterval(journalInterval);
+    journalSeconds = 180;
+    journalInterval = setInterval(() => {
+        journalSeconds--;
+        const m = Math.floor(journalSeconds / 60);
+        const s = String(journalSeconds % 60).padStart(2,'0');
+        $('journalTimer').textContent = `${m}:${s}`;
+        if(journalSeconds <= 0){
+            clearInterval(journalInterval);
+            journalInterval = null;
+            toast('3-minute journaling timer complete');
+        }
+    },1000);
+}
+
+function saveJournal(){
+    completePractice('3-minute Journaling',180,$('journalText').value || 'Saved a short reflection.');
+}
+
+function suggestReframe(){
+    if(!$('unhelpfulThought').value.trim()) $('unhelpfulThought').value = 'I cannot handle this.';
+    $('balancedThought').value = 'This is difficult, but I can take one small step right now and ask for support if needed.';
+}
+
+function saveReframe(){
+    const note = `Unhelpful: ${$('unhelpfulThought').value}\nBalanced: ${$('balancedThought').value}`;
+    completePractice('Thought Reframe',0,note);
+}
+
+function completeSleepWinddown(){
+    const checked = document.querySelectorAll('#sleepList input:checked').length;
+    completePractice('Sleep Wind-down Checklist',0,`Completed ${checked}/5 wind-down steps.`);
+}
+
+function updateSupportMessage(){
+    const select = $('supportTemplate');
+    $('supportMessage').textContent = select.options[select.selectedIndex].textContent;
+}
+
+async function copySupportMessage(){
+    const text = $('supportMessage').textContent;
+    try{
+        await navigator.clipboard.writeText(text);
+        toast('Message copied');
+    }catch(e){
+        toast('Copy unavailable. You can manually select the text.');
+    }
+}
+
+function saveGratitude(){
+    completePractice('Gratitude Note',0,$('gratitudeText').value || 'Saved a gratitude note.');
+}
+
+function generateTaskSteps(){
+    const task = $('bigTask').value || 'Complete this task';
+    $('taskSteps').value = `1. Open what I need for: ${task}\n2. Work for only 10 minutes\n3. Finish one small part\n4. Take a short break\n5. Decide the next tiny step`;
+}
+
+function saveTaskBreakdown(){
+    const note = `Task: ${$('bigTask').value}\nSteps:\n${$('taskSteps').value}`;
+    completePractice('Task Breakdown Practice',0,note);
+}
+</script>
+
+</body>
+</html>

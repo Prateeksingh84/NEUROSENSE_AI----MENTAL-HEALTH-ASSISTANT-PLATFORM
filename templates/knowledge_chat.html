@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NeuroSense AI • Knowledge Chat</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/knowledge_chat.css') }}">
+<style>
+:root{
+  --bg:#f4f7f2; --s1:#ffffff; --s2:#f0f6ee; --border:#d3e6cc; --border2:#b8d4ae;
+  --text:#1a2e18; --text2:#4a6645; --muted:#7a9e74;
+  --accent:#2d7a3a; --accent2:#3fa050; --accent-light:#e8f5e3; --accent-mid:#c3e6b8;
+  --red:#d94040; --shadow:0 16px 50px rgba(45,122,58,.10);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(20px);
+  border-bottom:1.5px solid var(--border);position:sticky;top:0;z-index:50;
+}
+.brand{display:flex;align-items:center;gap:.5rem;font-family:'Outfit',sans-serif;font-size:1.1rem;font-weight:900;color:var(--text)}
+.brand span{color:var(--accent)}
+.nav{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
+.nav a{
+  padding:.45rem .85rem;border-radius:12px;font-size:.82rem;font-weight:700;
+  color:var(--text2);border:1px solid var(--border);background:var(--s2);text-decoration:none;transition:.2s;
+}
+.nav a:hover{color:var(--accent);border-color:var(--accent-mid)}
+.nav a.danger{color:var(--red);border-color:rgba(217,64,64,.25);background:#fdecea}
+.nav a.danger:hover{background:var(--red);color:#fff}
+.wrapper{max-width:1380px;margin:0 auto;padding:2.5rem 1.5rem}
+.hero{margin-bottom:2rem;max-width:780px}
+.badge{
+  display:inline-flex;align-items:center;gap:.4rem;padding:.45rem .9rem;border-radius:999px;
+  background:var(--accent-light);border:1.5px solid var(--accent-mid);
+  color:var(--accent);font-size:.75rem;font-weight:900;margin-bottom:1rem;letter-spacing:.06em;
+}
+.hero h1{
+  font-family:'Outfit',sans-serif;font-size:clamp(1.8rem,4vw,3rem);
+  line-height:1.05;letter-spacing:-.04em;margin-bottom:.8rem;color:var(--text);
+}
+.hero h1 span{color:var(--accent)}
+.hero p{color:var(--text2);line-height:1.8;font-size:.95rem}
+.layout{display:grid;grid-template-columns:280px 1fr 240px;gap:1.2rem;align-items:start}
+.side-card{
+  background:var(--s1);border:1.5px solid var(--border);border-radius:20px;
+  padding:1.4rem;box-shadow:var(--shadow);
+}
+.side-head h2{font-family:'Outfit',sans-serif;font-size:1.05rem;margin-bottom:.35rem;color:var(--text)}
+.side-head p{font-size:.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.6}
+.upload-stack{display:grid;gap:1rem;margin-bottom:1rem}
+.upload-box{
+  padding:1rem;border-radius:16px;background:var(--s2);border:1.5px solid var(--border);
+}
+.upload-num{
+  width:28px;height:28px;border-radius:50%;background:var(--accent);
+  color:#fff;font-size:.78rem;font-weight:900;display:grid;place-items:center;margin-bottom:.6rem;
+}
+.upload-box h3{font-family:'Outfit',sans-serif;font-size:.9rem;margin-bottom:.35rem;color:var(--text)}
+.upload-box p{font-size:.78rem;color:var(--muted);margin-bottom:.7rem;line-height:1.5}
+.upload-box input[type="file"]{
+  width:100%;padding:.5rem;border-radius:10px;border:1.5px solid var(--border);
+  background:var(--s1);color:var(--text2);font-size:.78rem;margin-bottom:.6rem;cursor:pointer;
+}
+.upload-box button{
+  width:100%;padding:.65rem;border-radius:12px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;font-weight:800;font-size:.82rem;transition:.2s;
+}
+.upload-box button:hover{opacity:.9}
+.file-state{font-size:.75rem;color:var(--muted);margin-top:.5rem;font-weight:600}
+.clear-report-btn{
+  width:100%;padding:.65rem;border-radius:12px;border:1.5px solid var(--border);
+  background:var(--s2);color:var(--text2);font-weight:700;font-size:.82rem;cursor:pointer;transition:.2s;
+}
+.clear-report-btn:hover{border-color:var(--red);color:var(--red)}
+.chat-card{
+  background:var(--s1);border:1.5px solid var(--border);border-radius:20px;
+  box-shadow:var(--shadow);display:flex;flex-direction:column;min-height:600px;
+}
+.chat-head{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  padding:1.2rem 1.4rem;border-bottom:1.5px solid var(--border);
+}
+.chat-head h2{font-family:'Outfit',sans-serif;font-size:1.1rem;margin-bottom:.2rem;color:var(--text)}
+.chat-head p{font-size:.78rem;color:var(--muted)}
+.clear-btn{
+  padding:.5rem 1rem;border-radius:12px;border:1.5px solid var(--border);
+  background:var(--s2);color:var(--text2);font-weight:700;font-size:.8rem;cursor:pointer;transition:.2s;
+}
+.clear-btn:hover{border-color:var(--red);color:var(--red)}
+.report-context-banner{
+  margin:0 1.4rem;padding:.8rem 1rem;border-radius:12px;
+  background:var(--accent-light);border:1px solid var(--accent-mid);
+  display:flex;align-items:center;gap:.6rem;font-size:.8rem;color:var(--accent);font-weight:700;
+}
+.report-context-banner.hidden{display:none}
+.messages{
+  flex:1;padding:1.2rem 1.4rem;overflow-y:auto;display:flex;flex-direction:column;gap:.8rem;
+}
+.message{display:flex;gap:.7rem;max-width:92%}
+.message.assistant{align-self:flex-start}
+.message.user{align-self:flex-end;flex-direction:row-reverse}
+.avatar{
+  width:34px;height:34px;border-radius:50%;background:var(--accent-light);
+  border:1.5px solid var(--accent-mid);display:grid;place-items:center;
+  font-size:1rem;flex-shrink:0;
+}
+.bubble{
+  padding:.85rem 1rem;border-radius:16px;font-size:.86rem;line-height:1.6;
+}
+.message.assistant .bubble{background:var(--s2);border:1px solid var(--border);color:var(--text2)}
+.message.user .bubble{background:var(--accent-light);border:1px solid var(--accent-mid);color:var(--text)}
+.bubble strong{display:block;font-family:'Outfit',sans-serif;font-size:.82rem;margin-bottom:.35rem;color:var(--accent)}
+.composer{
+  display:flex;gap:.6rem;padding:1rem 1.4rem;border-top:1.5px solid var(--border);align-items:flex-end;
+}
+.composer textarea{
+  flex:1;padding:.8rem 1rem;border-radius:14px;border:1.5px solid var(--border);
+  background:var(--s2);color:var(--text);font-size:.88rem;resize:none;outline:none;transition:.2s;
+  font-family:'Plus Jakarta Sans',sans-serif;
+}
+.composer textarea:focus{border-color:var(--accent);background:#fff;box-shadow:0 0 0 3px rgba(45,122,58,.1)}
+.composer button{
+  padding:.8rem 1.2rem;border-radius:14px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;font-weight:800;font-size:.88rem;transition:.2s;white-space:nowrap;
+}
+.composer button:hover{transform:translateY(-1px)}
+.allowed-list{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0}
+.allowed-list span{
+  padding:.35rem .7rem;border-radius:999px;font-size:.75rem;font-weight:700;
+  background:var(--accent-light);border:1px solid var(--accent-mid);color:var(--accent);
+}
+.safety-note{
+  padding:1rem;border-radius:14px;background:var(--s2);border:1.5px solid var(--border);
+}
+.safety-note strong{display:block;color:var(--text);margin-bottom:.4rem;font-size:.88rem}
+.safety-note p{font-size:.8rem;color:var(--muted);line-height:1.6}
+@media(max-width:1100px){.layout{grid-template-columns:240px 1fr}}
+@media(max-width:860px){.layout{grid-template-columns:1fr};.side-card:last-child{display:none}}
+</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-brand-logo.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-ui-image.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">🧠 <span>NeuroSense AI</span></div>
+  <nav class="nav">
+    <a href="/dashboard">📊 Dashboard</a>
+    <a href="/mode">🔄 Modes</a>
+    <a href="/research_chat">🧠 Research Chat</a>
+    <a href="/reports">📄 Reports</a>
+    <a href="/support">🆘 Support</a>
+    <a href="/logout" class="danger">Logout</a>
+  </nav>
+</header>
+
+<main class="wrapper">
+  <section class="hero">
+    <div class="badge">✦ GROUNDED KNOWLEDGE CHAT</div>
+    <h1>Mental-health-only <span>Knowledge Chat</span></h1>
+    <p>Ask questions only about NeuroSense AI, mental wellbeing, stress, anxiety-like feelings, sleep, loneliness, academic pressure, self-doubt, mood tracking, reports, professional help, and crisis safety. This chat uses approved knowledge, agents, and model checks to reduce hallucinations.</p>
+  </section>
+
+  <section class="layout">
+    <aside class="side-card">
+      <div class="side-head">
+        <h2>Report Context</h2>
+        <p>Upload reports in this exact order.</p>
+      </div>
+      <div class="upload-stack">
+        <div class="upload-box">
+          <div class="upload-num">1</div>
+          <h3>Mental Wellness Assessment</h3>
+          <p>Upload assessment PDF, CSV, TXT, or JSON.</p>
+          <input type="file" id="assessmentFile" accept=".pdf,.csv,.txt,.json">
+          <button type="button" onclick="uploadKnowledgeReport('assessment')">Upload Assessment</button>
+          <div class="file-state" id="assessmentState">Not uploaded</div>
+        </div>
+        <div class="upload-box">
+          <div class="upload-num">2</div>
+          <h3>Personalized Wellness Plan</h3>
+          <p>Upload solution/wellness plan PDF, CSV, TXT, or JSON.</p>
+          <input type="file" id="solutionFile" accept=".pdf,.csv,.txt,.json">
+          <button type="button" onclick="uploadKnowledgeReport('solution')">Upload Solution Report</button>
+          <div class="file-state" id="solutionState">Not uploaded</div>
+        </div>
+      </div>
+      <button class="clear-report-btn" onclick="clearReportContext()">Clear Report Context</button>
+    </aside>
+
+    <section class="chat-card">
+      <div class="chat-head">
+        <div>
+          <h2>Knowledge Chat</h2>
+          <p id="knowledgeStatus">Checking knowledge engine...</p>
+        </div>
+        <button class="clear-btn" onclick="clearKnowledgeHistory()">Clear</button>
+      </div>
+      <div id="reportContextBanner" class="report-context-banner hidden">
+        <strong>Report context active</strong>
+        <span id="reportContextText">Assessment and solution report context will be used safely.</span>
+      </div>
+      <div id="knowledgeMessages" class="messages">
+        <div class="message assistant">
+          <div class="avatar">📚</div>
+          <div class="bubble">
+            <strong>NeuroSense Knowledge Agent</strong>
+            <p>Ask me about mental health education or NeuroSense AI reports. I answer only from approved mental-health knowledge and uploaded report context. I cannot diagnose, prescribe medication, or answer unrelated topics.</p>
+          </div>
+        </div>
+      </div>
+      <form id="knowledgeForm" class="composer">
+        <textarea id="knowledgeInput" rows="2" placeholder="Example: Based on my assessment and wellness plan, what stress support steps should I follow?" required></textarea>
+        <button type="submit">Ask →</button>
+      </form>
+    </section>
+
+    <aside class="side-card">
+      <div class="side-head">
+        <h2>Allowed Areas</h2>
+      </div>
+      <div class="allowed-list">
+        <span>Stress</span><span>Anxiety-like feelings</span><span>Sleep</span>
+        <span>Loneliness</span><span>Academic pressure</span><span>Self-doubt</span>
+        <span>Anger regulation</span><span>Mood tracking</span><span>Assessment report</span>
+        <span>Wellness plan</span><span>Professional help</span><span>Crisis safety</span>
+      </div>
+      <div class="safety-note">
+        <strong>Safety Boundary</strong>
+        <p>Knowledge Chat is not a psychiatrist, doctor, psychologist, or emergency service. It does not diagnose or prescribe medicine.</p>
+      </div>
+    </aside>
+  </section>
+</main>
+
+<script src="{{ url_for('static', filename='js/knowledge_chat.js') }}"></script>
+</body>
+</html>

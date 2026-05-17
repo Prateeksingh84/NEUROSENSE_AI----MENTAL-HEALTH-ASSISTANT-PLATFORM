@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NeuroSense AI • Real-Time Admin Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+:root{
+  --bg:#f4f7f2;
+  --bg2:#eef4eb;
+  --s1:#ffffff;
+  --s2:#f0f6ee;
+  --s3:#e8f5e3;
+
+  --border:#d3e6cc;
+  --border2:#b8d4ae;
+
+  --text:#1a2e18;
+  --text2:#4a6645;
+  --muted:#7a9e74;
+
+  --accent:#2d7a3a;
+  --accent2:#3fa050;
+  --accent-light:#e8f5e3;
+  --accent-mid:#c3e6b8;
+
+  --green:#2d7a3a;
+  --red:#d94040;
+  --yellow:#c8880a;
+  --cyan:#3b82c4;
+  --blue:#3b82c4;
+
+  --shadow:0 20px 60px rgba(45,122,58,.10);
+  --shadow-sm:0 8px 26px rgba(45,122,58,.08);
+  --r:20px;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:
+    radial-gradient(circle at top left,rgba(63,160,80,.10),transparent 34%),
+    radial-gradient(circle at bottom right,rgba(195,230,184,.42),transparent 34%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button{
+  font-family:inherit;
+}
+
+button:disabled{
+  opacity:.72;
+  cursor:not-allowed;
+}
+
+/* ==========================================================================
+   SIDEBAR
+   ========================================================================== */
+
+.sidebar{
+  position:fixed;
+  top:0;
+  left:0;
+  width:272px;
+  height:100vh;
+  background:rgba(255,255,255,.94);
+  border-right:1.5px solid var(--border);
+  padding:1.8rem 1.2rem;
+  overflow:auto;
+  backdrop-filter:blur(18px);
+}
+
+.sidebar::-webkit-scrollbar{
+  width:7px;
+}
+
+.sidebar::-webkit-scrollbar-thumb{
+  background:var(--accent-mid);
+  border-radius:999px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:.75rem;
+  margin-bottom:2rem;
+}
+
+.logo-icon{
+  width:46px;
+  height:46px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  font-size:1.3rem;
+  color:#fff;
+  box-shadow:0 6px 20px rgba(45,122,58,.25);
+  flex-shrink:0;
+}
+
+.logo-text{
+  font-family:'Outfit',sans-serif;
+  font-size:1.15rem;
+  font-weight:900;
+  color:var(--text);
+  line-height:1.1;
+}
+
+.admin-badge{
+  margin-top:.4rem;
+  display:inline-flex;
+  gap:.4rem;
+  align-items:center;
+  padding:.38rem .75rem;
+  border-radius:999px;
+  background:rgba(217,64,64,.08);
+  border:1px solid rgba(217,64,64,.25);
+  color:var(--red);
+  font-size:.72rem;
+  font-weight:800;
+}
+
+.live-badge{
+  margin-top:.4rem;
+  display:inline-flex;
+  gap:.4rem;
+  align-items:center;
+  padding:.35rem .7rem;
+  border-radius:999px;
+  background:var(--accent-light);
+  border:1px solid var(--accent-mid);
+  color:var(--accent);
+  font-size:.72rem;
+  font-weight:900;
+}
+
+.live-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--accent2);
+  box-shadow:0 0 0 6px rgba(63,160,80,.12);
+  animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+  50%{
+    opacity:.45;
+  }
+}
+
+.nav{
+  display:grid;
+  gap:.3rem;
+}
+
+.nav a{
+  display:flex;
+  align-items:center;
+  gap:.7rem;
+  padding:.85rem 1rem;
+  border-radius:14px;
+  color:var(--text2);
+  transition:.2s;
+  font-weight:800;
+  font-size:.88rem;
+  border:1px solid transparent;
+}
+
+.nav a:hover,
+.nav a.active{
+  background:var(--accent-light);
+  border-color:var(--accent-mid);
+  color:var(--accent);
+}
+
+/* ==========================================================================
+   MAIN
+   ========================================================================== */
+
+.main{
+  margin-left:272px;
+  padding:2rem;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:2rem;
+  gap:1rem;
+}
+
+.page-title{
+  font-family:'Outfit',sans-serif;
+  font-size:1.9rem;
+  font-weight:900;
+  color:var(--text);
+}
+
+.subline{
+  margin-top:.35rem;
+  color:var(--text2);
+  font-size:.9rem;
+  line-height:1.6;
+}
+
+.top-actions{
+  display:flex;
+  gap:.75rem;
+  flex-wrap:wrap;
+}
+
+.btn{
+  min-height:44px;
+  padding:0 1.2rem;
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+  font-weight:900;
+  font-size:.88rem;
+  transition:.2s;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.btn.primary,
+.btn.green{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;
+  box-shadow:0 8px 22px rgba(45,122,58,.22);
+}
+
+.btn.secondary{
+  background:#fff;
+  color:var(--accent);
+  border:1.5px solid var(--accent-mid);
+}
+
+.btn:hover:not(:disabled){
+  transform:translateY(-1px);
+}
+
+.card{
+  background:var(--s1);
+  border:1.5px solid var(--border);
+  border-radius:var(--r);
+  box-shadow:var(--shadow);
+}
+
+/* ==========================================================================
+   STATS
+   ========================================================================== */
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:1rem;
+  margin-bottom:1.5rem;
+}
+
+.stat-card{
+  padding:1.5rem;
+  min-height:150px;
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:.82rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  margin-bottom:.5rem;
+}
+
+.stat-value{
+  font-family:'Outfit',sans-serif;
+  font-size:2.2rem;
+  font-weight:900;
+  color:var(--accent);
+  line-height:1.05;
+}
+
+.stat-growth{
+  margin-top:.7rem;
+  color:var(--accent2);
+  font-size:.82rem;
+  font-weight:800;
+  line-height:1.5;
+}
+
+.accuracy-card{
+  background:
+    radial-gradient(circle at bottom right,rgba(195,230,184,.58),transparent 35%),
+    linear-gradient(135deg,#ffffff,#e8f5e3);
+  border-color:var(--accent-mid);
+}
+
+.accuracy-card .stat-value{
+  color:#008a3d;
+}
+
+.accuracy-excellent{
+  border-color:#92d99c;
+}
+
+.accuracy-very-good{
+  border-color:#b9df98;
+}
+
+.accuracy-good{
+  border-color:#f1cc7a;
+}
+
+.accuracy-low{
+  border-color:rgba(217,64,64,.30);
+}
+
+/* ==========================================================================
+   GRID / CHARTS / ACTIVITY
+   ========================================================================== */
+
+.grid-2{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:1.2rem;
+  margin-bottom:1.5rem;
+}
+
+.chart-card{
+  padding:1.5rem;
+  min-height:420px;
+}
+
+.card-title{
+  font-family:'Outfit',sans-serif;
+  font-size:1.2rem;
+  font-weight:900;
+  margin-bottom:1rem;
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+}
+
+.small-muted{
+  font-size:.76rem;
+  color:var(--muted);
+  font-weight:800;
+}
+
+.chart-wrap{
+  height:330px;
+  position:relative;
+}
+
+.activity{
+  display:grid;
+  gap:.9rem;
+  max-height:430px;
+  overflow:auto;
+  padding-right:.25rem;
+}
+
+.activity-item{
+  display:flex;
+  gap:.9rem;
+  padding:.9rem;
+  border-radius:14px;
+  background:var(--s2);
+  border:1px solid var(--border);
+}
+
+.activity-icon{
+  width:44px;
+  height:44px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  background:var(--accent-light);
+  border:1px solid var(--accent-mid);
+  font-size:1.1rem;
+  flex-shrink:0;
+}
+
+.activity-title{
+  font-weight:900;
+  margin-bottom:.25rem;
+  color:var(--text);
+}
+
+.activity-sub{
+  color:var(--muted);
+  font-size:.83rem;
+  line-height:1.5;
+}
+
+.activity-time{
+  margin-top:.35rem;
+  color:var(--accent);
+  font-size:.75rem;
+  font-weight:900;
+}
+
+/* ==========================================================================
+   ACCURACY BREAKDOWN
+   ========================================================================== */
+
+.accuracy-panel{
+  margin-bottom:1.5rem;
+  padding:1.5rem;
+}
+
+.accuracy-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:1rem;
+  margin-bottom:1.2rem;
+}
+
+.accuracy-head h2{
+  font-family:'Outfit',sans-serif;
+  font-size:1.25rem;
+  font-weight:900;
+  color:var(--text);
+}
+
+.accuracy-head p{
+  margin-top:.35rem;
+  color:var(--text2);
+  font-size:.88rem;
+  line-height:1.6;
+}
+
+.accuracy-pill{
+  min-height:34px;
+  padding:0 .8rem;
+  border-radius:999px;
+  background:var(--accent-light);
+  border:1.5px solid var(--accent-mid);
+  color:var(--accent);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:.78rem;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.accuracy-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:1rem;
+}
+
+.accuracy-item{
+  padding:1rem;
+  border-radius:18px;
+  background:var(--s2);
+  border:1.5px solid var(--border);
+}
+
+.accuracy-item span{
+  display:block;
+  color:var(--text2);
+  font-size:.78rem;
+  font-weight:900;
+  margin-bottom:.4rem;
+}
+
+.accuracy-item strong{
+  display:block;
+  color:var(--accent);
+  font-size:1.55rem;
+  font-family:'Outfit',sans-serif;
+  font-weight:900;
+}
+
+.accuracy-item small{
+  display:block;
+  margin-top:.35rem;
+  color:var(--muted);
+  font-size:.75rem;
+  font-weight:800;
+}
+
+.accuracy-bar{
+  width:100%;
+  height:8px;
+  margin-top:.75rem;
+  border-radius:999px;
+  background:#dcebd8;
+  overflow:hidden;
+}
+
+.accuracy-bar-fill{
+  width:0%;
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  transition:width .35s ease;
+}
+
+.accuracy-raw-grid{
+  margin-top:1rem;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1rem;
+}
+
+.accuracy-raw-item{
+  padding:1rem;
+  border-radius:16px;
+  background:#fff;
+  border:1.5px solid var(--border);
+}
+
+.accuracy-raw-item small{
+  display:block;
+  color:var(--muted);
+  font-size:.76rem;
+  font-weight:800;
+  margin-bottom:.35rem;
+}
+
+.accuracy-raw-item strong{
+  display:block;
+  color:var(--text);
+  font-family:'Outfit',sans-serif;
+  font-size:1.35rem;
+  font-weight:900;
+}
+
+.hint{
+  margin-top:1rem;
+  color:var(--text2);
+  font-size:.84rem;
+  line-height:1.6;
+}
+
+/* ==========================================================================
+   USERS TABLE
+   ========================================================================== */
+
+.table-card{
+  padding:1.5rem;
+  margin-bottom:1.5rem;
+}
+
+.table-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  margin-bottom:1rem;
+}
+
+.table-head h2{
+  font-family:'Outfit',sans-serif;
+  font-size:1.2rem;
+  font-weight:900;
+}
+
+.table-head span{
+  color:var(--muted);
+  font-weight:900;
+  font-size:.84rem;
+}
+
+.table-wrap{
+  overflow:auto;
+}
+
+.users-table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:860px;
+}
+
+.users-table th{
+  text-align:left;
+  color:var(--muted);
+  font-size:.8rem;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  padding:0 0 1rem;
+}
+
+.users-table td{
+  padding:.9rem 0;
+  border-top:1px solid var(--border);
+  vertical-align:middle;
+}
+
+.user{
+  display:flex;
+  align-items:center;
+  gap:.75rem;
+}
+
+.avatar{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:var(--accent-light);
+  border:2px solid var(--accent-mid);
+  color:var(--accent);
+  font-weight:900;
+  flex-shrink:0;
+  overflow:hidden;
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.user strong{
+  display:block;
+  color:var(--text);
+  font-weight:900;
+  margin-bottom:.2rem;
+}
+
+.user small{
+  display:block;
+  color:var(--muted);
+  font-size:.78rem;
+  word-break:break-word;
+}
+
+.status{
+  padding:.35rem .7rem;
+  border-radius:999px;
+  font-size:.72rem;
+  font-weight:900;
+  text-transform:uppercase;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  white-space:nowrap;
+}
+
+.status.active{
+  background:var(--accent-light);
+  color:var(--accent);
+  border:1px solid var(--accent-mid);
+}
+
+.status.warning{
+  background:#fef8e3;
+  color:var(--yellow);
+  border:1px solid rgba(200,136,10,.25);
+}
+
+.status.inactive{
+  background:#f1f3ef;
+  color:#61725c;
+  border:1px solid #d9e3d4;
+}
+
+.status.danger{
+  background:#fdecea;
+  color:var(--red);
+  border:1px solid rgba(217,64,64,.25);
+}
+
+.status-legend{
+  margin-top:1rem;
+  display:flex;
+  flex-wrap:wrap;
+  gap:.6rem;
+  color:var(--muted);
+  font-size:.78rem;
+  font-weight:800;
+}
+
+/* ==========================================================================
+   QUICK ACTIONS
+   ========================================================================== */
+
+.bottom-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1.2rem;
+}
+
+.quick-card{
+  padding:1.5rem;
+}
+
+.quick-actions{
+  display:grid;
+  gap:.75rem;
+}
+
+.quick-btn{
+  padding:1rem;
+  min-height:58px;
+  border-radius:14px;
+  background:var(--s2);
+  border:1.5px solid var(--border);
+  color:var(--text);
+  text-align:left;
+  cursor:pointer;
+  transition:.2s;
+  font-weight:900;
+  font-size:.88rem;
+}
+
+.quick-btn:hover:not(:disabled){
+  background:var(--accent-light);
+  border-color:var(--accent-mid);
+  color:var(--accent);
+  transform:translateY(-1px);
+}
+
+.quick-btn:disabled{
+  background:#eef5eb;
+  color:#7a9e74;
+}
+
+
+.danger-mini-btn{
+  min-height:34px;
+  padding:0 .75rem;
+  border-radius:999px;
+  border:1.5px solid rgba(217,64,64,.28);
+  background:#fdecec;
+  color:#d94040;
+  font-weight:900;
+  cursor:pointer;
+  transition:.2s ease;
+  white-space:nowrap;
+}
+
+.danger-mini-btn:hover{
+  background:#d94040;
+  color:#fff;
+  transform:translateY(-1px);
+}
+
+.danger-mini-btn:disabled{
+  opacity:.65;
+  cursor:not-allowed;
+}
+
+
+
+/* ==========================================================================
+   TOAST
+   ========================================================================== */
+
+.toast{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  background:#fff;
+  border:1.5px solid var(--accent-mid);
+  color:var(--text);
+  box-shadow:var(--shadow);
+  border-radius:16px;
+  padding:1rem 1.1rem;
+  font-weight:900;
+  z-index:9999;
+  max-width:360px;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media(max-width:1400px){
+  .stats-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .accuracy-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+@media(max-width:1200px){
+  .stats-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .grid-2,
+  .bottom-grid{
+    grid-template-columns:1fr;
+  }
+
+  .accuracy-grid,
+  .accuracy-raw-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:860px){
+  .sidebar{
+    position:relative;
+    width:100%;
+    height:auto;
+  }
+
+  .main{
+    margin-left:0;
+    padding:1rem;
+  }
+
+  .stats-grid{
+    grid-template-columns:1fr;
+  }
+
+  .accuracy-grid,
+  .accuracy-raw-grid{
+    grid-template-columns:1fr;
+  }
+
+  .topbar{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .top-actions{
+    width:100%;
+  }
+
+  .btn{
+    flex:1;
+  }
+
+  .users-table{
+    font-size:.85rem;
+  }
+}
+</style>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-brand-logo.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-ui-image.css') }}">
+</head>
+
+<body>
+
+<div class="sidebar">
+
+  <div class="logo">
+    <div class="logo-icon">🧠</div>
+
+    <div>
+      <div class="logo-text">NeuroSense AI</div>
+      <div class="admin-badge">🛡 ADMIN PANEL</div>
+      <div class="live-badge">
+        <span class="live-dot"></span>
+        LIVE DATA
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <a href="#" class="active">📊 Dashboard</a>
+    <a href="#usersCard">👥 Users</a>
+    <a href="#analyticsCard">🧠 AI Sessions</a>
+    <a href="#reportsCard">📄 Reports</a>
+    <a href="#activityCard">⚠ Activity</a>
+    <a href="#accuracyCard">🎯 Accuracy</a>
+    <a href="/dashboard">← Back to User Dashboard</a>
+  </div>
+
+</div>
+
+<div class="main">
+
+  <div class="topbar">
+
+    <div>
+      <div class="page-title">Admin Dashboard</div>
+      <div class="subline">
+        Real-time data from NeuroSense local store and Supabase when available • Updated:
+        <strong id="lastUpdated">Loading...</strong>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <button class="btn secondary" type="button" id="refreshBtn">
+        ↻ Refresh Now
+      </button>
+
+      <button class="btn green" type="button" id="exportBtn">
+        Export Reports
+      </button>
+
+      <button class="btn green" type="button" id="analyticsBtn">
+        Generate Analytics
+      </button>
+    </div>
+
+  </div>
+
+  <!-- STATS -->
+  <section class="stats-grid">
+
+    <div class="card stat-card">
+      <div class="stat-label">Total Users</div>
+      <div class="stat-value" id="totalUsers">--</div>
+      <div class="stat-growth" id="totalUsersHint">Loading...</div>
+    </div>
+
+    <div class="card stat-card">
+      <div class="stat-label">Active Sessions</div>
+      <div class="stat-value" id="activeSessions">--</div>
+      <div class="stat-growth" id="activeSessionsHint">Loading...</div>
+    </div>
+
+    <div class="card stat-card">
+      <div class="stat-label">Reports Generated</div>
+      <div class="stat-value" id="reportsGenerated">--</div>
+      <div class="stat-growth" id="reportsGeneratedHint">Loading...</div>
+    </div>
+
+    <div class="card stat-card">
+      <div class="stat-label">Emotion Detections</div>
+      <div class="stat-value" id="emotionDetections">--</div>
+      <div class="stat-growth" id="emotionDetectionsHint">Loading...</div>
+    </div>
+
+    <div class="card stat-card accuracy-card" id="accuracyCard">
+      <div class="stat-label">Overall Project Accuracy</div>
+      <div class="stat-value" id="overallAccuracy">--%</div>
+      <div class="stat-growth" id="accuracyGrade">Calculating...</div>
+    </div>
+
+  </section>
+
+  <!-- CHART + ACTIVITY -->
+  <section class="grid-2">
+
+    <div class="card chart-card" id="analyticsCard">
+      <div class="card-title">
+        <span>Weekly Mental Wellness Analytics</span>
+        <span class="small-muted">Mood score vs stress level</span>
+      </div>
+
+      <div class="chart-wrap">
+        <canvas id="wellnessChart"></canvas>
+      </div>
+    </div>
+
+    <div class="card chart-card" id="activityCard">
+      <div class="card-title">
+        <span>Recent Platform Activity</span>
+        <span class="small-muted" id="activityCount">Live</span>
+      </div>
+
+      <div class="activity" id="activityList">
+        <div class="activity-item">
+          <div class="activity-icon">⏳</div>
+          <div>
+            <div class="activity-title">Loading activity...</div>
+            <div class="activity-sub">Please wait while NeuroSense loads live activity.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- REAL-TIME ACCURACY BREAKDOWN -->
+  <section class="card accuracy-panel">
+
+    <div class="accuracy-head">
+      <div>
+        <h2>🎯 Real-Time Accuracy Breakdown</h2>
+        <p>
+          Live project reliability score calculated from user feedback, safety pass rate,
+          emotion confidence, report success, and session completion.
+        </p>
+      </div>
+
+      <span class="accuracy-pill" id="accuracyUpdatedPill">
+        Auto updates
+      </span>
+    </div>
+
+    <div class="accuracy-grid">
+
+      <div class="accuracy-item">
+        <span>User Feedback</span>
+        <strong id="feedbackScore">--%</strong>
+        <small>Weight: 30%</small>
+        <div class="accuracy-bar">
+          <div class="accuracy-bar-fill" id="feedbackBar"></div>
+        </div>
+      </div>
+
+      <div class="accuracy-item">
+        <span>Safety Pass Rate</span>
+        <strong id="safetyScore">--%</strong>
+        <small>Weight: 25%</small>
+        <div class="accuracy-bar">
+          <div class="accuracy-bar-fill" id="safetyBar"></div>
+        </div>
+      </div>
+
+      <div class="accuracy-item">
+        <span>Emotion Confidence</span>
+        <strong id="emotionScore">--%</strong>
+        <small>Weight: 20%</small>
+        <div class="accuracy-bar">
+          <div class="accuracy-bar-fill" id="emotionBar"></div>
+        </div>
+      </div>
+
+      <div class="accuracy-item">
+        <span>Report Success</span>
+        <strong id="reportScore">--%</strong>
+        <small>Weight: 15%</small>
+        <div class="accuracy-bar">
+          <div class="accuracy-bar-fill" id="reportBar"></div>
+        </div>
+      </div>
+
+      <div class="accuracy-item">
+        <span>Session Completion</span>
+        <strong id="sessionScore">--%</strong>
+        <small>Weight: 10%</small>
+        <div class="accuracy-bar">
+          <div class="accuracy-bar-fill" id="sessionBar"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="accuracy-raw-grid">
+
+      <div class="accuracy-raw-item">
+        <small>Total Users</small>
+        <strong id="accuracyTotalUsers">--</strong>
+      </div>
+
+      <div class="accuracy-raw-item">
+        <small>Total Sessions</small>
+        <strong id="accuracyTotalSessions">--</strong>
+      </div>
+
+      <div class="accuracy-raw-item">
+        <small>Total Reports</small>
+        <strong id="accuracyTotalReports">--</strong>
+      </div>
+
+      <div class="accuracy-raw-item">
+        <small>Total Feedback</small>
+        <strong id="accuracyTotalFeedback">--</strong>
+      </div>
+
+    </div>
+
+    <p class="hint">
+      Formula: 30% user feedback + 25% safety pass rate + 20% emotion confidence +
+      15% report success + 10% session completion.
+    </p>
+
+  </section>
+
+  <!-- USERS -->
+  <section class="card table-card" id="usersCard">
+
+    <div class="table-head">
+      <h2>User Management</h2>
+      <span id="usersCount">-- users</span>
+    </div>
+
+    <div class="table-wrap">
+      <table class="users-table">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Sessions</th>
+            <th>Messages</th>
+            <th>Reports</th>
+            <th>Last Active</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody id="usersTableBody">
+          <tr>
+            <td colspan="8">Loading users...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="status-legend">
+      <span><span class="status active">Active</span> Recently active</span>
+      <span><span class="status warning">Needs Attention</span> Low recent activity</span>
+      <span><span class="status danger">Safety Alert</span> Safety review required</span>
+      <span><span class="status inactive">Inactive</span> No recent activity</span>
+    </div>
+
+  </section>
+
+  <!-- QUICK ACTIONS -->
+  <section class="bottom-grid">
+
+    <div class="card quick-card" id="reportsCard">
+      <div class="card-title">Reports & Data</div>
+
+      <div class="quick-actions">
+        <button class="quick-btn" type="button" id="downloadAdminExportBtn">
+          📥 Download Live Admin Export
+        </button>
+
+        <button class="quick-btn" type="button" id="reloadMetricsBtn">
+          🔄 Reload Real-Time Metrics
+        </button>
+
+        <button class="quick-btn" type="button" id="recalculateAccuracyBtn">
+          🎯 Recalculate Project Accuracy
+        </button>
+      </div>
+    </div>
+
+    <div class="card quick-card">
+      <div class="card-title">System Notes</div>
+
+      <div class="quick-actions">
+        <div class="quick-btn">
+          ✅ Real-time data comes from local store and Supabase if available.
+        </div>
+
+        <div class="quick-btn">
+          ⚠ Needs Attention means low recent activity, not an app error.
+        </div>
+
+        <div class="quick-btn">
+          🛡 Accuracy is a reliability score, not a medical diagnostic score.
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+<script>
+
+/* ==========================================================================
+   ADMIN USER DELETE — REAL-TIME WORKING BUTTON
+   ========================================================================== */
+
+async function deleteAdminUser(userKey, userName){
+  if(!userKey){
+    showToast("User identifier missing. Cannot delete this user.");
+    return;
+  }
+
+  const confirmText = prompt(
+    `Delete user: ${userName || userKey}?
+
+Type DELETE to confirm.`
+  );
+
+  if(confirmText !== "DELETE"){
+    showToast("Delete cancelled");
+    return;
+  }
+
+  try{
+    const res = await fetch("/api/admin/users/delete", {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "Accept":"application/json",
+        "Cache-Control":"no-cache"
+      },
+      body:JSON.stringify({
+        user_key:userKey,
+        user_id:userKey,
+        email:userKey,
+        confirm:"DELETE"
+      })
+    });
+
+    let data = {};
+    try{
+      data = await res.json();
+    }catch(parseError){
+      throw new Error(`Delete failed with status ${res.status}`);
+    }
+
+    if(!res.ok || !(data.ok || data.success)){
+      throw new Error(data.error || `Delete failed with status ${res.status}`);
+    }
+
+    showToast(data.message || "User removed successfully");
+
+    await loadRealtimeAdminData();
+    await loadProjectAccuracy();
+
+  }catch(error){
+    console.error("Delete user failed:", error);
+    showToast(error.message || "Could not delete user");
+  }
+}
+
+/* ==========================================================================
+   NeuroSense AI — Real-Time Admin Dashboard Script
+   ========================================================================== */
+
+let wellnessChart = null;
+let adminDataController = null;
+let accuracyController = null;
+
+document.addEventListener("DOMContentLoaded", () => {
+  initAdminDashboard();
+});
+
+function initAdminDashboard(){
+  initWellnessChart();
+  bindAdminActions();
+
+  loadRealtimeAdminData();
+  loadProjectAccuracy();
+
+  setInterval(loadRealtimeAdminData, 5000);
+  setInterval(loadProjectAccuracy, 10000);
+}
+
+/* ==========================================================================
+   ACTIONS
+   ========================================================================== */
+
+function bindAdminActions(){
+  const refreshBtn = document.getElementById("refreshBtn");
+  const exportBtn = document.getElementById("exportBtn");
+  const analyticsBtn = document.getElementById("analyticsBtn");
+
+  const reloadMetricsBtn = document.getElementById("reloadMetricsBtn");
+  const recalculateAccuracyBtn = document.getElementById("recalculateAccuracyBtn");
+  const downloadAdminExportBtn = document.getElementById("downloadAdminExportBtn");
+
+  if(refreshBtn){
+    refreshBtn.addEventListener("click", async () => {
+      await handleReloadMetrics(refreshBtn, "↻ Refresh Now");
+    });
+  }
+
+  if(exportBtn){
+    exportBtn.addEventListener("click", downloadAdminExport);
+  }
+
+  if(analyticsBtn){
+    analyticsBtn.addEventListener("click", async () => {
+      await handleReloadMetrics(analyticsBtn, "Generate Analytics");
+      showToast("Analytics regenerated");
+    });
+  }
+
+  if(reloadMetricsBtn){
+    reloadMetricsBtn.addEventListener("click", async () => {
+      await handleReloadMetrics(reloadMetricsBtn, "🔄 Reload Real-Time Metrics");
+    });
+  }
+
+  if(recalculateAccuracyBtn){
+    recalculateAccuracyBtn.addEventListener("click", async () => {
+      await handleRecalculateAccuracy(recalculateAccuracyBtn, "🎯 Recalculate Project Accuracy");
+    });
+  }
+
+  if(downloadAdminExportBtn){
+    downloadAdminExportBtn.addEventListener("click", downloadAdminExport);
+  }
+}
+
+async function handleReloadMetrics(button, originalText){
+  try{
+    button.disabled = true;
+    button.innerHTML = "⏳ Reloading live metrics...";
+
+    await loadRealtimeAdminData();
+    await loadProjectAccuracy();
+
+    showToast("Real-time metrics reloaded successfully");
+  }catch(error){
+    console.error("Reload metrics failed:", error);
+    showToast("Could not reload real-time metrics");
+  }finally{
+    button.disabled = false;
+    button.innerHTML = originalText;
+  }
+}
+
+async function handleRecalculateAccuracy(button, originalText){
+  try{
+    button.disabled = true;
+    button.innerHTML = "⏳ Recalculating accuracy...";
+
+    await loadProjectAccuracy();
+
+    showToast("Project accuracy recalculated successfully");
+  }catch(error){
+    console.error("Accuracy recalculation failed:", error);
+    showToast("Could not recalculate project accuracy");
+  }finally{
+    button.disabled = false;
+    button.innerHTML = originalText;
+  }
+}
+
+function downloadAdminExport(){
+  window.open("/api/admin/export", "_blank");
+}
+
+/* ==========================================================================
+   REAL-TIME ADMIN DATA
+   ========================================================================== */
+
+async function loadRealtimeAdminData(){
+  try{
+    if(adminDataController){
+      adminDataController.abort();
+    }
+
+    adminDataController = new AbortController();
+
+    const res = await fetch("/api/admin/realtime", {
+      method:"GET",
+      headers:{
+        "Accept":"application/json",
+        "Cache-Control":"no-cache"
+      },
+      signal:adminDataController.signal
+    });
+
+    if(!res.ok){
+      throw new Error(`Admin realtime API failed: ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    if(!(data.ok || data.success)){
+      throw new Error(data.error || "Admin realtime API failed");
+    }
+
+    const stats = data.stats || {};
+    const users = data.users || [];
+    const activity = data.activity || [];
+    const chart = data.chart || data.weekly_chart || {};
+
+    updateStats(stats);
+    updateUsers(users);
+    updateActivity(activity);
+    updateChart(chart);
+    updateLastUpdated(data.updated_at);
+
+    if(data.project_accuracy){
+      applyProjectAccuracy(data.project_accuracy);
+    }
+
+    return data;
+
+  }catch(err){
+    if(err.name === "AbortError") return null;
+
+    console.error("Admin realtime load error:", err);
+    showToast("Could not load admin realtime data");
+    throw err;
+  }
+}
+
+function updateStats(stats){
+  setText("totalUsers", formatNumber(stats.total_users ?? stats.users ?? 0));
+  setText("activeSessions", formatNumber(stats.active_sessions ?? stats.sessions ?? 0));
+  setText("reportsGenerated", formatNumber(stats.reports_generated ?? stats.total_reports ?? 0));
+  setText("emotionDetections", formatCompact(stats.emotion_detections ?? stats.total_emotions ?? 0));
+
+  setText("totalUsersHint", "Live registered users");
+  setText("activeSessionsHint", "Current / recent sessions");
+  setText("reportsGeneratedHint", "Generated wellness reports");
+  setText("emotionDetectionsHint", "Logged emotion detections");
+}
+
+function updateUsers(users){
+  const body = document.getElementById("usersTableBody");
+  const count = document.getElementById("usersCount");
+
+  if(count){
+    count.textContent = `${users.length} users`;
+  }
+
+  if(!body) return;
+
+  if(!users.length){
+    body.innerHTML = `
+      <tr>
+        <td colspan="8">No users found yet.</td>
+      </tr>
+    `;
+    return;
+  }
+
+  body.innerHTML = users.map((user) => {
+    const status = normalizeStatus(user.status);
+    const statusLabel = formatUserStatus(status);
+    const role = escapeHtml(user.role || "User");
+    const name = escapeHtml(user.name || user.full_name || user.email || "User");
+    const email = escapeHtml(user.email || "No email");
+
+    const avatar = user.avatar_url
+      ? `<img src="${escapeAttribute(user.avatar_url)}" alt="${name}">`
+      : escapeHtml(getInitial(name));
+
+    const sessions = user.sessions ?? user.total_sessions ?? 0;
+    const messages = user.messages ?? user.total_messages ?? 0;
+    const reports = user.reports ?? user.total_reports ?? 0;
+    const lastActive = escapeHtml(user.last_active || "Unknown");
+    const userKey = escapeAttribute(user.user_key || user.email || user.id || user.name || "");
+    const safeName = escapeAttribute(user.name || user.full_name || user.email || "User");
+
+    return `
+      <tr>
+        <td>
+          <div class="user">
+            <div class="avatar">${avatar}</div>
+            <div>
+              <strong>${name}</strong>
+              <small>${email}</small>
+            </div>
+          </div>
+        </td>
+
+        <td>${role}</td>
+
+        <td>
+          <span
+            class="status ${status}"
+            title="${escapeAttribute(statusTooltip(status))}"
+          >
+            ${statusLabel}
+          </span>
+        </td>
+
+        <td>${formatNumber(sessions)}</td>
+        <td>${formatNumber(messages)}</td>
+        <td>${formatNumber(reports)}</td>
+        <td>${lastActive}</td>
+        <td>
+          <button
+            class="danger-mini-btn"
+            type="button"
+            onclick="deleteAdminUser('${userKey}', '${safeName}')"
+          >
+            🗑 Remove
+          </button>
+        </td>
+      </tr>
+    `;
+  }).join("");
+}
+
+function updateActivity(activity){
+  const list = document.getElementById("activityList");
+  const count = document.getElementById("activityCount");
+
+  if(count){
+    count.textContent = `${activity.length || 0} live`;
+  }
+
+  if(!list) return;
+
+  if(!activity.length){
+    list.innerHTML = `
+      <div class="activity-item">
+        <div class="activity-icon">🧠</div>
+        <div>
+          <div class="activity-title">No recent activity</div>
+          <div class="activity-sub">User sessions, reports, and safety actions will appear here.</div>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  list.innerHTML = activity.slice(0, 8).map((item) => {
+    const title = escapeHtml(item.title || "NeuroSense activity");
+    const detail = escapeHtml(item.detail || item.description || "Activity recorded");
+    const time = escapeHtml(item.time || "Recent");
+    const icon = escapeHtml(resolveActivityIcon(item));
+
+    return `
+      <div class="activity-item">
+        <div class="activity-icon">${icon}</div>
+        <div>
+          <div class="activity-title">${title}</div>
+          <div class="activity-sub">${detail}</div>
+          <div class="activity-time">${time}</div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function updateLastUpdated(value){
+  const el = document.getElementById("lastUpdated");
+
+  if(!el) return;
+
+  el.textContent = value || new Date().toLocaleTimeString([], {
+    hour:"2-digit",
+    minute:"2-digit"
+  });
+}
+
+/* ==========================================================================
+   REAL-TIME ACCURACY
+   ========================================================================== */
+
+async function loadProjectAccuracy(){
+  try{
+    if(accuracyController){
+      accuracyController.abort();
+    }
+
+    accuracyController = new AbortController();
+
+    const res = await fetch("/api/project/accuracy", {
+      method:"GET",
+      headers:{
+        "Accept":"application/json",
+        "Cache-Control":"no-cache"
+      },
+      signal:accuracyController.signal
+    });
+
+    if(!res.ok){
+      throw new Error(`Accuracy API failed: ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    if(!(data.ok || data.success)){
+      throw new Error(data.error || "Accuracy API failed");
+    }
+
+    applyProjectAccuracy(data.accuracy || {});
+
+    return data;
+
+  }catch(err){
+    if(err.name === "AbortError") return null;
+
+    console.error("Accuracy load error:", err);
+    setText("overallAccuracy", "--%");
+    setText("accuracyGrade", "Accuracy API unavailable");
+    throw err;
+  }
+}
+
+function applyProjectAccuracy(accuracy){
+  const breakdown = accuracy.breakdown || {};
+  const raw = accuracy.raw || {};
+
+  const overall = Number(accuracy.overall_accuracy || 0);
+  const grade = accuracy.grade || "Good";
+  const updatedAt = accuracy.updated_at || getCurrentTime();
+
+  setText("overallAccuracy", `${formatPercent(overall)}%`);
+  setText("accuracyGrade", `${grade} • Updated ${updatedAt}`);
+  setText("accuracyUpdatedPill", `Updated ${updatedAt}`);
+
+  setText("feedbackScore", `${formatPercent(breakdown.user_feedback_score)}%`);
+  setText("safetyScore", `${formatPercent(breakdown.safety_pass_rate)}%`);
+  setText("emotionScore", `${formatPercent(breakdown.emotion_confidence)}%`);
+  setText("reportScore", `${formatPercent(breakdown.report_success_rate)}%`);
+  setText("sessionScore", `${formatPercent(breakdown.session_completion_rate)}%`);
+
+  setText("accuracyTotalUsers", raw.total_users ?? "--");
+  setText("accuracyTotalSessions", raw.total_sessions ?? "--");
+  setText("accuracyTotalReports", raw.total_reports ?? "--");
+  setText("accuracyTotalFeedback", raw.total_feedback ?? "--");
+
+  setBar("feedbackBar", breakdown.user_feedback_score);
+  setBar("safetyBar", breakdown.safety_pass_rate);
+  setBar("emotionBar", breakdown.emotion_confidence);
+  setBar("reportBar", breakdown.report_success_rate);
+  setBar("sessionBar", breakdown.session_completion_rate);
+
+  const card = document.getElementById("accuracyCard");
+
+  if(card){
+    card.classList.remove("accuracy-excellent","accuracy-very-good","accuracy-good","accuracy-low");
+
+    if(overall >= 90){
+      card.classList.add("accuracy-excellent");
+    }else if(overall >= 80){
+      card.classList.add("accuracy-very-good");
+    }else if(overall >= 70){
+      card.classList.add("accuracy-good");
+    }else{
+      card.classList.add("accuracy-low");
+    }
+  }
+}
+
+function setBar(id, value){
+  const el = document.getElementById(id);
+
+  if(!el) return;
+
+  const safe = clamp(Number(value || 0), 0, 100);
+  el.style.width = `${safe}%`;
+}
+
+/* ==========================================================================
+   CHART
+   ========================================================================== */
+
+function initWellnessChart(){
+  const canvas = document.getElementById("wellnessChart");
+
+  if(!canvas || typeof Chart === "undefined") return;
+
+  const ctx = canvas.getContext("2d");
+
+  wellnessChart = new Chart(ctx, {
+    type:"line",
+    data:{
+      labels:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+      datasets:[
+        {
+          label:"Mood Score",
+          data:[5,6,7,8,7,9,8],
+          borderColor:"#2d7a3a",
+          backgroundColor:"rgba(45,122,58,.12)",
+          tension:.35,
+          fill:true,
+          pointRadius:4,
+          pointHoverRadius:6
+        },
+        {
+          label:"Stress Level",
+          data:[7,6,5,4,5,3,4],
+          borderColor:"#d94040",
+          backgroundColor:"rgba(217,64,64,.10)",
+          tension:.35,
+          fill:true,
+          pointRadius:4,
+          pointHoverRadius:6
+        }
+      ]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{
+        legend:{
+          labels:{
+            color:"#4a6645",
+            font:{
+              weight:"700"
+            }
+          }
+        }
+      },
+      scales:{
+        y:{
+          beginAtZero:false,
+          min:0,
+          max:10,
+          ticks:{
+            color:"#7a9e74"
+          },
+          grid:{
+            color:"rgba(45,122,58,.10)"
+          }
+        },
+        x:{
+          ticks:{
+            color:"#7a9e74"
+          },
+          grid:{
+            color:"rgba(45,122,58,.08)"
+          }
+        }
+      }
+    }
+  });
+}
+
+function updateChart(chart){
+  if(!wellnessChart || !chart) return;
+
+  const labels = chart.labels || chart.days || ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  const mood = chart.mood || chart.mood_scores || chart.mood_score || null;
+  const stress = chart.stress || chart.stress_levels || chart.stress_level || null;
+
+  if(Array.isArray(labels) && labels.length){
+    wellnessChart.data.labels = labels;
+  }
+
+  if(Array.isArray(mood) && mood.length){
+    wellnessChart.data.datasets[0].data = mood;
+  }
+
+  if(Array.isArray(stress) && stress.length){
+    wellnessChart.data.datasets[1].data = stress;
+  }
+
+  wellnessChart.update();
+}
+
+/* ==========================================================================
+   STATUS HELPERS
+   ========================================================================== */
+
+function normalizeStatus(status){
+  status = String(status || "inactive").toLowerCase();
+
+  if(status === "needs_attention") return "warning";
+  if(status === "needs attention") return "warning";
+  if(status === "safety_alert") return "danger";
+  if(status === "safety alert") return "danger";
+
+  if(["active","warning","danger","inactive"].includes(status)){
+    return status;
+  }
+
+  return "inactive";
+}
+
+function formatUserStatus(status){
+  status = normalizeStatus(status);
+
+  if(status === "active") return "Active";
+  if(status === "warning") return "Needs Attention";
+  if(status === "danger") return "Safety Alert";
+
+  return "Inactive";
+}
+
+function statusTooltip(status){
+  status = normalizeStatus(status);
+
+  if(status === "active"){
+    return "User has recent activity.";
+  }
+
+  if(status === "warning"){
+    return "User has low recent activity and may need engagement attention.";
+  }
+
+  if(status === "danger"){
+    return "User may require safety review because of crisis or risk signals.";
+  }
+
+  return "User has no recent activity.";
+}
+
+/* ==========================================================================
+   ACTIVITY HELPERS
+   ========================================================================== */
+
+function resolveActivityIcon(item){
+  const text = String(
+    `${item.title || ""} ${item.detail || ""} ${item.description || ""} ${item.type || ""}`
+  ).toLowerCase();
+
+  if(text.includes("crisis")) return "🆘";
+  if(text.includes("safety")) return "🛡️";
+  if(text.includes("report")) return "📄";
+  if(text.includes("voice")) return "🎤";
+  if(text.includes("research")) return "🧠";
+  if(text.includes("knowledge")) return "📚";
+  if(text.includes("practice") || text.includes("grounding") || text.includes("breathing")) return "🌱";
+  if(text.includes("check") || text.includes("mood")) return "😊";
+  if(text.includes("profile")) return "👤";
+  if(text.includes("login") || text.includes("auth")) return "🔐";
+  if(text.includes("chat")) return "💬";
+
+  return item.icon || "✨";
+}
+
+/* ==========================================================================
+   TOAST
+   ========================================================================== */
+
+function showToast(message){
+  const old = document.querySelector(".toast");
+
+  if(old){
+    old.remove();
+  }
+
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.textContent = message;
+
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.transform = "translateY(12px)";
+    toast.style.transition = ".25s ease";
+
+    setTimeout(() => {
+      toast.remove();
+    }, 260);
+  }, 2500);
+}
+
+/* ==========================================================================
+   GENERAL HELPERS
+   ========================================================================== */
+
+function setText(id, value){
+  const el = document.getElementById(id);
+
+  if(!el) return;
+
+  el.textContent = value;
+}
+
+function formatNumber(value){
+  const num = Number(value || 0);
+
+  if(Number.isNaN(num)) return "0";
+
+  return num.toLocaleString();
+}
+
+function formatCompact(value){
+  const num = Number(value || 0);
+
+  if(Number.isNaN(num)) return "0";
+
+  if(num >= 1000000){
+    return `${(num / 1000000).toFixed(1).replace(".0","")}M`;
+  }
+
+  if(num >= 1000){
+    return `${(num / 1000).toFixed(1).replace(".0","")}K`;
+  }
+
+  return String(num);
+}
+
+function formatPercent(value){
+  const num = Number(value || 0);
+
+  if(Number.isNaN(num)) return "0";
+
+  if(Number.isInteger(num)) return String(num);
+
+  return num.toFixed(1).replace(/\.0$/, "");
+}
+
+function getCurrentTime(){
+  return new Date().toLocaleTimeString([], {
+    hour:"2-digit",
+    minute:"2-digit"
+  });
+}
+
+function getInitial(value){
+  const text = String(value || "U").trim();
+
+  return text ? text[0].toUpperCase() : "U";
+}
+
+function clamp(value, min, max){
+  return Math.max(min, Math.min(max, value));
+}
+
+function escapeHtml(value){
+  return String(value || "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function escapeAttribute(value){
+  return escapeHtml(value).replaceAll("`","&#096;");
+}
+</script>
+
+</body>
+</html>

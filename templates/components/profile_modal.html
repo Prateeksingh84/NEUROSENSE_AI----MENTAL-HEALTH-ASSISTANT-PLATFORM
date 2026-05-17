@@ -1,0 +1,543 @@
+<div class="profile-modal-overlay" id="profileModal">
+
+    <div class="profile-modal">
+
+        <button class="modal-close" id="closeProfileModal">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <div class="modal-header">
+
+            <div class="modal-avatar-wrapper">
+
+                <div class="modal-avatar">
+
+                    {% if profile and profile.avatar_url %}
+                        <img
+                            src="{{ profile.avatar_url }}"
+                            alt="Profile"
+                            id="modalAvatarPreview"
+                        >
+                    {% else %}
+                        <span>
+                            {{ current_user.email[0]|upper }}
+                        </span>
+                    {% endif %}
+
+                </div>
+
+                <button class="avatar-upload-btn" id="changeAvatarBtn">
+                    <i class="fas fa-camera"></i>
+                </button>
+
+                <input
+                    type="file"
+                    id="avatarUploadInput"
+                    accept="image/*"
+                    hidden
+                >
+
+            </div>
+
+            <h2>
+                {{ profile.full_name if profile else "User Profile" }}
+            </h2>
+
+            <p>
+                {{ current_user.email }}
+            </p>
+
+            <div class="modal-role-badge">
+
+                <i class="fas fa-shield-heart"></i>
+
+                {{ profile.role if profile else "user" }}
+
+            </div>
+
+        </div>
+
+        <form
+            id="quickProfileForm"
+            class="modal-form"
+        >
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label>
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="full_name"
+                        id="modalFullName"
+                        value="{{ profile.full_name if profile else '' }}"
+                        placeholder="Enter full name"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="text"
+                        name="phone"
+                        id="modalPhone"
+                        value="{{ profile.phone if profile else '' }}"
+                        placeholder="+91 XXXXX XXXXX"
+                    >
+
+                </div>
+
+                <div class="form-group full-width">
+
+                    <label>
+                        Bio
+                    </label>
+
+                    <textarea
+                        name="bio"
+                        id="modalBio"
+                        placeholder="Tell us about yourself..."
+                    >{{ profile.bio if profile else '' }}</textarea>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        Preferred Language
+                    </label>
+
+                    <select id="modalLanguage">
+
+                        <option value="en">
+                            English
+                        </option>
+
+                        <option value="hi">
+                            Hindi
+                        </option>
+
+                        <option value="fr">
+                            French
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        Theme Preference
+                    </label>
+
+                    <select id="modalTheme">
+
+                        <option value="dark">
+                            Dark
+                        </option>
+
+                        <option value="light">
+                            Light
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    id="cancelProfileModal"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="save-btn"
+                >
+                    <i class="fas fa-save"></i>
+
+                    Save Changes
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:wght@700;800&display=swap');
+
+:root {
+    --green-primary: #2D6A4F;
+    --green-secondary: #40916C;
+    --green-light: #74C69D;
+    --green-pale: #D8F3DC;
+    --green-xpale: #F0FAF4;
+    --green-accent: #52B788;
+    --text-primary: #1B3A2D;
+    --text-secondary: #4A7C6B;
+    --text-muted: #7FA894;
+    --border: #C8E6D4;
+    --bg-white: #FFFFFF;
+    --bg-surface: #F6FCF8;
+    --shadow-lg: 0 20px 80px rgba(45, 106, 79, 0.18);
+}
+
+.profile-modal-overlay {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(27, 58, 45, 0.45);
+
+    backdrop-filter: blur(10px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: 0.3s ease;
+
+    z-index: 99999;
+
+    font-family: 'DM Sans', sans-serif;
+}
+
+.profile-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.profile-modal {
+    width: 100%;
+    max-width: 740px;
+
+    background: #fff;
+
+    border: 1px solid var(--border);
+
+    border-radius: 28px;
+
+    padding: 2rem;
+
+    position: relative;
+
+    transform: translateY(24px);
+
+    transition: 0.35s ease;
+
+    box-shadow: var(--shadow-lg);
+}
+
+.profile-modal-overlay.active .profile-modal {
+    transform: translateY(0);
+}
+
+.modal-close {
+    position: absolute;
+
+    top: 18px;
+    right: 18px;
+
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    background: var(--bg-surface);
+
+    color: var(--text-muted);
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.modal-close:hover {
+    background: #FFF5F5;
+    border-color: #FFCDD2;
+    color: #E63946;
+}
+
+.modal-header {
+    text-align: center;
+
+    margin-bottom: 2rem;
+}
+
+.modal-avatar-wrapper {
+    position: relative;
+
+    width: 120px;
+    height: 120px;
+
+    margin: auto;
+    margin-bottom: 1rem;
+}
+
+.modal-avatar {
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    background: linear-gradient(135deg, var(--green-primary), var(--green-light));
+
+    display: grid;
+    place-items: center;
+
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #fff;
+
+    border: 4px solid var(--green-pale);
+}
+
+.modal-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-upload-btn {
+    position: absolute;
+
+    bottom: 6px;
+    right: 6px;
+
+    width: 40px;
+    height: 40px;
+
+    border: 2px solid #fff;
+
+    border-radius: 50%;
+
+    background: var(--green-primary);
+
+    color: #fff;
+
+    cursor: pointer;
+
+    font-size: 0.85rem;
+
+    box-shadow: 0 4px 16px rgba(45, 106, 79, 0.3);
+
+    transition: 0.2s ease;
+}
+
+.avatar-upload-btn:hover {
+    background: var(--green-secondary);
+}
+
+.modal-header h2 {
+    font-size: 1.6rem;
+
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+
+    color: var(--text-primary);
+
+    margin-bottom: 0.3rem;
+}
+
+.modal-header p {
+    color: var(--text-muted);
+
+    margin-bottom: 0.875rem;
+
+    font-size: 0.9rem;
+}
+
+.modal-role-badge {
+    width: fit-content;
+
+    margin: auto;
+
+    padding: 0.45rem 0.9rem;
+
+    border-radius: 999px;
+
+    background: rgba(45, 106, 79, 0.08);
+
+    border: 1px solid rgba(45, 106, 79, 0.2);
+
+    color: var(--green-primary);
+
+    font-size: 0.8rem;
+    font-weight: 700;
+
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+
+    text-transform: capitalize;
+}
+
+.modal-form {
+    display: grid;
+    gap: 1.4rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 1.1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    color: var(--text-secondary);
+
+    font-size: 0.82rem;
+
+    font-weight: 700;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+
+    padding: 0.875rem 1rem;
+
+    border-radius: 14px;
+
+    border: 1px solid var(--border);
+
+    background: var(--bg-surface);
+
+    color: var(--text-primary);
+
+    outline: none;
+
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+
+    transition: 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: var(--green-accent);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(82, 183, 136, 0.12);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-muted);
+}
+
+.form-group textarea {
+    min-height: 110px;
+
+    resize: none;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.875rem;
+}
+
+.cancel-btn,
+.save-btn {
+    height: 48px;
+
+    padding: 0 1.4rem;
+
+    border: none;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    font-weight: 700;
+    font-size: 0.9rem;
+
+    font-family: 'DM Sans', sans-serif;
+
+    transition: 0.2s ease;
+}
+
+.cancel-btn {
+    background: var(--bg-surface);
+
+    border: 1px solid var(--border);
+
+    color: var(--text-secondary);
+}
+
+.cancel-btn:hover {
+    background: var(--green-pale);
+    border-color: var(--green-accent);
+    color: var(--green-primary);
+}
+
+.save-btn {
+    background: var(--green-primary);
+
+    color: #fff;
+
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.save-btn:hover {
+    background: var(--green-secondary);
+}
+
+@media (max-width: 760px) {
+    .profile-modal {
+        width: 95%;
+        padding: 1.4rem;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+    }
+}
+
+</style>

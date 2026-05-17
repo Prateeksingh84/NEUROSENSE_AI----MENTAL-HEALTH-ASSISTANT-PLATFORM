@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NeuroSense AI • Templates</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/templates.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-brand-logo.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-ui-image.css') }}">
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="brand">🧠 <span>NeuroSense AI</span></div>
+
+    <nav class="nav">
+        <a href="/research_chat">🧠 Research Chat</a>
+        <a href="/templates/create" class="primary">➕ Create Template</a>
+        <a href="/mode">🔄 Mode</a>
+        <a href="/dashboard">📊 Dashboard</a>
+    </nav>
+</header>
+
+<main class="wrapper">
+
+    <section class="hero">
+        <div class="badge">✦ GUIDED WELLNESS TEMPLATES</div>
+
+        <h1>
+            Pre-built and custom <span>mental wellness templates</span>
+        </h1>
+
+        <p>
+            Use ready-made templates for stress, anxiety-like feelings, sleep, loneliness, academic pressure, relationship stress, self-doubt, professional help, and crisis safety. You can also create your own safe templates.
+        </p>
+    </section>
+
+    <section class="toolbar">
+        <input type="search" id="templateSearch" placeholder="Search templates...">
+
+        <select id="categoryFilter">
+            <option value="">All Categories</option>
+            <option value="stress">Stress</option>
+            <option value="anxiety">Anxiety</option>
+            <option value="sleep">Sleep</option>
+            <option value="loneliness">Loneliness</option>
+            <option value="academic_pressure">Academic Pressure</option>
+            <option value="relationship">Relationship</option>
+            <option value="self_doubt">Self Doubt</option>
+            <option value="anger">Anger</option>
+            <option value="mood_tracking">Mood Tracking</option>
+            <option value="professional_help">Professional Help</option>
+            <option value="crisis_safety">Crisis Safety</option>
+            <option value="weekly_reflection">Weekly Reflection</option>
+        </select>
+
+        <button onclick="loadTemplates()">Refresh</button>
+    </section>
+
+    <section id="templateGrid" class="template-grid">
+        <div class="empty">Loading templates...</div>
+    </section>
+
+</main>
+
+<script src="{{ url_for('static', filename='js/templates.js') }}"></script>
+
+</body>
+</html>

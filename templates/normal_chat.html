@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Text Chat — NeuroSense AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f8f4;--s1:#fff;--s2:#f0f7f0;--s3:#e8f3e8;
+  --border:#d0e8d0;--border2:#b8ddb8;
+  --text:#1a2e1a;--text2:#4a6b4a;--muted:#7a9e7a;
+  --accent:#2d8c4e;--a2:#d94f3c;--a3:#2d8c4e;--a4:#c97a00;--a5:#1a7fa8;
+  --purple:#5a3fb5;
+}
+[data-theme="dark"]{
+  --bg:#07080d;--s1:#0f1219;--s2:#131720;--s3:#181d28;
+  --border:#1a2035;--border2:#222840;
+  --text:#e2e8f0;--text2:#94a3b8;--muted:#475569;
+  --accent:#2d8c4e;--a2:#f43f5e;--a3:#06d6a0;--a4:#fbbf24;--a5:#38bdf8;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);height:100vh;display:flex;flex-direction:column;overflow:hidden;transition:background .3s,color .3s}
+nav{display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.5rem;background:var(--s1);border-bottom:1.5px solid var(--border);flex-shrink:0;gap:.6rem;flex-wrap:wrap;z-index:50}
+.nav-logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:900;font-size:.95rem;color:var(--text)}
+.nav-logo .green{color:var(--accent)}
+.mode-pill{display:inline-block;padding:.2rem .65rem;border-radius:10px;font-size:.68rem;font-weight:700;background:var(--accent);color:#fff;margin-left:.3rem}
+.nav-right{display:flex;gap:.45rem;align-items:center;flex-wrap:wrap}
+.nbtn{padding:.38rem .82rem;border-radius:8px;font-size:.78rem;font-weight:600;border:1.5px solid var(--border);background:transparent;color:var(--text2);text-decoration:none;cursor:pointer;transition:all .2s;font-family:'Plus Jakarta Sans',sans-serif}
+.nbtn:hover{border-color:var(--accent);color:var(--accent)}
+.nbtn.end-btn{background:rgba(217,79,60,.08);border-color:rgba(217,79,60,.25);color:var(--a2);font-weight:700}
+.nbtn.end-btn:hover{background:rgba(217,79,60,.14)}
+.ttstoggle{padding:.38rem .82rem;border-radius:8px;font-size:.78rem;font-weight:600;border:1.5px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;gap:.3rem}
+.ttstoggle.on{border-color:var(--accent);color:var(--accent);background:rgba(45,140,78,.07)}
+.theme-btn{padding:.38rem .55rem;border-radius:8px;font-size:.82rem;border:1.5px solid var(--border);background:transparent;cursor:pointer;transition:all .2s}
+.theme-btn:hover{border-color:var(--accent)}
+select.nbtn{cursor:pointer;padding-right:1.8rem;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%234a6b4a' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .55rem center;background-color:transparent}
+select.nbtn option{background:var(--s1)}
+.layout{flex:1;display:flex;overflow:hidden;min-height:0}
+.vpanel{width:265px;flex-shrink:0;background:var(--s1);border-right:1.5px solid var(--border);display:flex;flex-direction:column;padding:1rem;overflow-y:auto;gap:.9rem}
+.vpanel::-webkit-scrollbar{width:3px}
+.vpanel::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.vid-wrap{position:relative;border-radius:12px;overflow:hidden;background:#e0e8e0;aspect-ratio:4/3;flex-shrink:0}
+video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+canvas{display:none}
+.vid-overlay{position:absolute;bottom:0;left:0;right:0;padding:.7rem .85rem;background:linear-gradient(transparent,rgba(26,46,26,.8))}
+.emo-live{display:flex;align-items:center;gap:.5rem}
+.emo-emoji{font-size:1.6rem;transition:all .35s}
+.emo-name{font-weight:700;font-size:.88rem;text-transform:capitalize;color:#fff}
+.emo-conf{font-size:.67rem;color:rgba(255,255,255,.75)}
+.cam-status{display:flex;align-items:center;gap:.45rem;font-size:.71rem;color:var(--muted);padding:.4rem .68rem;background:var(--s2);border-radius:8px;border:1px solid var(--border)}
+.sdot{width:8px;height:8px;border-radius:50%;background:var(--a2);flex-shrink:0}
+.sdot.live{background:var(--accent);animation:blinkDot 1.5s ease-in-out infinite}
+@keyframes blinkDot{0%,100%{opacity:1}50%{opacity:.35}}
+.sec-label{font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.ebar{display:flex;align-items:center;gap:.4rem;margin-bottom:.28rem;font-size:.63rem}
+.ebl{width:52px;color:var(--muted);text-transform:capitalize}
+.ebt{flex:1;height:5px;background:var(--s3);border-radius:3px;overflow:hidden}
+.ebf{height:100%;border-radius:3px;transition:width .55s ease}
+.ebf.happy{background:var(--accent)}.ebf.sad{background:#5a3fb5}.ebf.angry{background:var(--a2)}
+.ebf.fear{background:var(--a4)}.ebf.surprise{background:var(--a5)}.ebf.neutral{background:var(--muted)}
+.ebv{width:26px;text-align:right;color:var(--text2);opacity:.7}
+.sess-pills{display:flex;flex-wrap:wrap;gap:.2rem}
+.spill{padding:.17rem .4rem;border-radius:10px;font-size:.6rem;border:1px solid var(--border);background:var(--s2)}
+.spill.happy{background:rgba(45,140,78,.1);border-color:rgba(45,140,78,.25);color:var(--accent)}
+.spill.sad{background:rgba(90,63,181,.1);border-color:rgba(90,63,181,.25);color:var(--purple)}
+.spill.angry{background:rgba(217,79,60,.1);border-color:rgba(217,79,60,.25);color:var(--a2)}
+.spill.neutral{background:rgba(122,158,122,.1);border-color:rgba(122,158,122,.25);color:var(--muted)}
+.cam-btn{padding:.52rem;border-radius:9px;border:1.5px solid var(--border);background:var(--s2);color:var(--text);font-size:.78rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.35rem;transition:all .22s;font-family:'Plus Jakarta Sans',sans-serif;margin-top:auto}
+.cam-btn.on{background:rgba(45,140,78,.1);border-color:rgba(45,140,78,.3);color:var(--accent)}
+.cam-btn:hover{border-color:var(--accent)}
+.cpanel{flex:1;display:flex;flex-direction:column;min-width:0}
+.chat-hdr{padding:.88rem 1.4rem;border-bottom:1.5px solid var(--border);background:var(--s1);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.chat-hdr-left h2{font-size:.96rem;font-weight:700;margin-bottom:.15rem;color:var(--text)}
+.chat-hdr-left p{font-size:.72rem;color:var(--muted)}
+.agent-thinking{display:flex;align-items:center;gap:.5rem;padding:.35rem .75rem;background:rgba(45,140,78,.07);border:1px solid rgba(45,140,78,.2);border-radius:20px;font-size:.68rem;color:var(--accent);font-weight:600;display:none}
+.agent-thinking.show{display:flex}
+.tdots-sm span{display:inline-block;width:5px;height:5px;background:var(--accent);border-radius:50%;margin:0 1.5px;animation:tdot 1.2s ease-in-out infinite}
+.tdots-sm span:nth-child(2){animation-delay:.15s}.tdots-sm span:nth-child(3){animation-delay:.3s}
+@keyframes tdot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
+.msgs{flex:1;overflow-y:auto;padding:1.1rem;display:flex;flex-direction:column;gap:.75rem;min-height:0;background:var(--bg)}
+.msgs::-webkit-scrollbar{width:4px}
+.msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.msg{max-width:78%;animation:msgIn .3s ease both}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.msg.user{align-self:flex-end}.msg.assistant{align-self:flex-start}
+.msg-body{padding:.86rem 1.1rem;border-radius:18px;line-height:1.65;font-size:.87rem;word-break:break-word}
+.msg.user .msg-body{background:linear-gradient(135deg,var(--accent),var(--accent2,#3aab63));color:#fff;border-bottom-right-radius:5px}
+.msg.assistant .msg-body{background:var(--s1);border:1.5px solid var(--border);border-bottom-left-radius:5px;color:var(--text)}
+.msg-meta{display:flex;align-items:center;gap:.38rem;margin-top:.24rem;font-size:.62rem;color:var(--muted)}
+.msg.user .msg-meta{justify-content:flex-end}
+.model-chip{background:rgba(45,140,78,.1);padding:.08rem .28rem;border-radius:4px;font-size:.58rem;font-family:'JetBrains Mono',monospace;color:var(--accent)}
+.emo-tag{background:rgba(45,140,78,.12);padding:.1rem .32rem;border-radius:6px;font-size:.62rem;color:var(--accent)}
+.spkbtn{background:none;border:none;cursor:pointer;font-size:.72rem;opacity:.4;transition:all .2s;padding:.1rem .22rem;border-radius:4px}
+.spkbtn:hover{opacity:1}.spkbtn.speaking{opacity:1;color:var(--accent);animation:spkP 1s ease-in-out infinite}
+@keyframes spkP{0%,100%{opacity:1}50%{opacity:.35}}
+.typing{align-self:flex-start;padding:.86rem 1.1rem;background:var(--s1);border:1.5px solid var(--border);border-radius:18px;display:none}
+.typing.show{display:flex}
+.tdots{display:flex;gap:4px}
+.tdots span{width:7px;height:7px;background:var(--muted);border-radius:50%;animation:tdot 1.4s infinite}
+.tdots span:nth-child(2){animation-delay:.18s}.tdots span:nth-child(3){animation-delay:.36s}
+.session-end-overlay{display:none;position:fixed;inset:0;background:rgba(244,248,244,.85);backdrop-filter:blur(8px);z-index:200;align-items:center;justify-content:center}
+.session-end-overlay.show{display:flex}
+.session-end-card{background:var(--s1);border:1.5px solid var(--border);border-radius:20px;padding:2rem;max-width:420px;width:90%;text-align:center;animation:slideUp .3s ease;box-shadow:0 12px 48px rgba(45,140,78,.15)}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.session-end-card h3{font-size:1.1rem;font-weight:800;margin-bottom:.5rem;color:var(--text)}
+.session-end-card p{font-size:.82rem;color:var(--muted);margin-bottom:1.2rem;line-height:1.65}
+.sum-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:1.2rem}
+.sum-item{background:var(--s2);border:1.5px solid var(--border);border-radius:10px;padding:.7rem;text-align:center}
+.sum-val{font-size:1.4rem;font-weight:800;font-family:'JetBrains Mono',monospace;color:var(--accent)}
+.sum-lbl{font-size:.65rem;color:var(--muted);margin-top:.15rem}
+.end-btns{display:flex;gap:.65rem;flex-wrap:wrap;justify-content:center}
+.end-btn{padding:.65rem 1.3rem;border-radius:10px;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Plus Jakarta Sans',sans-serif;border:none}
+.end-btn.report{background:var(--accent);color:#fff}
+.end-btn.report:hover{background:#3aab63}
+.end-btn.dashboard{background:var(--s2);border:1.5px solid var(--border);color:var(--text)}
+.end-btn.dashboard:hover{border-color:var(--accent);color:var(--accent)}
+.end-btn.close-btn{background:transparent;border:1.5px solid var(--border);color:var(--muted);font-size:.75rem}
+.inp-area{padding:.86rem 1.3rem;background:var(--s1);border-top:1.5px solid var(--border);flex-shrink:0}
+.inp-row{display:flex;gap:.7rem;align-items:flex-end}
+textarea{flex:1;padding:.8rem 1rem;border-radius:12px;border:1.5px solid var(--border);background:var(--s2);color:var(--text);font-size:.9rem;font-family:'Plus Jakarta Sans',sans-serif;resize:none;min-height:46px;max-height:120px;transition:border-color .22s;outline:none;line-height:1.55}
+textarea:focus{border-color:var(--accent);background:#e8f5ec}
+textarea::placeholder{color:var(--muted)}
+.send-btn{padding:.8rem 1.3rem;border-radius:12px;border:none;background:linear-gradient(135deg,var(--accent),#3aab63);color:#fff;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .25s;white-space:nowrap;flex-shrink:0;font-family:'Plus Jakarta Sans',sans-serif}
+.send-btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px -6px rgba(45,140,78,.4)}
+.send-btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.quick-row{display:flex;gap:.38rem;margin-top:.6rem;flex-wrap:wrap}
+.qr{padding:.34rem .78rem;border-radius:20px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-size:.74rem;cursor:pointer;transition:all .22s;font-family:'Plus Jakarta Sans',sans-serif}
+.qr:hover{border-color:var(--accent);color:var(--accent);background:rgba(45,140,78,.06);transform:translateY(-1px)}
+@media(max-width:820px){.layout{flex-direction:column}.vpanel{width:100%;flex-direction:row;max-height:175px;padding:.8rem;overflow-x:auto;gap:1rem}.vid-wrap{width:145px;flex-shrink:0}.cam-btn,.sess-pills,.ebar{display:none}}
+[data-theme="dark"] .msgs{background:var(--bg)}
+[data-theme="dark"] .msg.assistant .msg-body{background:var(--s2);border-color:var(--border);color:var(--text)}
+</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-brand-logo.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-ui-image.css') }}">
+</head>
+<body>
+<div class="session-end-overlay" id="endOverlay">
+  <div class="session-end-card">
+    <div style="font-size:2rem;margin-bottom:.75rem">✅</div>
+    <h3>Session Complete!</h3>
+    <p>Great work today. Here's your session summary. Generate a full AI report from the dashboard.</p>
+    <div class="sum-grid">
+      <div class="sum-item"><div class="sum-val" id="endMsgCount">0</div><div class="sum-lbl">Messages</div></div>
+      <div class="sum-item"><div class="sum-val" id="endEmoTop">—</div><div class="sum-lbl">Top Emotion</div></div>
+      <div class="sum-item"><div class="sum-val" id="endMoodAvg">—</div><div class="sum-lbl">Avg Mood</div></div>
+      <div class="sum-item"><div class="sum-val" id="endDuration">—</div><div class="sum-lbl">Duration</div></div>
+    </div>
+    <div class="end-btns">
+      <button class="end-btn report" onclick="goToReport()">⚡ Generate Report</button>
+      <button class="end-btn dashboard" onclick="location.href='/dashboard'">📊 Dashboard</button>
+      <button class="end-btn close-btn" onclick="closeEndOverlay()">Continue Chatting</button>
+    </div>
+  </div>
+</div>
+<nav>
+  <div class="nav-logo">🧠 <span class="green">NeuroSense</span> <span class="mode-pill">💬 TEXT</span></div>
+  <div class="nav-right">
+    <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+    <button class="ttstoggle on" id="ttsBtn" onclick="toggleTTS()">🔊 Voice On</button>
+    <select class="nbtn" id="langSel" onchange="changeLang(this.value)">
+      {% for code, name in languages.items() %}<option value="{{ code }}" {% if code == lang %}selected{% endif %}>{{ name }}</option>{% endfor %}
+    </select>
+    <button class="nbtn end-btn" onclick="endSession()">⏹ End Session</button>
+    <a href="/mode" class="nbtn">← Modes</a>
+    <a href="/dashboard" class="nbtn">📊</a>
+  </div>
+</nav>
+<div class="layout">
+  <div class="vpanel">
+    <div class="vid-wrap">
+      <video id="vid" autoplay playsinline></video>
+      <canvas id="cvs"></canvas>
+      <div class="vid-overlay">
+        <div class="emo-live"><span class="emo-emoji" id="eIcon">🔄</span><div><div class="emo-name" id="eName">Starting...</div><div class="emo-conf" id="eConf">Initializing</div></div></div>
+      </div>
+    </div>
+    <div class="cam-status"><span class="sdot" id="sdot"></span><span id="stext">Connecting...</span></div>
+    <div><div class="sec-label" style="margin-bottom:.5rem">📊 Live Emotions</div><div id="barBox"></div></div>
+    <div><div class="sec-label" style="margin-bottom:.42rem">📈 Session</div><div class="sess-pills" id="sessPills"></div></div>
+    <button class="cam-btn on" id="camBtn" onclick="toggleCam()">📹 Camera On</button>
+  </div>
+  <div class="cpanel">
+    <div class="chat-hdr">
+      <div class="chat-hdr-left"><h2>💬 Text Chat with NeuroSense</h2><p>Emotion detection active · {{ name }}</p></div>
+      <div class="agent-thinking" id="agentThinking"><div class="tdots-sm"><span></span><span></span><span></span></div><span style="margin-left:.4rem;font-family:'JetBrains Mono',monospace;font-size:.64rem">llama-3.3-70b thinking...</span></div>
+    </div>
+    <div class="msgs" id="msgs">
+      <div class="msg assistant">
+        <div class="msg-body" id="welcomeBody">Hello {{ name }}! 👋 I'm here to listen and support you. Type anything you'd like to share — I'll respond with empathy and care. When you're done, click <strong>End Session</strong> to save your session and generate a report.</div>
+        <div class="msg-meta"><span class="model-chip">llama-3.3-70b</span><button class="spkbtn" onclick="speakBtn(this)">🔊</button><span>Just now</span></div>
+      </div>
+    </div>
+    <div class="typing" id="typing"><div class="tdots"><span></span><span></span><span></span></div></div>
+    <div class="inp-area">
+      <div class="inp-row">
+        <textarea id="inp" placeholder="Type your message... (Enter to send, Shift+Enter for newline)" rows="1" onkeydown="onKey(event)"></textarea>
+        <button class="send-btn" id="sbtn" onclick="sendMsg()">Send →</button>
+      </div>
+      <div class="quick-row">
+        <button class="qr" onclick="qs('I\'m feeling really anxious right now')">😰 Anxious</button>
+        <button class="qr" onclick="qs('I\'m feeling really sad today')">😢 Sad</button>
+        <button class="qr" onclick="qs('I need someone to talk to')">💬 Need to talk</button>
+        <button class="qr" onclick="qs('I\'m having trouble sleeping')">🌙 Can't sleep</button>
+        <button class="qr" onclick="qs('I\'m feeling better today!')">😊 Better today</button>
+        <button class="qr" onclick="qs('I feel overwhelmed by everything')">🌊 Overwhelmed</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+function toggleTheme(){var h=document.documentElement;var d=h.getAttribute('data-theme')==='dark';h.setAttribute('data-theme',d?'light':'dark');localStorage.setItem('ns_theme',d?'light':'dark');document.querySelector('.theme-btn').textContent=d?'☀️':'🌙';}
+(function(){var s=localStorage.getItem('ns_theme');if(s){document.documentElement.setAttribute('data-theme',s);document.querySelector('.theme-btn').textContent=s==='light'?'☀️':'🌙';}})();
+var vid=document.getElementById('vid'),cvs=document.getElementById('cvs'),ctx2=cvs.getContext('2d'),msgs=document.getElementById('msgs'),inp=document.getElementById('inp'),typing=document.getElementById('typing'),barBox=document.getElementById('barBox'),sessPills=document.getElementById('sessPills');
+var camActive=true,ttsEnabled=true,emoInterval=null,currentEmo='neutral',sessEmos=[],activeSpeakBtn=null,msgCount=0,sessionStart=Date.now();
+var EMO={happy:'😊',sad:'😢',angry:'😠',fear:'😨',surprise:'😲',disgust:'🤢',neutral:'😐',contempt:'😤'};
+var MOOD_SCORE={happy:9,surprise:7,neutral:5,fear:3,sad:2,disgust:2,angry:1,contempt:1};
+var LANG_MAP={'en':'en-US','hi':'hi-IN','es':'es-ES','fr':'fr-FR','de':'de-DE','zh-CN':'zh-CN','ja':'ja-JP','ko':'ko-KR','ar':'ar-SA','ru':'ru-RU','pt':'pt-PT','ta':'ta-IN','te':'te-IN','bn':'bn-IN','mr':'mr-IN','ur':'ur-PK'};
+function speak(text){if(!('speechSynthesis' in window))return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(text);u.lang=LANG_MAP[document.getElementById('langSel').value]||'en-US';u.rate=.88;speechSynthesis.speak(u);}
+function toggleTTS(){ttsEnabled=!ttsEnabled;var btn=document.getElementById('ttsBtn');btn.textContent=ttsEnabled?'🔊 Voice On':'🔇 Voice Off';btn.classList.toggle('on',ttsEnabled);if(!ttsEnabled)speechSynthesis.cancel();}
+function speakBtn(btn){var text=btn.closest('.msg').querySelector('.msg-body').textContent.trim();if(activeSpeakBtn===btn&&speechSynthesis.speaking){speechSynthesis.cancel();btn.classList.remove('speaking');activeSpeakBtn=null;return;}speechSynthesis.cancel();if(activeSpeakBtn)activeSpeakBtn.classList.remove('speaking');btn.classList.add('speaking');activeSpeakBtn=btn;speak(text);var chk=setInterval(function(){if(!speechSynthesis.speaking){btn.classList.remove('speaking');activeSpeakBtn=null;clearInterval(chk);}},300);}
+function initCam(){navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:480},height:{ideal:360}}}).then(function(s){vid.srcObject=s;vid.onloadedmetadata=function(){setStatus('Detecting emotions...',true);emoInterval=setInterval(detectEmo,1600);detectEmo();};}).catch(function(){setStatus('Camera unavailable',false);});}
+function toggleCam(){camActive=!camActive;var btn=document.getElementById('camBtn');btn.textContent=camActive?'📹 Camera On':'📷 Camera Off';btn.classList.toggle('on',camActive);if(camActive){initCam();}else{if(vid.srcObject)vid.srcObject.getTracks().forEach(function(t){t.stop();});if(emoInterval)clearInterval(emoInterval);setStatus('Camera off',false);}}
+function setStatus(text,live){document.getElementById('stext').textContent=text;document.getElementById('sdot').classList.toggle('live',live);}
+async function detectEmo(){if(!camActive||!vid.srcObject||vid.videoWidth===0)return;cvs.width=vid.videoWidth;cvs.height=vid.videoHeight;ctx2.drawImage(vid,0,0);try{var res=await fetch('/api/emotion_detect',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image:cvs.toDataURL('image/jpeg',.82)})});var data=await res.json();if(data.emotion){currentEmo=data.emotion;document.getElementById('eIcon').textContent=EMO[data.emotion]||'😐';document.getElementById('eName').textContent=data.emotion.charAt(0).toUpperCase()+data.emotion.slice(1);document.getElementById('eConf').textContent=data.scores&&data.scores[data.emotion]?Math.round(data.scores[data.emotion]*100)+'% confidence':'';if(data.scores)renderBars(data.scores);if(sessEmos.indexOf(data.emotion)===-1){sessEmos.push(data.emotion);var pill=document.createElement('span');pill.className='spill '+data.emotion;pill.textContent=(EMO[data.emotion]||'')+' '+data.emotion;sessPills.appendChild(pill);}setStatus('Emotion: '+data.emotion,true);}else{setStatus('No face detected',false);}}catch(e){}}
+function renderBars(scores){barBox.innerHTML='';Object.entries(scores).sort(function(a,b){return b[1]-a[1];}).forEach(function(kv){var pct=Math.round(kv[1]*100);var row=document.createElement('div');row.className='ebar';row.innerHTML='<span class="ebl">'+(EMO[kv[0]]||'')+' '+kv[0]+'</span><div class="ebt"><div class="ebf '+kv[0]+'" style="width:'+pct+'%"></div></div><span class="ebv">'+pct+'%</span>';barBox.appendChild(row);});}
+async function sendMsg(){var text=inp.value.trim();if(!text)return;inp.value='';inp.style.height='auto';addMsg('user',text,currentEmo);msgCount++;typing.classList.add('show');document.getElementById('agentThinking').classList.add('show');msgs.scrollTop=msgs.scrollHeight;document.getElementById('sbtn').disabled=true;try{var res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text,mode:'normal_chat'})});var data=await res.json();typing.classList.remove('show');document.getElementById('agentThinking').classList.remove('show');addMsg('assistant',data.reply,null,true);msgCount++;}catch(e){typing.classList.remove('show');document.getElementById('agentThinking').classList.remove('show');addMsg('assistant','Connection error. Please try again.');}document.getElementById('sbtn').disabled=false;}
+function addMsg(role,content,emo,autoSpeak){var div=document.createElement('div');div.className='msg '+role;var time=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});var meta='';if(role==='assistant')meta+='<span class="model-chip">llama-3.3-70b</span>';if(role==='user'&&emo)meta+='<span class="emo-tag">'+(EMO[emo]||'')+' '+emo+'</span>';if(role==='assistant')meta+='<button class="spkbtn" onclick="speakBtn(this)">🔊</button>';meta+='<span>'+time+'</span>';div.innerHTML='<div class="msg-body">'+content+'</div><div class="msg-meta">'+meta+'</div>';msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;if(autoSpeak&&ttsEnabled){speak(content);var spk=div.querySelector('.spkbtn');if(spk){spk.classList.add('speaking');activeSpeakBtn=spk;var chk=setInterval(function(){if(!speechSynthesis.speaking){spk.classList.remove('speaking');activeSpeakBtn=null;clearInterval(chk);}},300);}}}
+function qs(text){inp.value=text;sendMsg();}
+function onKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}
+inp.addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px';});
+function changeLang(lang){fetch('/set_lang',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lang:lang})});}
+async function endSession(){if(msgCount===0){alert('Start a conversation first before ending the session.');return;}try{var res=await fetch('/api/end_session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode:'normal_chat'})});var data=await res.json();if(data.ok&&data.summary){var s=data.summary;document.getElementById('endMsgCount').textContent=s.user_messages||msgCount;document.getElementById('endEmoTop').textContent=(s.top_emotion||'neutral').charAt(0).toUpperCase()+(s.top_emotion||'neutral').slice(1);document.getElementById('endMoodAvg').textContent=s.avg_mood?s.avg_mood+'/10':'—';var dur=Math.round((Date.now()-sessionStart)/60000);document.getElementById('endDuration').textContent=dur>0?dur+'min':'<1min';}}catch(e){document.getElementById('endMsgCount').textContent=msgCount;document.getElementById('endEmoTop').textContent=currentEmo.charAt(0).toUpperCase()+currentEmo.slice(1);document.getElementById('endMoodAvg').textContent='—';var dur=Math.round((Date.now()-sessionStart)/60000);document.getElementById('endDuration').textContent=dur>0?dur+'min':'<1min';}document.getElementById('endOverlay').classList.add('show');}
+function closeEndOverlay(){document.getElementById('endOverlay').classList.remove('show');}
+function goToReport(){location.href='/dashboard#report';}
+initCam();
+window.addEventListener('load',function(){if(ttsEnabled){var wb=document.getElementById('welcomeBody');if(wb)setTimeout(function(){speak(wb.textContent);},900);}});
+</script>
+</body>
+</html>

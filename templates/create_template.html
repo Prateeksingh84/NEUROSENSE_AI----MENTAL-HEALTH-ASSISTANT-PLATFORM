@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NeuroSense AI • Create Template</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/templates.css') }}">
+<style>
+:root{
+  --bg:#f4f7f2; --s1:#ffffff; --s2:#f0f6ee; --border:#d3e6cc; --border2:#b8d4ae;
+  --text:#1a2e18; --text2:#4a6645; --muted:#7a9e74;
+  --accent:#2d7a3a; --accent2:#3fa050; --accent-light:#e8f5e3; --accent-mid:#c3e6b8;
+  --red:#d94040; --shadow:0 20px 60px rgba(45,122,58,.10);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(20px);
+  border-bottom:1.5px solid var(--border);position:sticky;top:0;z-index:50;
+}
+.brand{display:flex;align-items:center;gap:.5rem;font-family:'Outfit',sans-serif;font-size:1.1rem;font-weight:900;color:var(--text)}
+.nav{display:flex;align-items:center;gap:.5rem}
+.nav a{
+  padding:.5rem .9rem;border-radius:12px;font-size:.85rem;font-weight:700;
+  color:var(--text2);border:1px solid var(--border);background:var(--s2);text-decoration:none;transition:.2s;
+}
+.nav a:hover{color:var(--accent);border-color:var(--accent-mid);background:var(--accent-light)}
+.wrapper{max-width:860px;margin:0 auto;padding:3rem 1.5rem}
+.narrow{max-width:760px}
+.hero{margin-bottom:2.5rem;text-align:center}
+.badge{
+  display:inline-flex;align-items:center;gap:.4rem;padding:.45rem .9rem;border-radius:999px;
+  background:var(--accent-light);border:1.5px solid var(--accent-mid);
+  color:var(--accent);font-size:.75rem;font-weight:900;margin-bottom:1.1rem;letter-spacing:.06em;
+}
+.hero h1{
+  font-family:'Outfit',sans-serif;font-size:clamp(2rem,4.5vw,3.4rem);
+  line-height:1.05;letter-spacing:-.04em;margin-bottom:1rem;color:var(--text);
+}
+.hero h1 span{color:var(--accent)}
+.hero p{color:var(--text2);line-height:1.8;max-width:620px;margin:0 auto}
+.form-card{
+  background:var(--s1);border:1.5px solid var(--border);
+  border-radius:24px;padding:2rem;box-shadow:var(--shadow);
+}
+.field{margin-bottom:1.2rem}
+.field label{
+  display:block;font-size:.78rem;font-weight:800;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:.45rem;
+}
+.field input,.field select,.field textarea{
+  width:100%;padding:.85rem 1rem;border-radius:14px;
+  border:1.5px solid var(--border);background:var(--s2);color:var(--text);
+  font-size:.92rem;font-family:'Plus Jakarta Sans',sans-serif;transition:.2s;outline:none;
+}
+.field input:focus,.field select:focus,.field textarea:focus{
+  border-color:var(--accent);background:#fff;box-shadow:0 0 0 3px rgba(45,122,58,.1);
+}
+.field input::placeholder,.field textarea::placeholder{color:var(--muted)}
+.field select{appearance:none;cursor:pointer}
+.field textarea{resize:vertical;min-height:180px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.safety-box{
+  margin:1rem 0;padding:1rem 1.2rem;border-radius:16px;
+  background:var(--accent-light);border:1.5px solid var(--accent-mid);
+}
+.safety-box strong{display:block;color:var(--accent);margin-bottom:.35rem;font-size:.9rem}
+.safety-box p{color:var(--text2);font-size:.87rem;line-height:1.7}
+.form-actions{display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem;gap:1rem}
+.secondary-link{color:var(--muted);font-weight:700;font-size:.9rem;text-decoration:none}
+.secondary-link:hover{color:var(--text)}
+.form-actions button{
+  padding:.9rem 1.8rem;border-radius:14px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;font-weight:800;font-size:.95rem;font-family:'Plus Jakarta Sans',sans-serif;
+  box-shadow:0 8px 22px rgba(45,122,58,.22);transition:.2s;
+}
+.form-actions button:hover{transform:translateY(-1px)}
+.status-box{
+  margin-top:1rem;padding:1rem;border-radius:14px;display:none;
+  background:var(--s2);border:1.5px solid var(--border);color:var(--text2);font-size:.9rem;
+}
+.status-box.show{display:block}
+.status-box.success{background:var(--accent-light);border-color:var(--accent-mid);color:var(--accent)}
+.status-box.error{background:#fdecea;border-color:rgba(217,64,64,.25);color:var(--red)}
+@media(max-width:600px){.two-col{grid-template-columns:1fr}}
+</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-brand-logo.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-ui-image.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">🧠 <span>NeuroSense AI</span></div>
+  <nav class="nav">
+    <a href="/templates">📋 Templates</a>
+    <a href="/research_chat">🧠 Research Chat</a>
+    <a href="/mode">🔄 Mode</a>
+    <a href="/dashboard">📊 Dashboard</a>
+  </nav>
+</header>
+
+<main class="wrapper narrow">
+  <section class="hero">
+    <div class="badge">✦ CREATE SAFE TEMPLATE</div>
+    <h1>Create a custom <span>wellness template</span></h1>
+    <p>Build your own guided prompt for safe mental wellness support. Templates cannot request diagnosis, medication advice, or replace professional care.</p>
+  </section>
+
+  <section class="form-card">
+    <form id="createTemplateForm">
+      <div class="field">
+        <label>Template Title</label>
+        <input type="text" id="templateTitle" placeholder="Example: Exam Anxiety Support Plan" required>
+      </div>
+      <div class="two-col">
+        <div class="field">
+          <label>Category</label>
+          <select id="templateCategory" required>
+            <option value="stress">Stress</option>
+            <option value="anxiety">Anxiety</option>
+            <option value="sleep">Sleep</option>
+            <option value="loneliness">Loneliness</option>
+            <option value="academic_pressure">Academic Pressure</option>
+            <option value="relationship">Relationship</option>
+            <option value="self_doubt">Self Doubt</option>
+            <option value="anger">Anger</option>
+            <option value="mood_tracking">Mood Tracking</option>
+            <option value="professional_help">Professional Help</option>
+            <option value="crisis_safety">Crisis Safety</option>
+            <option value="weekly_reflection">Weekly Reflection</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Output Type</label>
+          <select id="templateOutputType" required>
+            <option value="plan">Plan</option>
+            <option value="checklist">Checklist</option>
+            <option value="reflection">Reflection</option>
+            <option value="guide">Guide</option>
+            <option value="journal_prompt">Journal Prompt</option>
+            <option value="safety_plan">Safety Plan</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Description</label>
+        <input type="text" id="templateDescription" placeholder="Short description of what this template does">
+      </div>
+      <div class="field">
+        <label>Template Prompt</label>
+        <textarea id="templatePrompt" rows="8" required placeholder="Example: Create a 7-day calming study routine for a student who feels anxious before exams. Include breathing, study blocks, breaks, and when to seek support."></textarea>
+      </div>
+      <div class="safety-box">
+        <strong>Safety Rules</strong>
+        <p>Do not create templates asking for diagnosis, medication, dosage, or replacing psychiatrists. NeuroSense AI only provides general wellness support and professional referral guidance.</p>
+      </div>
+      <div class="form-actions">
+        <a href="/templates" class="secondary-link">Cancel</a>
+        <button type="submit">Create Template →</button>
+      </div>
+      <div id="templateStatus" class="status-box"></div>
+    </form>
+  </section>
+</main>
+
+<script src="{{ url_for('static', filename='js/templates.js') }}"></script>
+</body>
+</html>

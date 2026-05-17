@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuroSense AI — Crisis Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f8f5;
+  --white:#ffffff;
+  --panel:#f0f5f1;
+  --border:#d4e6d7;
+  --border2:#c2dcc6;
+  --text:#1a2e1c;
+  --text2:#4a6b4e;
+  --muted:#7a9b7e;
+  --accent:#2d7a3a;
+  --accent2:#3a9e4a;
+  --green:#27ae60;
+  --green-light:#e8f5e9;
+  --green-mid:#c8e6c9;
+  --cyan:#00897b;
+  --coral:#e53935;
+  --gold:#f9a825;
+  --shadow:0 4px 24px rgba(45,122,58,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  min-height:100vh;
+  font-family:Inter,sans-serif;
+  color:var(--text);
+  background:linear-gradient(135deg,#f0f7f1 0%,#ffffff 50%,#f0f5f1 100%);
+}
+a{text-decoration:none;color:inherit}
+button,input,textarea{font-family:inherit}
+
+.topbar{
+  min-height:68px;
+  border-bottom:1.5px solid var(--border);
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(16px);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  padding:0 1.5rem;
+  position:sticky;
+  top:0;
+  z-index:20;
+  box-shadow:0 2px 12px rgba(45,122,58,.08);
+}
+.brand{display:flex;align-items:center;gap:.65rem;font-weight:800;letter-spacing:.02em;color:var(--text)}
+.brand-logo{
+  width:34px;height:34px;border-radius:9px;
+  background:linear-gradient(135deg,var(--accent),var(--green));
+  display:grid;place-items:center;font-size:1.1rem;
+}
+.nav{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap}
+.nav a{
+  height:38px;padding:0 .9rem;border-radius:10px;
+  border:1.5px solid var(--border2);
+  color:var(--text2);background:#fff;
+  display:flex;align-items:center;
+  font-size:.78rem;font-weight:700;
+  transition:.18s;
+}
+.nav a:hover{background:var(--green-light);color:var(--accent)}
+.nav a.primary{background:#fff3e0;color:#e65100;border-color:#ffcc80}
+
+.wrapper{width:min(1180px,92vw);margin:0 auto;padding:2rem 0 4rem}
+
+.hero{
+  padding:1.8rem;
+  border:1.5px solid #ffcdd2;
+  border-radius:20px;
+  background:linear-gradient(135deg,#fff8f8,#fff3e0);
+  box-shadow:var(--shadow);
+  margin-bottom:1.2rem;
+}
+.badge{
+  display:inline-flex;align-items:center;gap:.45rem;
+  padding:.35rem .75rem;border-radius:999px;
+  background:#ffebee;border:1px solid #ef9a9a;
+  color:#c62828;font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:1rem;
+}
+h1{font-size:clamp(2rem,4.5vw,3.5rem);line-height:1.05;letter-spacing:-.04em;margin-bottom:.7rem;color:var(--text)}
+.hero p,.card p{color:var(--text2);line-height:1.8;max-width:900px}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1rem}
+.grid.three{grid-template-columns:repeat(3,1fr)}
+
+.card{
+  background:var(--white);
+  border:1.5px solid var(--border);
+  border-radius:18px;
+  padding:1.2rem;
+  box-shadow:var(--shadow);
+}
+.card.emergency{border-color:#ef9a9a;background:#fff8f8}
+.card.safe{border-color:var(--green-mid);background:var(--green-light)}
+.card.gold{border-color:#ffe082;background:#fffde7}
+.card h2{font-size:1.1rem;margin-bottom:.55rem;display:flex;align-items:center;gap:.5rem;color:var(--text)}
+.card h3{font-size:.9rem;margin:1rem 0 .45rem;color:var(--text2)}
+
+.resource{display:grid;gap:.55rem;margin-top:.85rem}
+.resource a,.resource div,.log-item{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:.75rem .85rem;border-radius:10px;
+  background:#fff;border:1.5px solid var(--border);
+  color:var(--text);font-size:.86rem;font-weight:700;
+  transition:.16s;
+}
+.resource a:hover{background:var(--green-light);border-color:var(--border2);color:var(--accent)}
+.resource small,.log-item small{color:var(--muted);font-size:.7rem;font-weight:700;text-align:right}
+
+.actions{display:flex;gap:.65rem;flex-wrap:wrap;margin-top:1rem}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.45rem;
+  min-height:42px;padding:.7rem 1rem;border-radius:10px;
+  border:1.5px solid var(--border2);background:#fff;
+  color:var(--text2);font-size:.82rem;font-weight:800;cursor:pointer;
+  transition:.16s;
+}
+.btn:hover{transform:translateY(-1px);background:var(--green-light);color:var(--accent)}
+.btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#fff}
+.btn.primary:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(45,122,58,.25)}
+.btn.danger{background:linear-gradient(135deg,#e53935,#ef5350);border:none;color:#fff}
+.btn.danger:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(229,57,53,.25)}
+.btn.safe{background:linear-gradient(135deg,var(--accent),var(--green));border:none;color:#fff}
+.btn.safe:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(45,122,58,.25)}
+.btn.gold{background:linear-gradient(135deg,#f9a825,#ffb300);border:none;color:#3e2000}
+.btn.full{width:100%}
+.btn[disabled]{opacity:.55;cursor:not-allowed;transform:none}
+
+.note{
+  margin-top:1rem;padding:1rem 1.1rem;border-radius:12px;
+  background:#fffde7;border:1px solid #ffe082;
+  color:#5d4037;line-height:1.75;font-size:.9rem;
+}
+.disclaimer{
+  margin-top:1rem;padding:1rem 1.1rem;border-radius:12px;
+  background:#fff3e0;border:1px solid #ffcc80;
+  color:#5d4037;line-height:1.75;font-size:.9rem;
+}
+.section-title{margin:1.5rem 0 .8rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.section-title h2{font-size:1.25rem;letter-spacing:-.02em;color:var(--text)}
+
+.check-buttons{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;margin-top:1rem}
+.check-btn{
+  padding:1rem;border-radius:14px;border:1.5px solid var(--border2);
+  background:#fff;color:var(--text);font-weight:900;cursor:pointer;
+  text-align:left;line-height:1.45;transition:.16s;
+}
+.check-btn:hover{background:var(--green-light);border-color:var(--border2)}
+.check-btn small{display:block;color:var(--muted);font-weight:700;margin-top:.3rem}
+.check-btn.active{outline:2px solid var(--accent2);background:var(--green-light)}
+.check-btn.danger.active{outline-color:#e53935;background:#ffebee}
+
+.status-panel{
+  margin-top:1rem;padding:1rem;border-radius:14px;border:1px solid var(--green-mid);
+  background:var(--green-light);color:var(--accent);line-height:1.7;font-weight:600;
+}
+
+.slider-wrap{margin-top:1rem}
+.slider-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem}
+.slider-value{font-size:2.2rem;font-weight:900;color:var(--gold);font-family:Outfit,sans-serif}
+input[type="range"]{width:100%;accent-color:var(--coral)}
+.intensity-labels{display:flex;justify-content:space-between;color:var(--muted);font-size:.72rem;margin-top:.45rem}
+
+.timer-card{text-align:center}
+.timer-circle{
+  width:170px;height:170px;border-radius:50%;margin:1rem auto;
+  border:8px solid var(--green-mid);
+  display:grid;place-items:center;
+  background:radial-gradient(circle,var(--green-light),#fff);
+}
+.timer-time{font-family:Outfit,sans-serif;font-size:2.25rem;font-weight:800;color:var(--accent)}
+.timer-phase{color:var(--green);font-weight:900;margin-top:-.6rem;margin-bottom:.8rem}
+
+.steps{display:grid;gap:.7rem;margin-top:1rem}
+.step{
+  display:flex;align-items:flex-start;gap:.8rem;padding:.85rem;border-radius:12px;
+  background:#fff;border:1.5px solid var(--border);cursor:pointer;transition:.16s;
+}
+.step:hover{background:var(--green-light);border-color:var(--border2)}
+.step-num{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--green-light);color:var(--accent);font-weight:900;flex:0 0 auto}
+.step.done{border-color:var(--green-mid);background:var(--green-light)}
+.step.done .step-num{background:var(--green-mid);color:#1b5e20}
+
+.plan-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem;margin-top:1rem}
+.plan-box{background:var(--panel);border:1.5px solid var(--border);border-radius:12px;padding:.85rem}
+.plan-box label{display:block;color:var(--accent);font-size:.8rem;font-weight:900;margin-bottom:.45rem;text-transform:uppercase;letter-spacing:.04em}
+.plan-box textarea{
+  width:100%;min-height:95px;resize:vertical;border-radius:10px;border:1.5px solid var(--border2);
+  background:#fff;color:var(--text);padding:.75rem;line-height:1.5;outline:none;
+  transition:.16s;
+}
+.plan-box textarea:focus{border-color:var(--accent2);box-shadow:0 0 0 3px rgba(45,122,58,.10)}
+
+.toast{
+  position:fixed;right:22px;bottom:22px;z-index:99;
+  background:var(--white);border:1.5px solid var(--border2);
+  box-shadow:var(--shadow-md);border-radius:14px;padding:.9rem 1rem;color:var(--text);font-weight:800;
+  opacity:0;transform:translateY(10px);pointer-events:none;transition:.2s;
+}
+.toast.show{opacity:1;transform:translateY(0)}
+
+@media(max-width:950px){
+  .grid,.grid.three,.plan-grid{grid-template-columns:1fr}
+  .check-buttons{grid-template-columns:1fr}
+  .topbar{height:auto;align-items:flex-start;flex-direction:column;padding:1rem}
+  .nav{width:100%}
+}
+</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-brand-logo.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-ui-image.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/dashboard">
+    <span class="brand-logo">🧠</span>
+    <span>NeuroSense AI</span>
+  </a>
+  <nav class="nav">
+    <a href="/dashboard">📊 Dashboard</a>
+    <a href="/mode">← Modes</a>
+    <a href="/research_chat">🧠 Research Chat</a>
+    <a class="primary" href="/support">🆘 Crisis Support</a>
+  </nav>
+</header>
+
+<main class="wrapper">
+  <section class="hero">
+    <div class="badge">Immediate Human Support</div>
+    <h1>🆘 Crisis Support</h1>
+    <p>If you feel unsafe, at risk of harming yourself, or in immediate emotional danger, please contact human support immediately. NeuroSense AI is only a supportive assistant and cannot replace emergency care.</p>
+    <div class="actions">
+      <a class="btn danger" href="tel:112" data-log-action="helpline_click" data-log-detail="Emergency 112">Call Emergency 112</a>
+      <a class="btn primary" href="tel:14416" data-log-action="helpline_click" data-log-detail="Tele-MANAS 14416">Call Tele-MANAS 14416</a>
+      <a class="btn" href="/dashboard">← Back to Dashboard</a>
+    </div>
+  </section>
+
+  <section class="grid">
+    <article class="card emergency">
+      <h2>1. Real-time safety check-in</h2>
+      <p>Choose the option closest to how safe you feel right now. If you are not safe, move toward human support first.</p>
+      <div class="check-buttons">
+        <button class="check-btn" data-safety="safe">✅ I am safe<small>I can use calming tools.</small></button>
+        <button class="check-btn" data-safety="unsure">⚠️ I am not sure<small>I should contact someone.</small></button>
+        <button class="check-btn danger" data-safety="unsafe">🆘 I may harm myself<small>I need human help now.</small></button>
+      </div>
+      <div id="safetyStatus" class="status-panel">Select your current safety status to get the next immediate step.</div>
+    </article>
+
+    <article class="card gold">
+      <h2>2. Crisis intensity slider</h2>
+      <p>Rate how intense this feels from 0 to 10. Higher scores will show stronger human-support actions.</p>
+      <div class="slider-wrap">
+        <div class="slider-head">
+          <strong>Current intensity</strong>
+          <span id="intensityValue" class="slider-value">5</span>
+        </div>
+        <input id="intensityRange" type="range" min="0" max="10" value="5">
+        <div class="intensity-labels"><span>0 calm</span><span>5 intense</span><span>10 emergency</span></div>
+      </div>
+      <div id="intensityAdvice" class="note">If this is above 7, call a trusted person or helpline now and avoid staying alone.</div>
+    </article>
+  </section>
+
+  <section class="grid three">
+    <article class="card emergency">
+      <h2>3. Emergency contact</h2>
+      {% if has_emergency_contact %}
+      <p>Your saved emergency contact is <strong>{{ emergency_contact_name }}</strong>.</p>
+      <div class="actions">
+        <a class="btn danger full" href="tel:{{ emergency_contact_phone }}" data-log-action="emergency_contact_call" data-log-detail="{{ emergency_contact_name }}">📞 Call {{ emergency_contact_name }}</a>
+        <button class="btn primary full" id="smsEmergencyBtn" data-phone="{{ emergency_contact_phone }}">💬 Message {{ emergency_contact_name }}</button>
+      </div>
+      {% else %}
+      <p>No emergency contact is saved yet. Add one in your profile so this page can show one-tap call and message actions.</p>
+      <a class="btn primary full" href="/profile">Add Emergency Contact</a>
+      {% endif %}
+      <div class="note" id="trustedMessage">"I am not feeling safe right now and I need someone to stay with me or talk to me. Can you please call me or come near me?"</div>
+      <button class="btn full" id="copyMsgBtn">Copy message</button>
+    </article>
+
+    <article class="card timer-card safe">
+      <h2>4. 60-second breathing timer</h2>
+      <p>Use this while you are moving toward human support or waiting for someone to respond.</p>
+      <div class="timer-circle">
+        <div>
+          <div id="timerTime" class="timer-time">60</div>
+          <div class="timer-phase" id="timerPhase">Ready</div>
+        </div>
+      </div>
+      <div class="actions" style="justify-content:center">
+        <button class="btn safe" id="startTimerBtn">Start</button>
+        <button class="btn" id="resetTimerBtn">Reset</button>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>5. Guided grounding steps</h2>
+      <p>Tap each step as you complete it. These are short-term grounding actions, not a substitute for emergency care.</p>
+      <div class="steps" id="groundingSteps">
+        <div class="step" data-step="1"><div class="step-num">1</div><div><strong>Place both feet on the floor.</strong><p>Feel the ground supporting you.</p></div></div>
+        <div class="step" data-step="2"><div class="step-num">2</div><div><strong>Name 5 things you can see.</strong><p>Look around slowly and say them out loud.</p></div></div>
+        <div class="step" data-step="3"><div class="step-num">3</div><div><strong>Take 3 slow breaths.</strong><p>Inhale gently, exhale longer.</p></div></div>
+        <div class="step" data-step="4"><div class="step-num">4</div><div><strong>Move near another person.</strong><p>Do not stay alone if risk feels high.</p></div></div>
+        <div class="step" data-step="5"><div class="step-num">5</div><div><strong>Call or message support.</strong><p>Use a helpline or trusted person.</p></div></div>
+      </div>
+    </article>
+  </section>
+
+  <div class="section-title">
+    <h2>🇮🇳 India Crisis & Mental Health Helplines</h2>
+  </div>
+  <section class="grid">
+    <article class="card emergency">
+      <h2>Urgent contacts</h2>
+      <p>Use these contacts if you need urgent support, crisis counselling, or someone trained to talk to right now.</p>
+      <div class="resource">
+        <a href="tel:112" data-log-action="helpline_click" data-log-detail="Emergency 112"><span>Emergency Services</span><small>112</small></a>
+        <a href="tel:108" data-log-action="helpline_click" data-log-detail="Ambulance 108"><span>Ambulance</span><small>108</small></a>
+        <a href="tel:14416" data-log-action="helpline_click" data-log-detail="Tele-MANAS"><span>Tele-MANAS</span><small>14416</small></a>
+        <a href="tel:18008914416" data-log-action="helpline_click" data-log-detail="Tele-MANAS Alternate"><span>Tele-MANAS Alternate</span><small>1800-891-4416</small></a>
+        <a href="tel:18005990019" data-log-action="helpline_click" data-log-detail="KIRAN Helpline"><span>KIRAN Helpline</span><small>1800-599-0019</small></a>
+        <a href="tel:9152987821" data-log-action="helpline_click" data-log-detail="iCALL"><span>iCALL</span><small>9152987821</small></a>
+        <a href="tel:02227546669" data-log-action="helpline_click" data-log-detail="AASRA"><span>AASRA</span><small>022-27546669</small></a>
+        <a href="tel:+919999666555" data-log-action="helpline_click" data-log-detail="Vandrevala Foundation"><span>Vandrevala Foundation</span><small>+91 9999 666 555</small></a>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>What to do right now</h2>
+      <p>Take one immediate safety step before doing anything else.</p>
+      <div class="resource">
+        <div><span>Move near another person or public/safe space</span><small>Step 1</small></div>
+        <div><span>Call or message one trusted person</span><small>Step 2</small></div>
+        <div><span>Move away from anything you could use to hurt yourself</span><small>Step 3</small></div>
+        <div><span>Call a helpline or emergency service if danger feels immediate</span><small>Step 4</small></div>
+      </div>
+    </article>
+  </section>
+
+  <section class="grid">
+    <article class="card safe">
+      <h2>6. Crisis action log</h2>
+      <p>This records safety actions taken on this page, such as check-ins, helpline clicks, and grounding steps.</p>
+      <div class="resource" id="actionLog">
+        {% if crisis_actions %}
+          {% for item in crisis_actions %}
+          <div class="log-item"><span>{{ item.action|replace('_',' ')|title }}</span><small>{{ item.created_at }}</small></div>
+          {% endfor %}
+        {% else %}
+          <div class="log-item"><span>No actions logged yet</span><small>Start with a safety check-in</small></div>
+        {% endif %}
+      </div>
+    </article>
+
+    <article class="card gold">
+      <h2>Professional help bridge</h2>
+      <p>For ongoing or intense distress, connect with a qualified counsellor, psychologist, psychiatrist, doctor, or local emergency service.</p>
+      <div class="resource">
+        <a href="/reports/solution"><span>Open Solution Report</span><small>Wellness Plan</small></a>
+        <a href="/research_chat"><span>Open Research Chat</span><small>Guided Support</small></a>
+        <a href="/profile"><span>Update Emergency Contact</span><small>Profile</small></a>
+      </div>
+    </article>
+  </section>
+
+  <div class="section-title">
+    <h2>7. My Safety Plan</h2>
+    <button class="btn primary" id="savePlanBtn">Save Safety Plan</button>
+  </div>
+  <section class="card">
+    <p>Edit these fields so your crisis page shows practical steps that fit you. Keep it simple and action-based.</p>
+    <div class="plan-grid">
+      <div class="plan-box"><label>Warning signs</label><textarea id="planWarningSigns">{{ (safety_plan.warning_signs or [])|join('\n') }}</textarea></div>
+      <div class="plan-box"><label>Things that help me</label><textarea id="planCopingSteps">{{ (safety_plan.coping_steps or [])|join('\n') }}</textarea></div>
+      <div class="plan-box"><label>Safe places</label><textarea id="planSafePlaces">{{ (safety_plan.safe_places or [])|join('\n') }}</textarea></div>
+      <div class="plan-box"><label>Trusted people</label><textarea id="planTrustedPeople">{{ (safety_plan.trusted_people or [])|join('\n') }}</textarea></div>
+      <div class="plan-box"><label>Things to avoid right now</label><textarea id="planAvoid">{{ (safety_plan.things_to_avoid or [])|join('\n') }}</textarea></div>
+      <div class="plan-box"><label>Professional resources</label><textarea id="planResources">{{ (safety_plan.professional_resources or [])|join('\n') }}</textarea></div>
+    </div>
+  </section>
+
+  <section class="grid" style="margin-top:1rem">
+    <article class="card emergency" id="stillUnsafeCard">
+      <h2>🚨 Still feeling unsafe?</h2>
+      <p>If danger still feels immediate, use this button to focus only on human-support actions.</p>
+      <div class="actions">
+        <button type="button" class="btn danger" id="stillUnsafeBtn">I still feel unsafe</button>
+        <a class="btn" href="tel:112">Call Emergency 112</a>
+        <a class="btn" href="tel:14416">Call Tele-MANAS 14416</a>
+      </div>
+      <div class="note" id="stillUnsafeSteps" style="display:none;margin-top:1rem">
+        <strong>Do these now:</strong><br>
+        1. Move near another person or public/safe space.<br>
+        2. Call emergency services or a crisis helpline now.<br>
+        3. Message or call your emergency contact.<br>
+        4. Move away from anything that could be used to harm yourself.<br>
+        5. Do not stay alone while the feeling is intense.
+      </div>
+    </article>
+  </section>
+
+  <div class="disclaimer"><strong>Important:</strong> NeuroSense AI is not an emergency service, psychiatrist, doctor, or therapist. It does not diagnose or prescribe medication. If you are in immediate danger, contact local emergency services or a trusted person now.</div>
+</main>
+
+<div class="toast" id="toast">Saved</div>
+
+<script>
+const trustedMessage = "I am not feeling safe right now and I need someone to stay with me or talk to me. Can you please call me or come near me?";
+const actionLogEl = document.getElementById("actionLog");
+const toastEl = document.getElementById("toast");
+let intensityLogTimer = null;
+let timerInterval = null;
+let timerRemaining = 60;
+
+function toast(message){
+  toastEl.textContent = message;
+  toastEl.classList.add("show");
+  setTimeout(() => toastEl.classList.remove("show"), 2200);
+}
+
+async function logAction(action, details={}){
+  try{
+    const res = await fetch("/api/crisis/action_log", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({action, details})
+    });
+    const data = await res.json();
+    if(data.ok && Array.isArray(data.actions)) renderActionLog(data.actions);
+  }catch(err){ console.warn("Action log failed", err); }
+}
+
+function renderActionLog(actions){
+  if(!actionLogEl) return;
+  if(!actions || !actions.length){
+    actionLogEl.innerHTML = `<div class="log-item"><span>No actions logged yet</span><small>Start with a safety check-in</small></div>`;
+    return;
+  }
+  actionLogEl.innerHTML = actions.map(item => {
+    const label = String(item.action || "action").replaceAll("_"," ").replace(/\b\w/g, m => m.toUpperCase());
+    const created = item.created_at ? new Date(item.created_at).toLocaleString() : "Now";
+    return `<div class="log-item"><span>${label}</span><small>${created}</small></div>`;
+  }).join("");
+}
+
+function setSafetyStatus(status){
+  document.querySelectorAll(".check-btn").forEach(btn => btn.classList.remove("active"));
+  const btn = document.querySelector(`.check-btn[data-safety="${status}"]`);
+  if(btn) btn.classList.add("active");
+  const panel = document.getElementById("safetyStatus");
+  const messages = {
+    safe:"You selected that you are safe. Stay with the breathing timer or grounding steps, and still reach out to someone if the feeling rises.",
+    unsure:"You selected not sure. Please move near another person and message or call a trusted person now.",
+    unsafe:"You selected that you may harm yourself. Please call emergency services or a crisis helpline now. Do not stay alone. Move away from anything you could use to hurt yourself."
+  };
+  panel.textContent = messages[status] || messages.unsafe;
+  logAction("safety_check", {status});
+}
+
+document.querySelectorAll(".check-btn[data-safety]").forEach(btn => {
+  btn.addEventListener("click", () => setSafetyStatus(btn.dataset.safety));
+});
+
+const intensityRange = document.getElementById("intensityRange");
+const intensityValue = document.getElementById("intensityValue");
+const intensityAdvice = document.getElementById("intensityAdvice");
+function updateIntensity(value){
+  intensityValue.textContent = value;
+  let msg = "Use grounding and breathing. Keep tracking how the feeling changes.";
+  if(value >= 8) msg = "This is high intensity. Call a trusted person, helpline, or emergency service now. Do not stay alone.";
+  else if(value >= 5) msg = "This is moderate to high. Message someone you trust and use the breathing timer while waiting.";
+  else if(value <= 3) msg = "This is lower intensity. Use grounding, hydrate, and stay near supportive people if possible.";
+  intensityAdvice.textContent = msg;
+  clearTimeout(intensityLogTimer);
+  intensityLogTimer = setTimeout(() => logAction("intensity_change", {value:Number(value)}), 500);
+}
+intensityRange.addEventListener("input", e => updateIntensity(Number(e.target.value)));
+updateIntensity(Number(intensityRange.value));
+
+function openSMS(phone){
+  if(!phone){ window.location.href = "/profile"; return; }
+  logAction("emergency_contact_sms", {phone_masked:String(phone).slice(-4)});
+  window.location.href = `sms:${encodeURIComponent(phone)}?body=${encodeURIComponent(trustedMessage)}`;
+}
+const smsBtn = document.getElementById("smsEmergencyBtn");
+if(smsBtn){ smsBtn.addEventListener("click", () => openSMS(smsBtn.dataset.phone || "")); }
+
+const copyBtn = document.getElementById("copyMsgBtn");
+copyBtn.addEventListener("click", async () => {
+  try{
+    await navigator.clipboard.writeText(trustedMessage);
+    toast("Message copied");
+    logAction("copy_message", {source:"trusted_message"});
+  }catch(err){ toast("Copy failed — select the message manually"); }
+});
+
+document.querySelectorAll("[data-log-action]").forEach(el => {
+  el.addEventListener("click", () => logAction(el.dataset.logAction, {label:el.dataset.logDetail || el.textContent.trim()}));
+});
+
+function setTimerDisplay(){
+  document.getElementById("timerTime").textContent = timerRemaining;
+  const phase = document.getElementById("timerPhase");
+  const cycle = timerRemaining % 14;
+  if(timerRemaining === 60) phase.textContent = "Ready";
+  else if(cycle > 10) phase.textContent = "Breathe in";
+  else if(cycle > 6) phase.textContent = "Hold";
+  else phase.textContent = "Breathe out";
+}
+function startTimer(){
+  if(timerInterval) return;
+  logAction("breathing_timer_start", {seconds:60});
+  document.getElementById("startTimerBtn").textContent = "Running";
+  timerInterval = setInterval(() => {
+    timerRemaining -= 1;
+    if(timerRemaining <= 0){
+      clearInterval(timerInterval); timerInterval = null; timerRemaining = 0;
+      document.getElementById("timerPhase").textContent = "Complete";
+      document.getElementById("startTimerBtn").textContent = "Start";
+      logAction("breathing_timer_complete", {seconds:60});
+      toast("Breathing cycle complete");
+    }
+    setTimerDisplay();
+  }, 1000);
+}
+function resetTimer(){
+  clearInterval(timerInterval); timerInterval = null; timerRemaining = 60;
+  document.getElementById("startTimerBtn").textContent = "Start";
+  setTimerDisplay();
+}
+document.getElementById("startTimerBtn").addEventListener("click", startTimer);
+document.getElementById("resetTimerBtn").addEventListener("click", resetTimer);
+setTimerDisplay();
+
+document.querySelectorAll(".step[data-step]").forEach(step => {
+  step.addEventListener("click", () => {
+    step.classList.toggle("done");
+    logAction("grounding_step", {step:Number(step.dataset.step), completed:step.classList.contains("done")});
+  });
+});
+
+function lines(id){
+  const value = document.getElementById(id).value || "";
+  return value.split("\n").map(x => x.trim()).filter(Boolean);
+}
+document.getElementById("savePlanBtn").addEventListener("click", async () => {
+  const payload = {
+    warning_signs: lines("planWarningSigns"),
+    coping_steps: lines("planCopingSteps"),
+    safe_places: lines("planSafePlaces"),
+    trusted_people: lines("planTrustedPeople"),
+    things_to_avoid: lines("planAvoid"),
+    professional_resources: lines("planResources")
+  };
+  try{
+    const res = await fetch("/api/crisis/safety_plan", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if(!data.ok) throw new Error(data.error || "Safety plan save failed");
+    if(Array.isArray(data.actions)) renderActionLog(data.actions);
+    toast("Safety plan saved");
+  }catch(err){ toast(err.message || "Safety plan save failed"); }
+});
+
+const stillUnsafeBtn = document.getElementById("stillUnsafeBtn");
+if(stillUnsafeBtn){
+  stillUnsafeBtn.addEventListener("click", () => {
+    const box = document.getElementById("stillUnsafeSteps");
+    if(box) box.style.display = "block";
+    logAction("still_unsafe", {source:"support_page", level:"urgent"});
+    toast("Focus on immediate human support now");
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Language — NeuroSense AI</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   NeuroSense AI — Sign Chat Green-White Template
+   Palette: #f4f7f2, #ffffff, #2d7a3a, #3fa050
+   ========================================================================== */
+
+:root{
+  --bg:#f4f7f2;
+  --bg2:#eef4eb;
+  --s1:#ffffff;
+  --s2:#f0f6ee;
+  --s3:#e4efe0;
+
+  --border:#d3e6cc;
+  --border2:#b8d4ae;
+
+  --text:#1a2e18;
+  --text2:#4a6645;
+  --muted:#7a9e74;
+
+  --accent:#2d7a3a;
+  --accent2:#3fa050;
+  --accent-light:#e8f5e3;
+  --accent-mid:#c3e6b8;
+
+  --danger:#d94040;
+  --danger-soft:#fdecec;
+
+  --warm:#f0973b;
+  --warm-light:#fef3e8;
+
+  --blue:#3b82c4;
+  --blue-light:#e8f0fb;
+
+  --shadow:0 20px 60px rgba(45,122,58,.10);
+  --shadow-sm:0 8px 26px rgba(45,122,58,.08);
+
+  --r:22px;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,
+body{
+  min-height:100%;
+}
+
+body{
+  height:100vh;
+  min-height:100vh;
+  font-family:'DM Sans',sans-serif;
+  background:
+    radial-gradient(circle at top left,rgba(63,160,80,.10),transparent 34%),
+    radial-gradient(circle at bottom right,rgba(195,230,184,.42),transparent 34%),
+    var(--bg);
+  color:var(--text);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button{
+  font-family:inherit;
+}
+
+button,
+a,
+.msg,
+.nbtn,
+.bbtn,
+.sent-box,
+.news-item,
+.status-pill,
+.top-hud,
+.builder,
+.chat-col{
+  transition:.2s ease;
+}
+
+/* ==========================================================================
+   NAVBAR
+   ========================================================================== */
+
+nav{
+  height:76px;
+  min-height:76px;
+  padding:.9rem 1.35rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  flex-wrap:wrap;
+  background:rgba(255,255,255,.90);
+  border-bottom:1.5px solid var(--border);
+  backdrop-filter:blur(22px);
+  flex-shrink:0;
+  z-index:50;
+}
+
+.nav-logo{
+  display:flex;
+  align-items:center;
+  gap:.75rem;
+  font-family:'Outfit',sans-serif;
+  font-weight:900;
+  color:var(--text);
+  font-size:1.05rem;
+}
+
+.nav-logo::before{
+  content:'🧠';
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;
+  box-shadow:0 8px 24px rgba(45,122,58,.24);
+}
+
+.mode-pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:30px;
+  padding:0 .75rem;
+  border-radius:999px;
+  background:var(--accent-light);
+  border:1.5px solid var(--accent-mid);
+  color:var(--accent);
+  font-size:.72rem;
+  font-weight:900;
+  margin-left:.3rem;
+}
+
+.nav-right{
+  display:flex;
+  gap:.55rem;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+.nbtn{
+  min-height:40px;
+  padding:0 .95rem;
+  border-radius:14px;
+  font-size:.82rem;
+  font-weight:900;
+  border:1.5px solid var(--accent-mid);
+  background:#ffffff;
+  color:var(--accent);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.nbtn:hover{
+  background:var(--accent-light);
+  transform:translateY(-1px);
+}
+
+/* old toggle hidden because project is green-white only */
+.theme-toggle{
+  display:none;
+}
+
+/* ==========================================================================
+   LAYOUT
+   ========================================================================== */
+
+.layout{
+  flex:1 1 auto;
+  height:calc(100vh - 76px);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 390px;
+  overflow:hidden;
+  min-height:0;
+}
+
+.left-col{
+  display:grid;
+  grid-template-rows:minmax(0,1fr) auto;
+  overflow:hidden;
+  min-height:0;
+  border-right:1.5px solid var(--border);
+  background:rgba(255,255,255,.35);
+}
+
+/* ==========================================================================
+   VIDEO AREA
+   ========================================================================== */
+
+.vid-section{
+  position:relative;
+  overflow:hidden;
+  min-height:0;
+  height:100%;
+  background:#0e1710;
+}
+
+video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transform:scaleX(-1);
+  background:#0e1710;
+}
+
+canvas{
+  display:none;
+}
+
+/* Top HUD */
+.top-hud{
+  position:absolute;
+  top:1rem;
+  left:1rem;
+  right:1rem;
+  z-index:10;
+
+  background:rgba(255,255,255,.93);
+  backdrop-filter:blur(18px);
+  border:1.5px solid var(--border);
+  border-radius:24px;
+  padding:1rem 1.2rem;
+
+  display:flex;
+  align-items:center;
+  gap:1.2rem;
+
+  box-shadow:var(--shadow-sm);
+}
+
+.sign-block{
+  text-align:center;
+  flex-shrink:0;
+  min-width:95px;
+}
+
+.sign-micro{
+  font-size:.64rem;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  margin-bottom:.18rem;
+  font-family:'JetBrains Mono',monospace;
+  font-weight:700;
+}
+
+.sign-val{
+  min-width:72px;
+  min-height:40px;
+  display:grid;
+  place-items:center;
+  font-family:'Outfit',sans-serif;
+  font-size:2.1rem;
+  font-weight:900;
+  color:var(--accent);
+  line-height:1;
+}
+
+.sign-val.flash{
+  animation:signFlash .35s ease;
+}
+
+@keyframes signFlash{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.18);filter:brightness(1.25)}
+}
+
+.hold-block{
+  flex:1;
+}
+
+.hold-hdr{
+  display:flex;
+  justify-content:space-between;
+  font-size:.72rem;
+  color:var(--muted);
+  margin-bottom:.4rem;
+  font-family:'JetBrains Mono',monospace;
+  font-weight:700;
+}
+
+.hold-cnt{
+  color:var(--accent);
+  font-weight:900;
+}
+
+.hold-track{
+  height:11px;
+  background:var(--s3);
+  border-radius:999px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  margin-bottom:.34rem;
+}
+
+.hold-fill{
+  height:100%;
+  border-radius:999px;
+  width:0%;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  position:relative;
+  overflow:hidden;
+}
+
+.hold-fill::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
+  animation:shimmer 1.8s ease-in-out infinite;
+}
+
+@keyframes shimmer{
+  from{transform:translateX(-100%)}
+  to{transform:translateX(100%)}
+}
+
+.hold-segs{
+  display:flex;
+  gap:4px;
+}
+
+.seg{
+  height:5px;
+  flex:1;
+  border-radius:999px;
+  background:var(--border);
+}
+
+.seg.on{
+  background:var(--accent);
+}
+
+/* Bottom HUD */
+.bot-hud{
+  position:absolute;
+  bottom:1rem;
+  left:1rem;
+  right:1rem;
+  display:flex;
+  align-items:center;
+  gap:.7rem;
+  z-index:10;
+}
+
+.status-pill{
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+  padding:.48rem .95rem;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(16px);
+  border:1.5px solid var(--border);
+  border-radius:999px;
+  color:var(--text2);
+  font-size:.76rem;
+  font-weight:800;
+}
+
+.sdot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:var(--danger);
+  flex-shrink:0;
+}
+
+.sdot.live{
+  background:var(--accent2);
+  animation:blinkDot 1.5s ease-in-out infinite;
+}
+
+@keyframes blinkDot{
+  0%,100%{opacity:1}
+  50%{opacity:.35}
+}
+
+.hand-badge{
+  margin-left:auto;
+  padding:.48rem .95rem;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(16px);
+  border:1.5px solid var(--accent-mid);
+  border-radius:999px;
+  font-size:.76rem;
+  color:var(--accent);
+  font-weight:900;
+  display:none;
+}
+
+.hand-badge.show{
+  display:block;
+}
+
+.camera-builder{
+  position:absolute;
+  left:1rem;
+  right:1rem;
+  bottom:4.35rem;
+  z-index:11;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  padding:.78rem .95rem;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(18px);
+  border:1.5px solid var(--border);
+  border-radius:18px;
+  box-shadow:var(--shadow-sm);
+}
+
+.camera-builder-label{
+  flex-shrink:0;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.66rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--muted);
+}
+
+.camera-builder-text{
+  flex:1;
+  min-width:0;
+  color:var(--text);
+  font-weight:900;
+  line-height:1.45;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.camera-builder-text.empty{
+  color:var(--muted);
+  font-style:italic;
+  font-weight:700;
+}
+
+.camera-builder-count{
+  flex-shrink:0;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;
+  color:var(--accent);
+  background:var(--accent-light);
+  border:1.5px solid var(--accent-mid);
+  border-radius:999px;
+  padding:.25rem .58rem;
+  font-weight:800;
+}
+
+.camera-builder.appended{
+  border-color:var(--accent);
+  background:rgba(232,245,227,.96);
+  animation:appPulse .42s ease;
+}
+
+/* No model overlay */
+.no-model-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(244,247,242,.97);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:2rem;
+  z-index:20;
+  color:var(--text);
+}
+
+.no-model-overlay.hidden{
+  display:none;
+}
+
+.no-model-overlay h2{
+  font-family:'Outfit',sans-serif;
+  font-size:1.45rem;
+  margin-bottom:1rem;
+  color:var(--danger);
+}
+
+.no-model-overlay p{
+  color:var(--text2);
+  font-size:.9rem;
+  margin-bottom:.55rem;
+  line-height:1.65;
+}
+
+.no-model-overlay code{
+  background:#ffffff;
+  border:1.5px solid var(--border);
+  color:var(--accent);
+  padding:.4rem .9rem;
+  border-radius:10px;
+  font-size:.8rem;
+  display:block;
+  margin:.38rem 0;
+  font-family:'JetBrains Mono',monospace;
+  font-weight:800;
+}
+
+/* ==========================================================================
+   SENTENCE BUILDER
+   ========================================================================== */
+
+.builder{
+  position:relative;
+  z-index:30;
+  background:rgba(255,255,255,.97);
+  border-top:1.5px solid var(--border);
+  padding:1rem 1.2rem;
+  min-height:164px;
+  box-shadow:0 -10px 28px rgba(45,122,58,.08);
+}
+
+.bld-hdr{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:.75rem;
+}
+
+.bld-hdr h3{
+  font-family:'Outfit',sans-serif;
+  font-size:.95rem;
+  font-weight:900;
+  color:var(--text);
+}
+
+.wc{
+  font-size:.72rem;
+  color:var(--accent);
+  background:var(--accent-light);
+  padding:.25rem .65rem;
+  border-radius:999px;
+  border:1.5px solid var(--accent-mid);
+  font-family:'JetBrains Mono',monospace;
+  font-weight:800;
+}
+
+.sent-box{
+  min-height:72px;
+  padding:.9rem 1rem;
+  background:#ffffff;
+  border:1.5px solid var(--border);
+  border-radius:18px;
+  font-size:1rem;
+  line-height:1.6;
+  margin-bottom:.8rem;
+  outline:none;
+  word-break:break-word;
+  cursor:text;
+  color:var(--text);
+  box-shadow:var(--shadow-sm);
+}
+
+.sent-box:focus{
+  border-color:var(--accent-mid);
+  box-shadow:0 0 0 4px rgba(63,160,80,.12);
+}
+
+.sent-box.empty{
+  color:var(--muted);
+  font-style:italic;
+  font-size:.95rem;
+}
+
+.sent-box.appended{
+  border-color:var(--accent);
+  background:var(--accent-light);
+  animation:appPulse .42s ease;
+}
+
+@keyframes appPulse{
+  0%,100%{box-shadow:var(--shadow-sm)}
+  50%{box-shadow:0 0 0 5px rgba(63,160,80,.14)}
+}
+
+.bld-btns{
+  display:flex;
+  gap:.5rem;
+  flex-wrap:wrap;
+}
+
+.bbtn{
+  min-height:42px;
+  padding:0 .9rem;
+  border-radius:13px;
+  border:1.5px solid var(--border);
+  background:#ffffff;
+  color:var(--text2);
+  font-size:.8rem;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:.28rem;
+  font-weight:900;
+}
+
+.bbtn:hover{
+  border-color:var(--accent-mid);
+  background:var(--accent-light);
+  color:var(--accent);
+  transform:translateY(-1px);
+}
+
+.bbtn.primary{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border:none;
+  color:#fff;
+  font-weight:900;
+  flex:1;
+  box-shadow:0 10px 24px rgba(45,122,58,.18);
+}
+
+.bbtn.primary:hover{
+  box-shadow:0 14px 30px rgba(45,122,58,.24);
+  color:#fff;
+}
+
+.bbtn.danger:hover{
+  background:var(--danger-soft);
+  border-color:rgba(217,64,64,.25);
+  color:var(--danger);
+}
+
+/* ==========================================================================
+   RIGHT CHAT PANEL
+   ========================================================================== */
+
+.chat-col{
+  display:flex;
+  flex-direction:column;
+  background:rgba(255,255,255,.94);
+  overflow:hidden;
+}
+
+.chat-hdr{
+  padding:1rem 1.2rem;
+  border-bottom:1.5px solid var(--border);
+  background:#ffffff;
+  flex-shrink:0;
+}
+
+.chat-hdr h3{
+  font-family:'Outfit',sans-serif;
+  font-size:1rem;
+  font-weight:900;
+  color:var(--text);
+  margin-bottom:.15rem;
+}
+
+.chat-hdr p{
+  font-size:.75rem;
+  color:var(--muted);
+  font-weight:700;
+}
+
+.msgs{
+  flex:1;
+  overflow-y:auto;
+  padding:1rem;
+  display:flex;
+  flex-direction:column;
+  gap:.8rem;
+  min-height:0;
+  background:
+    radial-gradient(circle at top left,rgba(63,160,80,.06),transparent 40%),
+    var(--bg);
+}
+
+.msgs::-webkit-scrollbar{
+  width:5px;
+}
+
+.msgs::-webkit-scrollbar-thumb{
+  background:var(--accent-mid);
+  border-radius:999px;
+}
+
+.msg{
+  max-width:94%;
+  animation:msgIn .3s ease both;
+}
+
+@keyframes msgIn{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:none}
+}
+
+.msg.user{
+  align-self:flex-end;
+}
+
+.msg.assistant{
+  align-self:flex-start;
+}
+
+.msg-body{
+  padding:.88rem 1rem;
+  border-radius:18px;
+  line-height:1.62;
+  font-size:.88rem;
+  word-break:break-word;
+  box-shadow:var(--shadow-sm);
+}
+
+.msg.user .msg-body{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;
+  border-bottom-right-radius:5px;
+}
+
+.msg.assistant .msg-body{
+  background:#ffffff;
+  border:1.5px solid var(--border);
+  color:var(--text);
+  border-bottom-left-radius:5px;
+}
+
+.msg-meta{
+  display:flex;
+  align-items:center;
+  gap:.35rem;
+  margin-top:.28rem;
+  font-size:.64rem;
+  color:var(--muted);
+  font-family:'JetBrains Mono',monospace;
+}
+
+.msg.user .msg-meta{
+  justify-content:flex-end;
+}
+
+.spkbtn{
+  background:#ffffff;
+  border:1px solid var(--border);
+  cursor:pointer;
+  font-size:.72rem;
+  opacity:.7;
+  padding:.15rem .35rem;
+  border-radius:8px;
+}
+
+.spkbtn:hover,
+.spkbtn.speaking{
+  opacity:1;
+  color:var(--accent);
+  border-color:var(--accent-mid);
+  background:var(--accent-light);
+}
+
+.spkbtn.speaking{
+  animation:spkP 1s ease-in-out infinite;
+}
+
+@keyframes spkP{
+  0%,100%{opacity:1}
+  50%{opacity:.45}
+}
+
+.typing{
+  align-self:flex-start;
+  margin:0 1rem 1rem;
+  padding:.8rem 1rem;
+  background:#ffffff;
+  border:1.5px solid var(--border);
+  border-radius:18px;
+  display:none;
+  box-shadow:var(--shadow-sm);
+}
+
+.typing.show{
+  display:flex;
+}
+
+.tdots span{
+  display:inline-block;
+  width:6px;
+  height:6px;
+  background:var(--accent);
+  border-radius:50%;
+  margin:0 2px;
+  animation:tdot 1.4s infinite;
+}
+
+.tdots span:nth-child(2){
+  animation-delay:.18s;
+}
+
+.tdots span:nth-child(3){
+  animation-delay:.36s;
+}
+
+@keyframes tdot{
+  0%,60%,100%{transform:translateY(0)}
+  30%{transform:translateY(-5px)}
+}
+
+/* ==========================================================================
+   TOAST
+   ========================================================================== */
+
+.toast{
+  position:fixed;
+  right:24px;
+  bottom:24px;
+  z-index:9999;
+  min-width:230px;
+  max-width:360px;
+  padding:14px 16px;
+  border-radius:18px;
+  background:#ffffff;
+  border:1.5px solid var(--accent-mid);
+  color:var(--text);
+  box-shadow:0 20px 60px rgba(45,122,58,.16);
+  font-family:'DM Sans',sans-serif;
+  font-weight:800;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media(max-width:980px){
+  body{
+    height:auto;
+    min-height:100vh;
+    overflow:auto;
+  }
+
+  .layout{
+    height:auto;
+    grid-template-columns:1fr;
+    grid-template-rows:minmax(520px,1fr) 360px;
+    overflow:visible;
+  }
+
+  .left-col{
+    border-right:none;
+    min-height:680px;
+  }
+
+  .chat-col{
+    border-top:1.5px solid var(--border);
+    min-height:360px;
+  }
+
+  .vid-section{
+    min-height:460px;
+  }
+}
+
+@media(max-width:720px){
+  nav{
+    align-items:flex-start;
+  }
+
+  .nav-right{
+    width:100%;
+  }
+
+  .nbtn{
+    flex:1;
+  }
+
+  .top-hud{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .sign-block{
+    min-width:0;
+  }
+
+  .bot-hud{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .hand-badge{
+    margin-left:0;
+  }
+
+  .camera-builder{
+    bottom:5.5rem;
+    align-items:flex-start;
+    flex-direction:column;
+    gap:.35rem;
+  }
+
+  .camera-builder-text{
+    width:100%;
+    white-space:normal;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+  }
+
+  .bld-btns{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+
+  .bbtn.primary{
+    grid-column:1 / -1;
+  }
+}
+
+@media(max-width:520px){
+  .layout{
+    grid-template-rows:minmax(440px,1fr) 360px;
+  }
+
+  .vid-section{
+    min-height:420px;
+  }
+
+  .builder{
+    padding:.9rem;
+  }
+
+  .sent-box{
+    min-height:64px;
+  }
+
+  .msg{
+    max-width:100%;
+  }
+}
+</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-brand-logo.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-ui-image.css') }}">
+</head>
+
+<body>
+
+<nav>
+  <div class="nav-logo">
+    NeuroSense AI
+    <span class="mode-pill">🤟 SIGN</span>
+  </div>
+
+  <div class="nav-right">
+    <a href="/mode" class="nbtn">← Modes</a>
+    <a href="/dashboard" class="nbtn">📊 Dashboard</a>
+  </div>
+</nav>
+
+<div class="layout">
+
+  <div class="left-col">
+
+    <div class="vid-section">
+
+      <video id="vid" autoplay playsinline></video>
+      <canvas id="cvs"></canvas>
+
+      <div class="top-hud">
+
+        <div class="sign-block">
+          <div class="sign-micro">Detected Sign</div>
+          <div class="sign-val" id="signVal">—</div>
+        </div>
+
+        <div class="hold-block">
+          <div class="hold-hdr">
+            <span>Hold steady</span>
+            <span class="hold-cnt">
+              <span id="holdN">0</span>/3
+            </span>
+          </div>
+
+          <div class="hold-track">
+            <div class="hold-fill" id="holdFill"></div>
+          </div>
+
+          <div class="hold-segs">
+            <div class="seg" id="seg0"></div>
+            <div class="seg" id="seg1"></div>
+            <div class="seg" id="seg2"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="bot-hud">
+        <div class="status-pill">
+          <span class="sdot" id="sdot"></span>
+          <span id="stext">Initializing...</span>
+        </div>
+
+        <div class="hand-badge" id="handBadge">
+          ✓ Hand Detected
+        </div>
+      </div>
+
+      <div class="camera-builder" id="cameraBuilder">
+        <span class="camera-builder-label">Sentence</span>
+        <span class="camera-builder-text empty" id="liveSentPreview">
+          Start signing to build your sentence...
+        </span>
+        <span class="camera-builder-count">
+          <span id="liveWc">0</span> words
+        </span>
+      </div>
+
+      <div class="no-model-overlay hidden" id="noModel">
+        <div style="font-size:3rem;margin-bottom:1rem">🤚</div>
+
+        <h2>No Hand Model Found</h2>
+
+        <p>You need to train hand signs first.</p>
+        <p>Run in your terminal:</p>
+
+        <code>python app.py</code>
+        <code>→ Select option 2</code>
+        <code>→ Collect data → Train model</code>
+
+        <p style="margin-top:.8rem">Then refresh this page.</p>
+      </div>
+
+    </div>
+
+    <div class="builder">
+
+      <div class="bld-hdr">
+        <h3>✍️ Sentence Builder</h3>
+
+        <span class="wc">
+          <span id="wc">0</span> words
+        </span>
+      </div>
+
+      <div
+        class="sent-box empty"
+        id="sentBox"
+        contenteditable="true"
+        onfocus="onBxFocus()"
+        onblur="onBxBlur()"
+        oninput="onBxInput()"
+      >
+        Start signing to build your sentence...
+      </div>
+
+      <div class="bld-btns">
+        <button class="bbtn danger" onclick="clearSentence()">🗑️ Clear</button>
+        <button class="bbtn" onclick="addSpace()">␣ Space</button>
+        <button class="bbtn" onclick="bkspWord()">⌫ Back</button>
+        <button class="bbtn primary" onclick="sendSentence()">📤 Send to AI</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="chat-col">
+
+    <div class="chat-hdr">
+      <h3>💬 AI Responses</h3>
+      <p>Signs → Sentence → AI reply with voice</p>
+    </div>
+
+    <div class="msgs" id="msgs">
+
+      <div class="msg assistant">
+        <div class="msg-body">
+          Hello! 👋 Show your trained hand signs in front of the camera.
+          Hold each sign steady until it registers — I’ll respond here with empathy and voice.
+        </div>
+
+        <div class="msg-meta">
+          <button class="spkbtn" onclick="speakBtn(this)">🔊</button>
+          <span>Just now</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="typing" id="typing">
+      <div class="tdots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/handsign.js') }}"></script>
+
+</body>
+</html>

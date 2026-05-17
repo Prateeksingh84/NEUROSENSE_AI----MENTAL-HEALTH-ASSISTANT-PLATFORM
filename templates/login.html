@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NeuroSense AI • Auth</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f8f4;--surface:#fff;--surface2:#f0f7f0;--surface3:#e8f3e8;
+  --border:#d0e8d0;--border2:#b8ddb8;
+  --text:#1a2e1a;--text2:#4a6b4a;--muted:#7a9e7a;
+  --accent:#2d8c4e;--accent2:#3aab63;
+  --green:#2d8c4e;--green2:#3aab63;
+  --danger:#d94f3c;--danger-soft:rgba(217,79,60,.08);
+  --shadow:0 4px 24px rgba(45,140,78,.10);
+  --shadow-lg:0 16px 56px rgba(45,140,78,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{min-height:100%}
+body{
+  font-family:Inter,sans-serif;color:var(--text);
+  background:
+    radial-gradient(circle at top left,rgba(45,140,78,.08),transparent 38%),
+    radial-gradient(circle at bottom right,rgba(58,171,99,.06),transparent 40%),
+    var(--bg);
+  overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(45,140,78,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(45,140,78,.04) 1px,transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none;
+}
+.auth-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2.8rem 1.2rem;position:relative}
+.auth-shell{
+  width:min(1180px,94vw);min-height:680px;
+  display:grid;grid-template-columns:1.32fr .98fr;
+  border-radius:28px;overflow:hidden;
+  background:var(--surface);
+  border:1px solid var(--border);
+  box-shadow:var(--shadow-lg);
+}
+.info-panel{
+  padding:3rem 3.3rem;
+  background:linear-gradient(145deg,#1a5c32,#237a44,#2d8c4e);
+  display:flex;flex-direction:column;justify-content:center;
+}
+.logo-box{
+  width:78px;height:78px;border-radius:22px;
+  display:grid;place-items:center;font-size:2rem;
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.25);
+  margin-bottom:2rem;
+}
+.info-panel h1{
+  font-family:Outfit,sans-serif;
+  font-size:clamp(2.8rem,5vw,4.2rem);
+  line-height:.98;letter-spacing:-.04em;font-weight:900;
+  color:#fff;margin-bottom:1.25rem;
+}
+.gradient-text{color:rgba(255,255,255,.85)}
+.info-subtitle{max-width:560px;color:rgba(255,255,255,.78);font-size:1.06rem;line-height:1.85;margin-bottom:1.6rem}
+.feature-list{display:grid;gap:0;margin-top:.4rem}
+.feature-item{
+  display:grid;grid-template-columns:48px 1fr;gap:1rem;
+  align-items:center;padding:1rem 0;
+  border-top:1px solid rgba(255,255,255,.14);
+}
+.feature-icon{
+  width:44px;height:44px;border-radius:14px;
+  display:grid;place-items:center;
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.22);
+  font-size:1.2rem;
+}
+.feature-item h3{font-size:1rem;font-weight:900;color:#fff;margin-bottom:.22rem}
+.feature-item p{color:rgba(255,255,255,.68);font-size:.88rem;line-height:1.5}
+.crisis-box{
+  margin-top:1.7rem;padding:1rem 1.1rem;border-radius:16px;
+  background:rgba(217,79,60,.18);border:1px solid rgba(217,79,60,.35);
+  color:#ffe0dc;font-weight:800;font-size:.86rem;line-height:1.8;
+}
+.auth-panel{width:100%;height:100%;display:flex;flex-direction:column;background:var(--surface)}
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border)}
+.tab-btn{
+  height:64px;border:none;background:transparent;
+  color:var(--muted);font-size:.95rem;font-weight:900;cursor:pointer;
+  position:relative;font-family:Inter,sans-serif;transition:.2s;
+}
+.tab-btn.active{color:var(--accent)}
+.tab-btn.active::after{
+  content:"";position:absolute;left:24px;right:24px;bottom:0;height:2.5px;
+  border-radius:999px;background:var(--accent);
+}
+.auth-content{padding:38px 36px 28px;display:flex;flex-direction:column;gap:20px}
+.auth-header{display:flex;flex-direction:column;gap:8px}
+.auth-header h2{
+  margin:0;font-family:Outfit,sans-serif;font-size:2rem;
+  line-height:1.2;font-weight:900;letter-spacing:-.025em;color:var(--text);
+}
+.auth-header p{margin:0;font-size:1rem;line-height:1.6;color:var(--text2)}
+.google-btn{
+  width:100%;height:54px;border-radius:14px;
+  border:1.5px solid var(--border);background:var(--surface2);
+  color:var(--text);display:flex;align-items:center;justify-content:center;
+  gap:10px;font-size:.98rem;font-weight:900;cursor:pointer;transition:.2s;
+  font-family:Inter,sans-serif;
+}
+.google-btn:hover{border-color:var(--accent);background:#e8f5ec}
+.divider{display:flex;align-items:center;gap:12px}
+.divider span{flex:1;height:1px;background:var(--border)}
+.divider p{margin:0;white-space:nowrap;font-size:.88rem;color:var(--muted)}
+.auth-switcher{display:flex;gap:12px}
+.switch-btn{
+  height:40px;padding:0 14px;border-radius:12px;
+  border:1.5px solid var(--border2);background:var(--surface2);
+  color:var(--text2);font-size:.88rem;font-weight:800;cursor:pointer;
+  font-family:Inter,sans-serif;transition:.2s;
+}
+.switch-btn.active{background:var(--accent);color:#fff;border-color:transparent}
+.auth-form{display:flex;flex-direction:column;gap:18px}
+.form-group{display:flex;flex-direction:column;gap:8px}
+.form-group label{font-size:.78rem;font-weight:900;letter-spacing:.08em;color:var(--text2)}
+.input-row{display:flex;gap:.7rem}
+.country-code{
+  width:92px;height:52px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text);background:var(--surface2);border:1.5px solid var(--border);font-weight:800;
+}
+.form-group input,.form-group select{
+  width:100%;height:52px;border-radius:14px;
+  border:1.5px solid var(--border);background:var(--surface2);
+  padding:0 16px;color:var(--text);font-size:.95rem;outline:none;
+  font-family:Inter,sans-serif;transition:border-color .2s;
+}
+.form-group input::placeholder{color:var(--muted)}
+.form-group input:focus,.form-group select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(45,140,78,.1)}
+.submit-btn{
+  width:100%;height:54px;border:none;border-radius:14px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;font-size:1rem;font-weight:900;cursor:pointer;
+  margin-top:4px;font-family:Inter,sans-serif;
+  box-shadow:0 6px 22px rgba(45,140,78,.28);transition:.2s;
+}
+.submit-btn:hover{transform:translateY(-1px);box-shadow:0 10px 28px rgba(45,140,78,.34)}
+.guest-btn{
+  width:100%;height:52px;border-radius:14px;
+  border:1.5px solid var(--border);background:transparent;
+  color:var(--text2);font-size:.98rem;font-weight:900;cursor:pointer;
+  font-family:Inter,sans-serif;transition:.2s;
+}
+.guest-btn:hover{background:var(--surface2)}
+.bottom-text{margin:0;text-align:center;font-size:.92rem;color:var(--muted)}
+.bottom-text a{color:var(--accent);font-weight:900;text-decoration:none;cursor:pointer}
+.status-message{display:none;padding:.9rem 1rem;border-radius:14px;font-size:.86rem;font-weight:800;line-height:1.6}
+.status-message.show{display:block}
+.status-message.success{color:#1a5c32;background:rgba(45,140,78,.1);border:1.5px solid rgba(45,140,78,.25)}
+.status-message.error{color:var(--danger);background:var(--danger-soft);border:1.5px solid rgba(217,79,60,.22)}
+.status-message.info{color:var(--accent);background:rgba(45,140,78,.08);border:1.5px solid rgba(45,140,78,.18)}
+.otp-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:.55rem}
+.otp-grid input{height:52px;text-align:center;padding:0;font-size:1.05rem;font-weight:900}
+.hidden{display:none !important}
+@media(max-width:1050px){.auth-shell{grid-template-columns:1fr;max-width:560px}.info-panel{display:none}}
+@media(max-width:620px){.auth-page{align-items:flex-start;padding:1rem}.auth-shell{width:100%;border-radius:20px}.auth-content{padding:28px 18px 22px}}
+</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-brand-logo.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-ui-image.css') }}">
+</head>
+<body>
+<main class="auth-page">
+  <section class="auth-shell">
+    <aside class="info-panel">
+      <div class="logo-box">🧠</div>
+      <h1>Neuro<span class="gradient-text">Sense</span><br>AI</h1>
+      <p class="info-subtitle">A compassionate mental health companion powered by AI — here to listen, understand, and support you every step of the way.</p>
+      <div class="feature-list">
+        <div class="feature-item"><div class="feature-icon">🎭</div><div><h3>Real-Time Emotion Detection</h3><p>Facial expressions guide every response.</p></div></div>
+        <div class="feature-item"><div class="feature-icon">🤟</div><div><h3>Sign Language Recognition</h3><p>Inclusive support for every person.</p></div></div>
+        <div class="feature-item"><div class="feature-icon">🌍</div><div><h3>30+ Languages Supported</h3><p>Speak in your own language.</p></div></div>
+        <div class="feature-item"><div class="feature-icon">🔒</div><div><h3>Private & Secure</h3><p>Powered by Supabase Auth and secure backend sessions.</p></div></div>
+      </div>
+      <div class="crisis-box">🆘 In crisis right now?<br>iCall: 9152987821 · Vandrevala: 1860-2662-345<br>NIMHANS: 14416 · Snehi: 1800-209-4353</div>
+    </aside>
+    <section class="auth-panel">
+      <div class="auth-tabs">
+        <button class="tab-btn active" id="signinTab" type="button" onclick="showAuthTab('signin')">Sign In</button>
+        <button class="tab-btn" id="signupTab" type="button" onclick="showAuthTab('signup')">Create Account</button>
+      </div>
+      <div class="auth-content">
+        <div class="auth-header">
+          <h2 id="authHeading">Welcome back 👋</h2>
+          <p id="authSubheading">Sign in to continue your wellness journey.</p>
+        </div>
+        <button class="google-btn" type="button" onclick="signInWithGoogle()"><span>🌐</span><span>Continue with Google</span></button>
+        <div class="divider"><span></span><p>or sign in with phone / email</p><span></span></div>
+        <div class="auth-switcher">
+          <button class="switch-btn active" id="emailModeBtn" type="button" onclick="setLoginMode('email')">✉️ Email</button>
+          <button class="switch-btn" id="phoneModeBtn" type="button" onclick="setLoginMode('phone')">📱 Phone OTP</button>
+        </div>
+        <div class="status-message" id="authStatus"></div>
+        <form class="auth-form" id="emailForm" onsubmit="handleEmailAuth(event)">
+          <div class="form-group hidden" id="nameGroup"><label>FULL NAME</label><input type="text" id="fullName" placeholder="Your name" autocomplete="name"></div>
+          <div class="form-group"><label>EMAIL</label><input type="email" id="email" placeholder="you@example.com" autocomplete="email" required></div>
+          <div class="form-group"><label>PASSWORD</label><input type="password" id="password" placeholder="••••••••" autocomplete="current-password" minlength="6" required></div>
+          <button type="submit" class="submit-btn" id="emailSubmitBtn">Sign In →</button>
+        </form>
+        <form class="auth-form hidden" id="phoneForm" onsubmit="handlePhoneAuth(event)">
+          <div class="form-group"><label>MOBILE NUMBER</label>
+            <div class="input-row"><div class="country-code">+91</div><input type="tel" id="phoneNumber" placeholder="9876543210" maxlength="10" autocomplete="tel"></div>
+          </div>
+          <button type="button" class="submit-btn" id="sendOtpBtn" onclick="sendPhoneOtp()">Send OTP →</button>
+          <div class="form-group hidden" id="otpGroup">
+            <label>ENTER 6-DIGIT OTP</label>
+            <div class="otp-grid">
+              <input type="text" maxlength="1" inputmode="numeric" class="otp-input"><input type="text" maxlength="1" inputmode="numeric" class="otp-input"><input type="text" maxlength="1" inputmode="numeric" class="otp-input"><input type="text" maxlength="1" inputmode="numeric" class="otp-input"><input type="text" maxlength="1" inputmode="numeric" class="otp-input"><input type="text" maxlength="1" inputmode="numeric" class="otp-input">
+            </div>
+            <button type="submit" class="submit-btn">Verify & Sign In →</button>
+          </div>
+        </form>
+        <button class="guest-btn" type="button" onclick="continueAsGuest()">Continue as Guest</button>
+        <p class="bottom-text" id="bottomText">Don't have an account? <a onclick="showAuthTab('signup')">Create one free</a></p>
+      </div>
+    </section>
+  </section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="{{ supabase_url }}";const SUPABASE_ANON_KEY="{{ supabase_anon_key }}";const APP_URL="{{ app_url }}";
+let supabaseClient=null;
+if(SUPABASE_URL&&SUPABASE_ANON_KEY){supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);}
+let authMode="signin",loginMode="email";
+const signinTab=document.getElementById("signinTab"),signupTab=document.getElementById("signupTab"),authHeading=document.getElementById("authHeading"),authSubheading=document.getElementById("authSubheading"),emailModeBtn=document.getElementById("emailModeBtn"),phoneModeBtn=document.getElementById("phoneModeBtn"),emailForm=document.getElementById("emailForm"),phoneForm=document.getElementById("phoneForm"),nameGroup=document.getElementById("nameGroup"),emailSubmitBtn=document.getElementById("emailSubmitBtn"),bottomText=document.getElementById("bottomText"),authStatus=document.getElementById("authStatus"),otpGroup=document.getElementById("otpGroup");
+function showAuthTab(mode){authMode=mode;signinTab.classList.toggle("active",mode==="signin");signupTab.classList.toggle("active",mode==="signup");if(mode==="signin"){authHeading.textContent="Welcome back 👋";authSubheading.textContent="Sign in to continue your wellness journey.";nameGroup.classList.add("hidden");emailSubmitBtn.textContent="Sign In →";bottomText.innerHTML=`Don't have an account? <a onclick="showAuthTab('signup')">Create one free</a>`;}else{authHeading.textContent="Create your account 🌱";authSubheading.textContent="Start your private wellness support journey.";nameGroup.classList.remove("hidden");emailSubmitBtn.textContent="Create Account →";bottomText.innerHTML=`Already have an account? <a onclick="showAuthTab('signin')">Sign in</a>`;}clearStatus();}
+function setLoginMode(mode){loginMode=mode;emailModeBtn.classList.toggle("active",mode==="email");phoneModeBtn.classList.toggle("active",mode==="phone");emailForm.classList.toggle("hidden",mode!=="email");phoneForm.classList.toggle("hidden",mode!=="phone");clearStatus();}
+function setStatus(message,type="info"){authStatus.className="status-message show "+type;authStatus.textContent=message;}
+function clearStatus(){authStatus.className="status-message";authStatus.textContent="";}
+function requireSupabase(){if(!supabaseClient){setStatus("Supabase is not configured.","error");return false;}return true;}
+async function handleEmailAuth(event){event.preventDefault();if(!requireSupabase())return;const email=document.getElementById("email").value.trim(),password=document.getElementById("password").value,fullName=document.getElementById("fullName").value.trim();if(!email||!password){setStatus("Please enter email and password.","error");return;}try{setStatus(authMode==="signin"?"Signing in...":"Creating account...","info");let result;if(authMode==="signin"){result=await supabaseClient.auth.signInWithPassword({email,password});}else{result=await supabaseClient.auth.signUp({email,password,options:{data:{full_name:fullName||email.split("@")[0],preferred_language:"en"},emailRedirectTo:`${APP_URL}/auth/callback`}});}if(result.error)throw result.error;const sessionData=result.data.session;if(!sessionData){setStatus("Account created. Please confirm your email first, then sign in.","success");showAuthTab("signin");return;}await syncBackendSession(sessionData.access_token);}catch(err){let message=err.message||"Authentication failed.";if(message.toLowerCase().includes("email not confirmed"))message="Email not confirmed. Please check your inbox.";setStatus(message,"error");}}
+async function signInWithGoogle(){if(!requireSupabase())return;try{setStatus("Redirecting to Google...","info");const{error}=await supabaseClient.auth.signInWithOAuth({provider:"google",options:{redirectTo:`${APP_URL}/auth/callback`}});if(error)throw error;}catch(err){setStatus(err.message||"Google sign-in failed.","error");}}
+async function sendPhoneOtp(){if(!requireSupabase())return;const phone=document.getElementById("phoneNumber").value.trim();if(!/^[6-9]\d{9}$/.test(phone)){setStatus("Please enter a valid 10-digit Indian mobile number.","error");return;}try{setStatus("Sending OTP...","info");const{error}=await supabaseClient.auth.signInWithOtp({phone:`+91${phone}`});if(error)throw error;otpGroup.classList.remove("hidden");setStatus("OTP sent. Enter the 6-digit code.","success");}catch(err){setStatus(err.message||"Could not send OTP.","error");}}
+async function handlePhoneAuth(event){event.preventDefault();if(!requireSupabase())return;const phone=document.getElementById("phoneNumber").value.trim(),token=Array.from(document.querySelectorAll(".otp-input")).map(i=>i.value.trim()).join("");if(!/^[6-9]\d{9}$/.test(phone)){setStatus("Please enter a valid phone number.","error");return;}if(!/^\d{6}$/.test(token)){setStatus("Please enter the complete 6-digit OTP.","error");return;}try{setStatus("Verifying OTP...","info");const{data,error}=await supabaseClient.auth.verifyOtp({phone:`+91${phone}`,token,type:"sms"});if(error)throw error;if(!data.session)throw new Error("OTP verified but session was not created.");await syncBackendSession(data.session.access_token);}catch(err){setStatus(err.message||"OTP verification failed.","error");}}
+async function syncBackendSession(accessToken){const res=await fetch("/api/auth/sync",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({access_token:accessToken})});const data=await res.json();if(!res.ok||data.ok===false)throw new Error(data.error||"Backend session sync failed.");setStatus("Login successful. Redirecting...","success");setTimeout(()=>{window.location.href=data.redirect||"/mode";},500);}
+async function continueAsGuest(){try{const form=document.createElement("form");form.method="POST";form.action="/auth";["name","email","phone","lang"].forEach((n,i)=>{const inp=document.createElement("input");inp.name=n;inp.value=["Guest","","","en"][i];form.appendChild(inp);});document.body.appendChild(form);form.submit();}catch(err){setStatus("Could not continue as guest.","error");}}
+document.querySelectorAll(".otp-input").forEach((input,index,inputs)=>{input.addEventListener("input",()=>{input.value=input.value.replace(/\D/g,"");if(input.value&&index<inputs.length-1)inputs[index+1].focus();});input.addEventListener("keydown",(e)=>{if(e.key==="Backspace"&&!input.value&&index>0)inputs[index-1].focus();});});
+async function checkExistingSession(){if(!supabaseClient)return;try{const{data}=await supabaseClient.auth.getSession();if(data&&data.session&&window.location.pathname==="/auth/callback")await syncBackendSession(data.session.access_token);}catch(err){}}
+document.addEventListener("DOMContentLoaded",()=>{showAuthTab("signin");setLoginMode("email");checkExistingSession();});
+</script>
+</body>
+</html>

@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NeuroSense AI • Insights</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-brand-logo.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-ui-image.css') }}">
+</head>
+
+<body>
+
+{% set i = insights|default({}, true) %}
+{% set greeting = i.get('greeting', {}) %}
+{% set checkin = i.get('daily_checkin', {}) %}
+{% set thought = i.get('today_thought', {}) %}
+{% set cards = i.get('summary_cards', {}) %}
+{% set mode = cards.get('most_used_mode', {}) %}
+{% set energy = cards.get('today_energy', {}) %}
+{% set history_logs = i.get('history_logs', []) %}
+{% set practices = i.get('recommended_practices', []) %}
+
+{% set practice_streak_raw = cards.get('practice_streak', 0) %}
+{% if practice_streak_raw is mapping %}
+  {% set practice_streak_days = practice_streak_raw.get('days', 0) %}
+  {% set practice_streak_note = practice_streak_raw.get('note', 'Keep it going gently') %}
+{% else %}
+  {% set practice_streak_days = practice_streak_raw %}
+  {% set practice_streak_note = 'Keep it going gently' %}
+{% endif %}
+
+{% set mood_percent_value = cards.get('mood_percent', cards.get('mood_percentage', 50)) %}
+{% set dominant_emotion = checkin.get('top_emotion', i.get('top_emotion', 'neutral')) %}
+
+<div class="app-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <a href="/dashboard" class="brand">
+            <div class="brand-icon">🧠</div>
+
+            <div>
+                <h2>NeuroSense AI</h2>
+                <p>Mental Health Platform</p>
+            </div>
+        </a>
+
+        <nav class="sidebar-nav">
+
+            <div class="nav-section">Overview</div>
+
+            <a href="/dashboard" class="nav-item active">
+                <span>💡</span>
+                Insights
+            </a>
+
+            <a href="/analytics" class="nav-item">
+                <span>📈</span>
+                Analytics
+            </a>
+
+            <a href="/session_history" class="nav-item">
+                <span>🕘</span>
+                Session History
+            </a>
+
+            <div class="nav-section">Chat</div>
+
+            <a href="/normal_chat" class="nav-item">
+                <span>💬</span>
+                Text Chat
+            </a>
+
+            <a href="/voice_chat" class="nav-item">
+                <span>🎤</span>
+                Voice Chat
+            </a>
+
+            <a href="/hand_chat" class="nav-item">
+                <span>🤟</span>
+                Sign Chat
+            </a>
+
+            <a href="/research_chat" class="nav-item">
+                <span>🧠</span>
+                Research Chat
+            </a>
+
+            <a href="/knowledge_chat" class="nav-item">
+                <span>📚</span>
+                Knowledge Chat
+            </a>
+
+            <div class="nav-section">Wellness</div>
+
+            <a href="/best_practices" class="nav-item">
+                <span>🌱</span>
+                Best Practices
+            </a>
+
+            <a href="/support" class="nav-item danger">
+                <span>🆘</span>
+                Crisis Support
+            </a>
+
+            <a href="/reports/solution" class="nav-item">
+                <span>📄</span>
+                Wellness Plan
+            </a>
+
+            <a href="/profile" class="nav-item">
+                <span>👤</span>
+                Profile
+            </a>
+            {% if is_admin %}
+            <a href="/admin_dashboard" class="nav-item">
+                <span>🛠️</span>
+                Admin Dashboard
+            </a>
+            {% endif %}
+
+        </nav>
+
+        <div class="sidebar-footer">
+
+            <a href="/profile" class="user-card profile-user-card">
+                <div class="user-avatar">
+                    {{ (name or 'U')[:1]|upper }}
+                </div>
+
+                <div>
+                    <strong>{{ name or 'User' }}</strong>
+                    <span>{{ session.get('email', 'NeuroSense User') }}</span>
+                    <small>Open Profile →</small>
+                </div>
+            </a>
+
+            <a href="/logout" class="logout-link">
+                ↪ Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div>
+                <h1>Insights</h1>
+                <p>Your daily wellness intelligence overview</p>
+            </div>
+
+            <div class="top-actions">
+
+                <button type="button" class="top-btn">
+                    ↻ Refresh
+                </button>
+
+                <a href="/mode" class="top-btn">
+                    ← Modes
+                </a>
+
+                <span class="status-pill">
+                    ● Daily Wellness Active
+                </span>
+
+                <span class="status-pill" id="lastUpdatedPill">
+                    Last updated: Now
+                </span>
+
+            </div>
+
+        </header>
+
+        <!-- CONTENT -->
+        <section class="content insights-separate-layout">
+
+            <!-- WELCOME -->
+            <section class="welcome-grid">
+
+                <div class="welcome-card">
+
+                    <div class="welcome-icon">🌿</div>
+
+                    <div>
+                        <h2>
+                            {{ greeting.get('title', 'Good Evening') }},
+                            <span>{{ name or 'User' }}</span>
+                            {{ greeting.get('emoji', '👋') }}
+                        </h2>
+
+                        <p>
+                            {{ greeting.get('line', greeting.get('message', 'You are doing great — let’s make today calm, focused, and meaningful.')) }}
+                        </p>
+
+                        <div class="welcome-pills">
+                            <span>📅 {{ i.get('generated_date', i.get('date_label', 'Today')) }}</span>
+                            <span>✨ Daily insight ready</span>
+                            <span>🧠 NeuroSense AI</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- 1. DAILY CHECK-IN -->
+            <section class="insight-section" id="daily-checkin-section">
+
+                <div class="section-heading">
+                    <div>
+                        <span class="section-number">1</span>
+                        <h2>☀️ Daily Check-in</h2>
+                        <p>Your daily wellness check-in summary.</p>
+                    </div>
+
+                    <span class="soft-badge">Today</span>
+                </div>
+
+                <article class="panel full-section-card">
+
+                    <div class="daily-badge">☀️ Daily Check-in</div>
+
+                    <h3 class="large-insight-text">
+                        {{ checkin.get('headline', 'You’re showing up for yourself, and that’s something to be proud of.') }}
+                    </h3>
+
+                    <div class="metric-grid separate-metrics">
+
+                        <div class="metric-card">
+                            <small>Mood Trend</small>
+                            <strong>{{ checkin.get('mood_trend', 'Stable') }} ↗</strong>
+                        </div>
+
+                        <div class="metric-card">
+                            <small>Current Streak</small>
+                            <strong>{{ checkin.get('streak', checkin.get('current_streak', i.get('streak', 0))) }} days</strong>
+                        </div>
+
+                        <div class="metric-card">
+                            <small>Today’s Activity</small>
+                            <strong>{{ checkin.get('activity_percent', checkin.get('today_activity', 0)) }}%</strong>
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+            <!-- 2. TODAY'S THOUGHT -->
+            <section class="insight-section" id="thought-section">
+
+                <div class="section-heading">
+                    <div>
+                        <span class="section-number">2</span>
+                        <h2>💭 Today’s Thought</h2>
+                        <p>Based on recent chat patterns and session signals.</p>
+                    </div>
+
+                    <span class="soft-badge">
+                        {{ thought.get('source', 'Based on recent chat patterns') }}
+                    </span>
+                </div>
+
+                <article class="panel full-section-card thought-section-card">
+
+                    <div class="quote-mark">“</div>
+
+                    <p class="thought-text">
+                        {{ thought.get('text', 'Small steps still count, and rest is productive too.') }}
+                    </p>
+
+                    <div class="chip-row">
+                        {% for tag in thought.get('tags', ['Self-care', 'Progress', 'Consistency']) %}
+                            <span class="chip">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div class="thought-actions">
+
+                        <span>Was this insight helpful?</span>
+
+                        <div>
+                            <button
+                                type="button"
+                                class="feedback-btn"
+                                data-feedback-target="today_thought"
+                                data-feedback-label="helpful"
+                            >
+                                👍 Helpful
+                            </button>
+
+                            <button
+                                type="button"
+                                class="feedback-btn"
+                                data-feedback-target="today_thought"
+                                data-feedback-label="not_helpful"
+                            >
+                                👎 Not helpful
+                            </button>
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+            <!-- 3. NEUROSENSE HISTORY -->
+            <section class="insight-section" id="history-section">
+
+                <div class="section-heading">
+                    <div>
+                        <span class="section-number">3</span>
+                        <h2>🕘 NeuroSense History</h2>
+                        <p>Your latest activity across NeuroSense AI.</p>
+                    </div>
+
+                    <a href="/session_history" class="link-btn">
+                        View all
+                    </a>
+                </div>
+
+                <article class="panel full-section-card">
+
+                    <div class="history-list separate-history-list">
+
+                        {% if history_logs %}
+                            {% for item in history_logs[:6] %}
+
+                            {% set history_title = (
+                                item.get('title', '') ~ ' ' ~
+                                item.get('detail', '') ~ ' ' ~
+                                item.get('description', '')
+                            )|lower %}
+
+                            <div class="history-item">
+
+                                <div class="history-icon">
+                                    {% if 'crisis' in history_title %}
+                                        🆘
+                                    {% elif 'safety' in history_title %}
+                                        🛡️
+                                    {% elif 'report' in history_title %}
+                                        📄
+                                    {% elif 'voice' in history_title %}
+                                        🎤
+                                    {% elif 'text' in history_title %}
+                                        💬
+                                    {% elif 'research' in history_title %}
+                                        🧠
+                                    {% elif 'knowledge' in history_title %}
+                                        📚
+                                    {% elif 'practice' in history_title or 'breathing' in history_title or 'grounding' in history_title %}
+                                        🌱
+                                    {% elif 'check' in history_title or 'mood' in history_title %}
+                                        😊
+                                    {% elif 'profile' in history_title %}
+                                        👤
+                                    {% elif 'session' in history_title %}
+                                        🕘
+                                    {% elif 'sleep' in history_title %}
+                                        😴
+                                    {% elif 'analytics' in history_title %}
+                                        📈
+                                    {% elif 'login' in history_title or 'auth' in history_title %}
+                                        🔐
+                                    {% elif 'news' in history_title %}
+                                        📰
+                                    {% elif 'chat' in history_title %}
+                                        💬
+                                    {% else %}
+                                        {{ item.get('icon', '✨') }}
+                                    {% endif %}
+                                </div>
+
+                                <div>
+                                    <strong>{{ item.get('title', 'NeuroSense activity') }}</strong>
+                                    <p>{{ item.get('detail', item.get('description', 'Activity saved successfully.')) }}</p>
+                                </div>
+
+                                <span>{{ item.get('time', 'Recent') }}</span>
+
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="history-item">
+
+                                <div class="history-icon">🧠</div>
+
+                                <div>
+                                    <strong>No recent history yet</strong>
+                                    <p>Start a chat, complete a practice, or generate a report to see activity here.</p>
+                                </div>
+
+                                <span>Now</span>
+
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                </article>
+
+            </section>
+
+            <!-- 4. PERCENTAGE OVERVIEW -->
+            <section class="insight-section" id="summary-section">
+
+                <div class="section-heading">
+                    <div>
+                        <span class="section-number">4</span>
+                        <h2>📊 Percentage Overview</h2>
+                        <p>Voice mode, energy, practice streak, and mood percentage.</p>
+                    </div>
+                </div>
+
+                <div class="summary-grid separate-summary-grid">
+
+                    <article class="summary-card">
+                        <div class="summary-icon">💬</div>
+
+                        <div>
+                            <small>Most Used Mode</small>
+                            <h3>{{ mode.get('label', 'Voice Chat') }}</h3>
+                            <p>{{ mode.get('percent', mode.get('percentage', 0)) }}% of your activity</p>
+                        </div>
+                    </article>
+
+                    <article class="summary-card">
+                        <div class="summary-icon">⚡</div>
+
+                        <div>
+                            <small>Today’s Energy</small>
+                            <h3>{{ energy.get('label', 'Balanced') }}</h3>
+                            <p>{{ energy.get('display', energy.get('score', 5)) }} / 10</p>
+                        </div>
+                    </article>
+
+                    <article class="summary-card">
+                        <div class="summary-icon warm">🔥</div>
+
+                        <div>
+                            <small>Practice Streak</small>
+                            <h3>{{ practice_streak_days }}</h3>
+                            <p>{{ practice_streak_note }}</p>
+                        </div>
+                    </article>
+
+                    <article class="summary-card">
+                        <div class="summary-icon blue">💙</div>
+
+                        <div>
+                            <small>Mood Percentage</small>
+                            <h3>{{ mood_percent_value }}%</h3>
+                            <p>Dominant: {{ dominant_emotion }}</p>
+                        </div>
+                    </article>
+
+                    <article class="summary-card" id="projectAccuracyCard">
+                        <div class="summary-icon">🎯</div>
+
+                        <div>
+                            <small>Project Accuracy</small>
+                            <h3 id="dashboardAccuracy">--%</h3>
+                            <p id="dashboardAccuracyGrade">Live reliability score</p>
+                            <p id="dashboardAccuracyUpdated">Updating...</p>
+                        </div>
+                    </article>
+
+                </div>
+
+            </section>
+
+            <!-- 5. RECOMMENDED PRACTICES -->
+            <section class="insight-section" id="practices-section">
+
+                <div class="section-heading">
+                    <div>
+                        <span class="section-number">5</span>
+                        <h2>🌱 Recommended Practices</h2>
+                        <p>These change daily based on sessions, emotions, and practice history.</p>
+                    </div>
+
+                    <a href="/best_practices" class="link-btn">
+                        View all practices
+                    </a>
+                </div>
+
+                <article class="panel full-section-card">
+
+                    <div class="practice-grid separate-practice-grid">
+
+                        {% if practices %}
+                            {% for p in practices[:4] %}
+                            <div class="practice-card">
+
+                                <div class="practice-icon">
+                                    {{ p.get('icon', '🌱') }}
+                                </div>
+
+                                <div>
+                                    <strong>{{ p.get('title', 'Wellness Practice') }}</strong>
+                                    <p>
+                                        {{ p.get('duration', p.get('minutes', '3')) }} min •
+                                        {{ p.get('description', p.get('tag', 'A small supportive practice for today.')) }}
+                                    </p>
+                                </div>
+
+                                <a href="{{ p.get('url', p.get('href', '/best_practices')) }}" class="start-btn">
+                                    Start
+                                </a>
+
+                            </div>
+                            {% endfor %}
+                        {% else %}
+
+                            <div class="practice-card">
+                                <div class="practice-icon">🫁</div>
+                                <div>
+                                    <strong>Box Breathing</strong>
+                                    <p>4 min • Calm your mind and lower stress.</p>
+                                </div>
+                                <a href="/best_practices" class="start-btn">Start</a>
+                            </div>
+
+                            <div class="practice-card">
+                                <div class="practice-icon">🙏</div>
+                                <div>
+                                    <strong>Gratitude Note</strong>
+                                    <p>3 min • Shift attention toward something supportive.</p>
+                                </div>
+                                <a href="/best_practices" class="start-btn">Start</a>
+                            </div>
+
+                            <div class="practice-card">
+                                <div class="practice-icon">🖐️</div>
+                                <div>
+                                    <strong>5-4-3-2-1 Grounding</strong>
+                                    <p>5 min • Reconnect with the present moment.</p>
+                                </div>
+                                <a href="/best_practices" class="start-btn">Start</a>
+                            </div>
+
+                            <div class="practice-card">
+                                <div class="practice-icon">🚶</div>
+                                <div>
+                                    <strong>Short Walk</strong>
+                                    <p>10 min • Reset focus and support energy.</p>
+                                </div>
+                                <a href="/best_practices" class="start-btn">Start</a>
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                    <p class="hint">
+                        ✨ Recommendations update daily based on your sessions, emotions, and practice history.
+                    </p>
+
+                </article>
+
+            </section>
+
+            <!-- 6. NEWS -->
+            <section class="insight-section" id="news-section">
+
+                <div class="section-heading">
+                    <div>
+                        <span class="section-number">6</span>
+                        <h2>📰 News & Insights</h2>
+                        <p>Daily mental health, fitness, sleep, and wellbeing education.</p>
+                    </div>
+
+                    <a
+                        href="https://news.google.com/search?q=mental%20health%20wellbeing%20fitness%20sleep"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="link-btn"
+                    >
+                        View all
+                    </a>
+                </div>
+
+                <article class="panel full-section-card">
+
+                    <div class="news-grid separate-news-grid" id="wellnessNewsGrid">
+
+                        <div class="news-item">
+                            <div class="news-thumb">⏳</div>
+
+                            <div>
+                                <div class="news-meta">
+                                    <span>Loading</span>
+                                    <small>Today</small>
+                                </div>
+
+                                <h4>Loading latest wellness news...</h4>
+
+                                <p>
+                                    Please wait while NeuroSense AI fetches today’s mental health,
+                                    sleep, fitness, and wellbeing updates.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+            <!-- RELIABILITY -->
+            <section class="reliability-panel">
+
+                <div class="reliability-main">
+
+                    <div class="shield">🛡️</div>
+
+                    <div>
+                        <h2>Reliable. Safe. Always Here.</h2>
+                        <p>
+                            NeuroSense AI supports wellness education and self-awareness.
+                            It does not diagnose, prescribe medication, or replace emergency care.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="reliability-item">
+                    <strong>Evidence-Based</strong>
+                    <p>Insights are based on sessions, check-ins, and safe wellness signals.</p>
+                </div>
+
+                <div class="reliability-item">
+                    <strong>Privacy First</strong>
+                    <p>You control your data, history, practice logs, and crisis logs.</p>
+                </div>
+
+                <div class="reliability-item urgent">
+                    <strong>Need Immediate Help?</strong>
+                    <p>If you feel unsafe, open crisis support or contact a trusted person.</p>
+                    <a href="/support">Get Help Now</a>
+                </div>
+
+            </section>
+
+            <!-- DATA CONTROLS -->
+            <section class="data-panel">
+
+                <div>
+                    <h2>Data Controls</h2>
+                    <p>You can clear local history sections used for insights.</p>
+                </div>
+
+                <div class="data-actions">
+                    <a href="/api/user/export-data" target="_blank" rel="noopener noreferrer">
+                        Download My Data
+                    </a>
+
+                    <button type="button" data-clear-type="sessions">
+                        Clear Session History
+                    </button>
+
+                    <button type="button" data-clear-type="practice_logs">
+                        Clear Practice Logs
+                    </button>
+
+                    <button type="button" data-clear-type="crisis_actions">
+                        Clear Crisis Logs
+                    </button>
+                </div>
+
+            </section>
+
+            <!-- DISCLAIMER -->
+            <div class="notice">
+                <strong>Important:</strong>
+                News and insights are for general wellness education only. NeuroSense AI does not diagnose,
+                prescribe medication, or replace professional care. If you feel unsafe, contact emergency services,
+                a crisis helpline, or a trusted person immediately.
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+</body>
+</html>

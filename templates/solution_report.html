@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NeuroSense AI • Solution Report</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#f5f8f5;
+    --white:#ffffff;
+    --panel:#f0f5f1;
+    --border:#d4e6d7;
+    --border2:#c2dcc6;
+    --text:#1a2e1c;
+    --text2:#4a6b4e;
+    --muted:#7a9b7e;
+    --accent:#2d7a3a;
+    --accent2:#3a9e4a;
+    --green:#27ae60;
+    --green-light:#e8f5e9;
+    --green-mid:#c8e6c9;
+    --cyan:#00897b;
+    --orange:#ef6c00;
+    --red:#e53935;
+    --shadow:0 4px 24px rgba(45,122,58,.10);
+    --shadow-md:0 8px 32px rgba(45,122,58,.13);
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+body{
+    min-height:100vh;
+    font-family:Inter,sans-serif;
+    color:var(--text);
+    background:linear-gradient(135deg,#f0f7f1 0%,#ffffff 50%,#f0f5f1 100%);
+}
+
+.topbar{
+    height:72px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 2rem;
+    border-bottom:1.5px solid var(--border);
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(18px);
+    position:sticky;
+    top:0;
+    z-index:100;
+    box-shadow:0 2px 12px rgba(45,122,58,.08);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:.7rem;
+    font-family:Outfit,sans-serif;
+    font-size:1.2rem;
+    font-weight:900;
+    color:var(--text);
+}
+
+.brand span{
+    background:linear-gradient(135deg,var(--accent),var(--green));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.nav{ display:flex; align-items:center; gap:.7rem; }
+
+.nav a{
+    height:40px;
+    padding:0 1rem;
+    border-radius:12px;
+    border:1.5px solid var(--border2);
+    color:var(--text2);
+    text-decoration:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+    font-size:.88rem;
+    background:#fff;
+    transition:.16s;
+}
+
+.nav a:hover{ background:var(--green-light); color:var(--accent); }
+
+.nav a.primary{
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#fff;
+    border:none;
+}
+
+.wrapper{
+    width:min(1160px,92vw);
+    margin:0 auto;
+    padding:3rem 0 4rem;
+}
+
+.hero{ margin-bottom:2rem; }
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:.45rem;
+    padding:.55rem 1rem;
+    border-radius:999px;
+    color:var(--accent);
+    background:var(--green-light);
+    border:1px solid var(--green-mid);
+    font-size:.78rem;
+    font-weight:900;
+    margin-bottom:1.2rem;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+}
+
+.hero h1{
+    font-family:Outfit,sans-serif;
+    font-size:clamp(2.2rem,5vw,4.5rem);
+    line-height:1.05;
+    font-weight:900;
+    letter-spacing:-.04em;
+    margin-bottom:1rem;
+    color:var(--text);
+}
+
+.hero h1 span{
+    background:linear-gradient(135deg,var(--accent),var(--green));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    max-width:820px;
+    color:var(--muted);
+    line-height:1.8;
+    font-size:1rem;
+}
+
+.actions{
+    display:flex;
+    gap:.8rem;
+    flex-wrap:wrap;
+    margin-top:1.5rem;
+}
+
+.btn{
+    height:48px;
+    padding:0 1.2rem;
+    border:none;
+    border-radius:14px;
+    cursor:pointer;
+    font-weight:900;
+    color:var(--text2);
+    background:#fff;
+    border:1.5px solid var(--border2);
+    transition:.18s;
+}
+
+.btn:hover{ transform:translateY(-2px); background:var(--green-light); color:var(--accent); }
+
+.btn.green{
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    border:none;
+    color:#fff;
+    box-shadow:0 4px 18px rgba(45,122,58,.25);
+}
+
+.btn.green:hover{ transform:translateY(-2px); box-shadow:0 8px 24px rgba(45,122,58,.30); }
+
+.status-box{
+    margin-top:1rem;
+    padding:.85rem 1.1rem;
+    border-radius:12px;
+    background:var(--green-light);
+    border:1px solid var(--green-mid);
+    color:var(--accent);
+    font-weight:700;
+    font-size:.9rem;
+}
+
+.report-layout{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1.3rem;
+    align-items:start;
+}
+
+.card{
+    padding:1.5rem;
+    border-radius:24px;
+    background:var(--white);
+    border:1.5px solid var(--border);
+    box-shadow:var(--shadow);
+    margin-bottom:1.3rem;
+}
+
+.card h2{
+    font-family:Outfit,sans-serif;
+    font-size:1.35rem;
+    margin-bottom:.85rem;
+    color:var(--text);
+}
+
+.card p{ color:var(--text2); line-height:1.8; font-size:.95rem; }
+
+.suggestions{ display:grid; gap:.85rem; }
+
+.suggestion{
+    padding:1rem;
+    border-radius:18px;
+    background:var(--green-light);
+    border:1px solid var(--green-mid);
+}
+
+.suggestion h3{
+    font-family:Outfit,sans-serif;
+    font-size:1.05rem;
+    margin-bottom:.45rem;
+    color:var(--text);
+}
+
+.suggestion p{ font-size:.9rem; line-height:1.7; color:var(--text2); }
+
+.tag{
+    display:inline-flex;
+    margin-top:.65rem;
+    padding:.35rem .75rem;
+    border-radius:999px;
+    color:var(--accent);
+    background:#fff;
+    border:1px solid var(--border2);
+    font-weight:900;
+    font-size:.72rem;
+}
+
+.list{ display:grid; gap:.7rem; }
+
+.list-item{
+    padding:.9rem 1rem;
+    border-radius:14px;
+    background:var(--panel);
+    border:1px solid var(--border);
+    color:var(--text2);
+    line-height:1.7;
+}
+
+.resource{
+    padding:1rem;
+    border-radius:18px;
+    background:var(--green-light);
+    border:1px solid var(--green-mid);
+    margin-bottom:.8rem;
+}
+
+.resource h3{
+    font-family:Outfit,sans-serif;
+    font-size:1rem;
+    margin-bottom:.35rem;
+    color:var(--text);
+}
+
+.resource p{ color:var(--text2); font-size:.9rem; line-height:1.65; }
+
+.crisis{
+    padding:1.1rem;
+    border-radius:18px;
+    background:#ffebee;
+    border:1.5px solid #ef9a9a;
+    color:#c62828;
+    line-height:1.75;
+    margin-bottom:1rem;
+}
+
+.disclaimer{
+    padding:1rem;
+    border-radius:14px;
+    background:#fff8e1;
+    border:1px solid #ffe082;
+    color:#5d4037;
+    line-height:1.75;
+    font-size:.9rem;
+}
+
+@media(max-width:900px){
+    .report-layout{ grid-template-columns:1fr; }
+}
+</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-brand-logo.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-ui-image.css') }}">
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="brand">🧠 <span>NeuroSense AI</span></div>
+    <nav class="nav">
+        <a href="/reports" class="primary">📄 Reports</a>
+        <a href="/dashboard">📊 Dashboard</a>
+        <a href="/mode">🔄 Mode</a>
+    </nav>
+</header>
+
+<main class="wrapper">
+
+    <section class="hero">
+        <div class="badge">✦ ACTION PLAN</div>
+
+        <h1>Personalized <span>Wellness Plan</span></h1>
+
+        <p>This report converts NeuroSense AI insights into safe, practical next steps: suggestions, grounding exercises, daily routines, sleep support, social support, and professional help outside the app.</p>
+
+        <div class="actions">
+            <button class="btn green" onclick="generateReport('solution','pdf')">Download Solution PDF</button>
+            <button class="btn" onclick="generateReport('solution','csv')">Download Solution CSV</button>
+        </div>
+
+        <div class="status-box" id="reportStatus">Preparing report...</div>
+    </section>
+
+    <section class="report-layout">
+
+        <div>
+            <article class="card">
+                <h2>1. Top 5 Suggestions</h2>
+                <div class="suggestions">
+                    {% if suggestions %}
+                        {% for item in suggestions %}
+                            <div class="suggestion">
+                                <h3>{{ loop.index }}. {{ item.title }}</h3>
+                                <p><strong>Why:</strong> {{ item.why or item.description }}</p>
+                                <p><strong>How:</strong> {{ item.how_to_do or item.description }}</p>
+                                <span class="tag">{{ item.frequency or "As needed" }}</span>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="suggestion">
+                            <h3>1. Box Breathing</h3>
+                            <p><strong>Why:</strong> Helps calm stress response.</p>
+                            <p><strong>How:</strong> Breathe in 4 seconds, hold 4, breathe out 4, hold 4.</p>
+                            <span class="tag">As needed</span>
+                        </div>
+                        <div class="suggestion">
+                            <h3>2. Thought Journal</h3>
+                            <p><strong>Why:</strong> Helps organize difficult thoughts.</p>
+                            <p><strong>How:</strong> Write one thought, one feeling, and one kinder alternative.</p>
+                            <span class="tag">Daily</span>
+                        </div>
+                        <div class="suggestion">
+                            <h3>3. Sleep Wind-Down</h3>
+                            <p><strong>Why:</strong> Supports emotional recovery.</p>
+                            <p><strong>How:</strong> Avoid screens before bed and write tomorrow's tasks.</p>
+                            <span class="tag">Nightly</span>
+                        </div>
+                        <div class="suggestion">
+                            <h3>4. Trusted Person Check-In</h3>
+                            <p><strong>Why:</strong> Social support reduces emotional isolation.</p>
+                            <p><strong>How:</strong> Send one short message to someone safe.</p>
+                            <span class="tag">Today</span>
+                        </div>
+                        <div class="suggestion">
+                            <h3>5. Grounding Practice</h3>
+                            <p><strong>Why:</strong> Helps return attention to the present.</p>
+                            <p><strong>How:</strong> Use the 5-4-3-2-1 senses method.</p>
+                            <span class="tag">Whenever overwhelmed</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </article>
+
+            <article class="card">
+                <h2>2. Daily Practices</h2>
+                <div class="list">
+                    <div class="list-item">Start the day with one 2-minute breathing exercise.</div>
+                    <div class="list-item">Write one mood note: what happened, what I felt, what I need.</div>
+                    <div class="list-item">Take one small action that supports your routine.</div>
+                    <div class="list-item">Reduce screen exposure before sleep when possible.</div>
+                    <div class="list-item">Check in with one trusted person if you feel isolated.</div>
+                </div>
+            </article>
+
+            <article class="card">
+                <h2>3. Grounding & Emotional Regulation</h2>
+                <div class="list">
+                    <div class="list-item">5-4-3-2-1 grounding: notice 5 things you see, 4 you feel, 3 you hear, 2 you smell, and 1 you taste.</div>
+                    <div class="list-item">Box breathing: breathe in for 4, hold for 4, breathe out for 4, hold for 4.</div>
+                    <div class="list-item">Emotion naming: "I am noticing this feeling, and it makes sense because..."</div>
+                    <div class="list-item">Small-step reset: choose one task that takes less than 5 minutes.</div>
+                </div>
+            </article>
+        </div>
+
+        <aside>
+            <article class="card">
+                <h2>4. Sleep & Recovery Support</h2>
+                <div class="list">
+                    <div class="list-item">Keep a consistent sleep and wake time when possible.</div>
+                    <div class="list-item">Avoid heavy emotional problem-solving right before sleep.</div>
+                    <div class="list-item">Write tomorrow's tasks before bed to reduce mental load.</div>
+                    <div class="list-item">Use a calm wind-down routine: dim lights, slow breathing, low stimulation.</div>
+                </div>
+            </article>
+
+            <article class="card">
+                <h2>5. Social Support Plan</h2>
+                <div class="list">
+                    <div class="list-item">Identify one trusted person you can message or call.</div>
+                    <div class="list-item">Use a simple message: "I'm having a difficult day. Can we talk for a few minutes?"</div>
+                    <div class="list-item">If direct conversation feels hard, try text or voice note first.</div>
+                    <div class="list-item">If no support is available, consider a counselling helpline.</div>
+                </div>
+            </article>
+
+            <article class="card">
+                <h2>6. Professional Help Outside App</h2>
+                {% if professional_help and professional_help.user_facing_message %}
+                    <p>{{ professional_help.user_facing_message }}</p>
+                {% else %}
+                    <p>If distress continues, worsens, or affects daily functioning, consider speaking with a counsellor, psychologist, psychiatrist, or verified mental health service.</p>
+                {% endif %}
+                {% if professional_help and professional_help.recommendations %}
+                    <div class="list" style="margin-top:1rem;">
+                        {% for rec in professional_help.recommendations %}
+                            <div class="list-item">
+                                <strong>{{ rec.professional }}</strong><br>
+                                Issue: {{ rec.issue }}<br>
+                                Urgency: {{ rec.urgency }}<br>
+                                {{ rec.reason }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </article>
+
+            <article class="card">
+                <h2>7. Verified Support Resources</h2>
+                {% if professional_help and professional_help.resources %}
+                    {% for r in professional_help.resources %}
+                        <div class="resource">
+                            <h3>{{ r.name }}</h3>
+                            <p>{{ r.type }}</p>
+                            {% if r.phone %}<p><strong>Phone:</strong> {{ r.phone }}</p>{% endif %}
+                            {% if r.alternate_phone %}<p><strong>Alternate:</strong> {{ r.alternate_phone }}</p>{% endif %}
+                            {% if r.whatsapp %}<p><strong>WhatsApp:</strong> {{ r.whatsapp }}</p>{% endif %}
+                            {% if r.email %}<p><strong>Email:</strong> {{ r.email }}</p>{% endif %}
+                            {% if r.website %}<p><strong>Website:</strong> {{ r.website }}</p>{% endif %}
+                            {% if r.available %}<p><strong>Available:</strong> {{ r.available }}</p>{% endif %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="resource">
+                        <h3>Tele MANAS</h3>
+                        <p>Phone: 14416 or 1800-891-4416</p>
+                    </div>
+                    <div class="resource">
+                        <h3>iCALL</h3>
+                        <p>Phone: 9152987821</p>
+                        <p>Email: icall@tiss.ac.in</p>
+                    </div>
+                    <div class="resource">
+                        <h3>Vandrevala Foundation</h3>
+                        <p>Phone / WhatsApp: +91 9999 666 555</p>
+                    </div>
+                {% endif %}
+            </article>
+
+            <div class="crisis">
+                <strong>🆘 If you feel unsafe:</strong><br>
+                Please contact a trusted person, emergency services, or a crisis helpline immediately.
+                Tele MANAS: 14416 · iCALL: 9152987821 · Vandrevala: +91 9999 666 555
+            </div>
+
+            <div class="disclaimer">
+                <strong>Important:</strong>
+                This solution report is not medical treatment, psychiatric advice, or a replacement for licensed professional care.
+            </div>
+        </aside>
+
+    </section>
+
+</main>
+
+<script src="{{ url_for('static', filename='js/report.js') }}"></script>
+</body>
+</html>

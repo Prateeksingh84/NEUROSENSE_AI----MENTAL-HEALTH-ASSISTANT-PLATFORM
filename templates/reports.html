@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NeuroSense AI • Reports</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f8f4;--surface:#fff;--surface2:#f0f7f0;--surface3:#e8f3e8;
+  --border:#d0e8d0;--border2:#b8ddb8;
+  --text:#1a2e1a;--text2:#4a6b4a;--muted:#7a9e7a;
+  --accent:#2d8c4e;--accent2:#3aab63;--green:#2d8c4e;
+  --danger:#d94f3c;--orange:#c97a00;
+  --shadow:0 4px 20px rgba(45,140,78,.09);
+  --shadow-lg:0 12px 40px rgba(45,140,78,.13);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{min-height:100vh;font-family:Inter,sans-serif;color:var(--text);background:var(--bg)}
+.topbar{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;border-bottom:1.5px solid var(--border);background:rgba(255,255,255,.92);backdrop-filter:blur(16px);position:sticky;top:0;z-index:100}
+.brand{display:flex;align-items:center;gap:.7rem;font-family:Outfit,sans-serif;font-size:1.2rem;font-weight:900;color:var(--text)}
+.brand span{color:var(--accent)}
+.nav{display:flex;align-items:center;gap:.7rem}
+.nav a{height:40px;padding:0 1rem;border-radius:10px;border:1.5px solid var(--border);color:var(--text2);text-decoration:none;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.88rem;background:var(--surface);transition:.2s}
+.nav a:hover{border-color:var(--accent);color:var(--accent)}
+.nav a.primary{background:var(--accent);color:#fff;border-color:transparent}
+.nav a.primary:hover{background:var(--accent2)}
+.nav a.danger{color:var(--danger);border-color:rgba(217,79,60,.25);background:rgba(217,79,60,.06)}
+.wrapper{width:min(1200px,92vw);margin:0 auto;padding:3rem 0 4rem}
+.hero{margin-bottom:2rem}
+.badge{display:inline-flex;align-items:center;gap:.45rem;padding:.5rem 1rem;border-radius:999px;color:var(--accent);background:rgba(45,140,78,.1);border:1.5px solid rgba(45,140,78,.22);font-size:.78rem;font-weight:900;margin-bottom:1.2rem}
+.hero h1{font-family:Outfit,sans-serif;font-size:clamp(2.2rem,5vw,4.4rem);line-height:1.05;font-weight:900;letter-spacing:-.04em;margin-bottom:1rem;color:var(--text)}
+.hero h1 span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{max-width:720px;color:var(--muted);line-height:1.8;font-size:1rem}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem;margin-top:2rem}
+.report-card{padding:1.7rem;border-radius:24px;background:var(--surface);border:1.5px solid var(--border);box-shadow:var(--shadow);position:relative;overflow:hidden;transition:.2s}
+.report-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.report-card::before{content:"";position:absolute;width:180px;height:180px;border-radius:50%;right:-65px;top:-65px;background:rgba(45,140,78,.06)}
+.report-card.solution::before{background:rgba(45,140,78,.09)}
+.report-icon{width:64px;height:64px;border-radius:20px;display:grid;place-items:center;font-size:1.9rem;background:rgba(45,140,78,.1);border:1.5px solid rgba(45,140,78,.22);margin-bottom:1rem}
+.report-card.solution .report-icon{background:rgba(45,140,78,.12);border-color:rgba(45,140,78,.3)}
+.report-tag{display:inline-flex;padding:.4rem .72rem;border-radius:999px;background:rgba(45,140,78,.1);color:var(--accent);font-size:.72rem;font-weight:900;text-transform:uppercase;margin-bottom:.82rem;border:1px solid rgba(45,140,78,.2)}
+.report-card h2{font-family:Outfit,sans-serif;font-size:1.55rem;margin-bottom:.62rem;color:var(--text)}
+.report-card p{color:var(--muted);line-height:1.75;font-size:.94rem;margin-bottom:1rem}
+.includes{display:grid;grid-template-columns:1fr 1fr;gap:.52rem;margin:1rem 0 1.3rem}
+.includes span{padding:.62rem .72rem;border-radius:12px;background:var(--surface2);border:1.5px solid var(--border);color:var(--text2);font-size:.81rem;font-weight:700}
+.actions{display:flex;gap:.7rem;flex-wrap:wrap}
+.btn{height:46px;padding:0 1rem;border:none;border-radius:13px;cursor:pointer;font-weight:900;color:#fff;background:rgba(45,140,78,.1);border:1.5px solid rgba(45,140,78,.2);color:var(--accent);transition:.2s;font-family:Inter,sans-serif}
+.btn:hover{transform:translateY(-2px)}
+.btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#fff}
+.btn.green{background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#fff}
+.status-box{margin-top:2rem;padding:1.2rem 1.4rem;border-radius:20px;background:var(--surface2);border:1.5px solid var(--border);color:var(--text2);line-height:1.7;display:none}
+.status-box.show{display:block}
+.status-box.success{border-color:rgba(45,140,78,.3);background:rgba(45,140,78,.08);color:#1a5c32}
+.status-box.error{border-color:rgba(217,79,60,.25);background:rgba(217,79,60,.07);color:var(--danger)}
+.saved-section{margin-top:2.4rem;padding:1.6rem;border-radius:24px;background:var(--surface);border:1.5px solid var(--border)}
+.saved-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.1rem}
+.saved-head h2{font-family:Outfit,sans-serif;font-size:1.5rem;color:var(--text)}
+.saved-head button{height:40px}
+.saved-list{display:grid;gap:.72rem}
+.saved-item{padding:1rem;border-radius:16px;background:var(--surface2);border:1.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.saved-item h3{font-size:.97rem;margin-bottom:.24rem;color:var(--text)}
+.saved-item p{color:var(--muted);font-size:.83rem}
+.saved-empty{color:var(--muted);padding:1rem;border-radius:16px;background:var(--surface2);border:1px solid var(--border)}
+.note{margin-top:2rem;padding:1.2rem 1.4rem;border-radius:20px;background:rgba(201,122,0,.07);border:1.5px solid rgba(201,122,0,.22);color:var(--orange);line-height:1.8;font-size:.92rem}
+@media(max-width:950px){.grid{grid-template-columns:1fr}}
+@media(max-width:720px){.topbar{height:auto;padding:1rem;flex-direction:column;align-items:flex-start;gap:1rem}.nav{flex-wrap:wrap}.includes{grid-template-columns:1fr}.saved-item{flex-direction:column;align-items:flex-start}}
+</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-brand-logo.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-ui-image.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">🧠 <span>NeuroSense AI</span></div>
+  <nav class="nav">
+    <a href="/dashboard">📊 Dashboard</a>
+    <a href="/mode" class="primary">🔄 Mode</a>
+    <a href="/logout" class="danger">Logout</a>
+  </nav>
+</header>
+<main class="wrapper">
+  <section class="hero">
+    <div class="badge">✦ SAFE REPORTING SYSTEM</div>
+    <h1>Reports for <span>wellbeing insights</span></h1>
+    <p>NeuroSense AI separates reports into two parts: an observational assessment report and an action-oriented solution report. This keeps the system safer, clearer, and more professional.</p>
+  </section>
+  <section class="grid">
+    <article class="report-card assessment">
+      <div class="report-icon">📋</div>
+      <div class="report-tag">Assessment Report</div>
+      <h2>Mental Wellness Assessment</h2>
+      <p>This report explains what was observed from session data, detected emotions, mood trend, check-ins, conversation history, and engagement patterns.</p>
+      <div class="includes"><span>🧾 Session Data</span><span>🎭 Detected Emotions</span><span>📈 Mood Trend</span><span>📝 Check-In Responses</span><span>💬 Conversation Summary</span><span>⚠️ Risk Level</span></div>
+      <div class="actions">
+        <button class="btn primary" onclick="generateReport('assessment','pdf')">Download PDF</button>
+        <button class="btn" onclick="generateReport('assessment','csv')">Download CSV</button>
+      </div>
+    </article>
+    <article class="report-card solution">
+      <div class="report-icon">🌱</div>
+      <div class="report-tag">Solution Report</div>
+      <h2>Personalized Wellness Plan</h2>
+      <p>This report converts the assessment into safe, practical next steps like coping practices, daily routines, grounding, social support, and professional help outside the app.</p>
+      <div class="includes"><span>✅ Top 5 Suggestions</span><span>🧘 Grounding Practice</span><span>😴 Sleep Support</span><span>🤝 Social Support</span><span>👨‍⚕️ Professional Help</span><span>🆘 Crisis Resources</span></div>
+      <div class="actions">
+        <button class="btn green" onclick="generateReport('solution','pdf')">Download PDF</button>
+        <button class="btn" onclick="generateReport('solution','csv')">Download CSV</button>
+      </div>
+    </article>
+  </section>
+  <div class="status-box" id="reportStatus">Preparing report...</div>
+  <section class="saved-section">
+    <div class="saved-head"><h2>Saved AI Reports</h2><button class="btn" onclick="loadSavedReports()">Refresh</button></div>
+    <div class="saved-list" id="savedReportsList"><div class="saved-empty">Loading saved reports...</div></div>
+  </section>
+  <section class="note"><strong>Important:</strong> NeuroSense AI reports are not a clinical diagnosis, prescription, psychiatric evaluation, or replacement for licensed professional care. If a user feels unsafe or in crisis, they should contact a trusted person, emergency services, or a crisis helpline immediately.</section>
+</main>
+<script src="{{ url_for('static', filename='js/report.js') }}"></script>
+</body>
+</html>

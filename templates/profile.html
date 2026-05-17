@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NeuroSense AI • Profile</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-brand-logo.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-ui-image.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+
+        <a href="/dashboard" class="logo">
+            <div class="logo-icon">🧠</div>
+
+            <div>
+                <span>NeuroSense AI</span>
+                <small>Mental Health Platform</small>
+            </div>
+        </a>
+
+        <div class="top-actions">
+            <a href="/dashboard" class="back-btn">← Dashboard</a>
+            <a href="/mode" class="back-btn">← Modes</a>
+        </div>
+
+    </div>
+
+    <!-- MAIN GRID -->
+    <div class="grid">
+
+        <!-- LEFT PROFILE CARD -->
+        <aside class="card profile-card">
+
+            <div class="avatar-wrap">
+                <img
+                    id="avatarPreview"
+                    src="{{ profile.avatar_url or '/static/images/empty-avatar.png' }}"
+                    alt="Profile Photo"
+                    onerror="this.src='/static/images/empty-avatar.png'"
+                >
+            </div>
+
+            <div class="profile-name" id="profileName">
+                {{ profile.full_name or name or 'User' }}
+            </div>
+
+            <div class="profile-email" id="profileEmail">
+                {{ profile.email or session.get('email', '—') }}
+            </div>
+
+            <div class="role">
+                🛡️ <span id="profileRole">{{ profile.role|default('user')|upper }}</span>
+            </div>
+
+            <input
+                type="file"
+                id="avatarInput"
+                accept="image/png,image/jpeg,image/jpg,image/webp"
+                hidden
+            >
+
+            <button type="button" class="upload-btn" id="avatarBtn">
+                Upload & Crop Profile Photo
+            </button>
+
+            <p class="crop-hint">
+                Upload a photo, drag to position it, zoom if needed, and save the cropped avatar.
+            </p>
+
+            <div class="stats">
+
+                <div class="stat">
+                    <div class="stat-label">Daily Messages</div>
+                    <div class="stat-value" id="dailyMessages">
+                        {{ usage.daily_messages or 0 }}
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-label">Reports Generated</div>
+                    <div class="stat-value" id="reportsGenerated">
+                        {{ usage.reports_generated or 0 }}
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-label">Voice Minutes</div>
+                    <div class="stat-value" id="voiceMinutes">
+                        {{ usage.voice_minutes or 0 }}
+                    </div>
+                </div>
+
+            </div>
+
+        </aside>
+
+        <!-- RIGHT PROFILE FORM -->
+        <main class="card content-card">
+
+            <div class="section-head">
+                <div>
+                    <h1>User Profile</h1>
+                    <p>Manage your personal details, language preference, and safety contact.</p>
+                </div>
+
+                <span class="safe-pill">● Profile Active</span>
+            </div>
+
+            <form id="profileForm">
+
+                <div class="form-grid">
+
+                    <div class="input-group">
+                        <label for="full_name">Full Name</label>
+                        <input
+                            type="text"
+                            id="full_name"
+                            value="{{ profile.full_name or '' }}"
+                            placeholder="Enter your full name"
+                            autocomplete="name"
+                        >
+                    </div>
+
+                    <div class="input-group">
+                        <label for="phone">Phone</label>
+                        <input
+                            type="text"
+                            id="phone"
+                            value="{{ profile.phone or '' }}"
+                            placeholder="Enter phone number"
+                            autocomplete="tel"
+                        >
+                    </div>
+
+                    <div class="input-group">
+                        <label for="preferred_language">Preferred Language</label>
+                        <select id="preferred_language">
+                            <option value="en" {% if profile.preferred_language == 'en' %}selected{% endif %}>English</option>
+                            <option value="hi" {% if profile.preferred_language == 'hi' %}selected{% endif %}>Hindi</option>
+                            <option value="fr" {% if profile.preferred_language == 'fr' %}selected{% endif %}>French</option>
+                            <option value="es" {% if profile.preferred_language == 'es' %}selected{% endif %}>Spanish</option>
+                            <option value="de" {% if profile.preferred_language == 'de' %}selected{% endif %}>German</option>
+                            <option value="it" {% if profile.preferred_language == 'it' %}selected{% endif %}>Italian</option>
+                            <option value="pt" {% if profile.preferred_language == 'pt' %}selected{% endif %}>Portuguese</option>
+                            <option value="ta" {% if profile.preferred_language == 'ta' %}selected{% endif %}>Tamil</option>
+                            <option value="te" {% if profile.preferred_language == 'te' %}selected{% endif %}>Telugu</option>
+                            <option value="bn" {% if profile.preferred_language == 'bn' %}selected{% endif %}>Bengali</option>
+                            <option value="mr" {% if profile.preferred_language == 'mr' %}selected{% endif %}>Marathi</option>
+                            <option value="gu" {% if profile.preferred_language == 'gu' %}selected{% endif %}>Gujarati</option>
+                            <option value="pa" {% if profile.preferred_language == 'pa' %}selected{% endif %}>Punjabi</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="emergency_contact_name">Emergency Contact Name</label>
+                        <input
+                            type="text"
+                            id="emergency_contact_name"
+                            value="{{ profile.emergency_contact_name or '' }}"
+                            placeholder="Trusted person name"
+                        >
+                    </div>
+
+                    <div class="input-group full">
+                        <label for="emergency_contact_phone">Emergency Contact Phone</label>
+                        <input
+                            type="text"
+                            id="emergency_contact_phone"
+                            value="{{ profile.emergency_contact_phone or '' }}"
+                            placeholder="Trusted person phone number"
+                        >
+                    </div>
+
+                    <div class="input-group full">
+                        <label for="wellness_notes">Wellness Notes</label>
+                        <textarea
+                            id="wellness_notes"
+                            placeholder="Write personal wellness goals, reminders, calming notes, or things that help you feel grounded..."
+                        >{{ profile.wellness_notes or '' }}</textarea>
+                    </div>
+
+                </div>
+
+                <button type="submit" class="save-btn" id="saveProfileBtn">
+                    Save Profile
+                </button>
+
+            </form>
+
+            <section class="privacy-box">
+                <h3>Privacy & Safety</h3>
+                <p>
+                    Your profile information helps personalize your NeuroSense AI experience.
+                    Emergency contacts are only supportive details and do not replace crisis or emergency services.
+                </p>
+            </section>
+
+            <section class="danger-zone">
+                <h3>Danger Zone</h3>
+                <p>
+                    Deleting your account may remove access to reports, sessions, profile data, and wellness analytics.
+                    Use this only if you are sure.
+                </p>
+
+                <button type="button" class="delete-btn" id="deleteAccountBtn">
+                    Delete Account
+                </button>
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+<!-- AVATAR CROP MODAL -->
+<div class="crop-modal" id="avatarCropModal">
+
+    <div class="crop-dialog">
+
+        <div class="crop-header">
+
+            <div>
+                <h3>Crop Profile Photo</h3>
+                <p>Drag the image and adjust zoom. The circle area will be saved.</p>
+            </div>
+
+            <button type="button" class="crop-close" id="cropCloseBtn">
+                ✕
+            </button>
+
+        </div>
+
+        <div class="crop-body">
+
+            <div class="crop-stage" id="cropStage">
+                <img id="cropImage" alt="Crop image">
+                <div class="crop-mask"></div>
+                <div class="crop-ring"></div>
+            </div>
+
+            <div class="crop-side">
+
+                <div class="crop-preview-box">
+                    <p>Final Preview</p>
+
+                    <div class="crop-preview">
+                        <img id="cropFinalPreview" alt="Final avatar preview">
+                    </div>
+                </div>
+
+                <div class="crop-control">
+                    <label>
+                        <span>Zoom</span>
+                        <strong id="zoomValue">100%</strong>
+                    </label>
+
+                    <input
+                        type="range"
+                        id="cropZoom"
+                        min="1"
+                        max="3"
+                        step="0.01"
+                        value="1"
+                    >
+                </div>
+
+                <div class="crop-help">
+                    <strong>Tip:</strong>
+                    Keep your face inside the white circle. Use zoom if the photo looks too small.
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="crop-actions">
+            <button type="button" class="crop-btn secondary" id="cropCancelBtn">
+                Cancel
+            </button>
+
+            <button type="button" class="crop-btn secondary" id="cropResetBtn">
+                Reset
+            </button>
+
+            <button type="button" class="crop-btn primary" id="cropSaveBtn">
+                Save Cropped Photo
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+
+</body>
+</html>

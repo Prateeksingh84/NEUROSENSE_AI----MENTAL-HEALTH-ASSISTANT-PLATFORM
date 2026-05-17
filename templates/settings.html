@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuroSense AI • Settings</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f8f4;--surface:#fff;--surface2:#f0f7f0;
+  --border:#d0e8d0;--border2:#b8ddb8;
+  --text:#1a2e1a;--text2:#4a6b4a;--muted:#7a9e7a;
+  --accent:#2d8c4e;--accent2:#3aab63;
+  --shadow:0 4px 20px rgba(45,140,78,.09);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
+.container{max-width:980px;margin:auto;padding:2rem}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem}
+.title{font-family:'Outfit',sans-serif;font-size:2rem;font-weight:800;color:var(--text)}
+.back{padding:.72rem 1rem;border-radius:999px;border:1.5px solid var(--border);color:var(--text2);text-decoration:none;transition:.2s;font-weight:600}
+.back:hover{border-color:var(--accent);color:var(--accent)}
+.settings-grid{display:grid;gap:1.5rem}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:22px;padding:1.5rem;box-shadow:var(--shadow)}
+.card h2{font-family:'Outfit',sans-serif;margin-bottom:1.2rem;color:var(--text);font-size:1.35rem}
+.setting{display:flex;justify-content:space-between;align-items:center;padding:1rem 0;border-bottom:1px solid var(--border)}
+.setting:last-child{border-bottom:none}
+.setting-info{max-width:70%}
+.setting-title{font-weight:700;margin-bottom:.3rem;color:var(--text)}
+.setting-sub{color:var(--muted);font-size:.88rem;line-height:1.6}
+.toggle{width:58px;height:32px;border-radius:999px;background:var(--border2);position:relative;cursor:pointer;transition:.25s}
+.toggle::before{content:'';position:absolute;width:24px;height:24px;border-radius:50%;background:#fff;top:4px;left:4px;transition:.25s;box-shadow:0 2px 6px rgba(0,0,0,.14)}
+.toggle.active{background:var(--accent)}
+.toggle.active::before{transform:translateX(26px)}
+select{padding:.78rem 1rem;border-radius:13px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text);font-family:Inter,sans-serif;outline:none;transition:border-color .2s}
+select:focus{border-color:var(--accent)}
+.save-btn{padding:1rem 1.4rem;border:none;border-radius:15px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:800;cursor:pointer;font-size:1rem;transition:.2s;box-shadow:0 6px 22px rgba(45,140,78,.25)}
+.save-btn:hover{opacity:.9;transform:translateY(-1px)}
+</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-brand-logo.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/neurosense-ui-image.css') }}">
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="title">Settings</div>
+    <a href="/dashboard" class="back">← Dashboard</a>
+  </div>
+  <div class="settings-grid">
+    <div class="card">
+      <h2>AI Preferences</h2>
+      <div class="setting">
+        <div class="setting-info"><div class="setting-title">Emotion Detection</div><div class="setting-sub">Allow AI to analyze emotions during conversations.</div></div>
+        <div class="toggle active"></div>
+      </div>
+      <div class="setting">
+        <div class="setting-info"><div class="setting-title">Voice Responses</div><div class="setting-sub">Enable spoken AI responses.</div></div>
+        <div class="toggle active"></div>
+      </div>
+      <div class="setting">
+        <div class="setting-info"><div class="setting-title">Session Analytics</div><div class="setting-sub">Generate wellness analytics and mood insights.</div></div>
+        <div class="toggle active"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Language & Accessibility</h2>
+      <div class="setting">
+        <div class="setting-info"><div class="setting-title">Preferred Language</div><div class="setting-sub">Choose your default interaction language.</div></div>
+        <select><option>English</option><option>Hindi</option><option>French</option></select>
+      </div>
+      <div class="setting">
+        <div class="setting-info"><div class="setting-title">Sign Language Assistance</div><div class="setting-sub">Enable sign language accessibility mode.</div></div>
+        <div class="toggle"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Privacy & Safety</h2>
+      <div class="setting">
+        <div class="setting-info"><div class="setting-title">Anonymous Reports</div><div class="setting-sub">Hide personal details inside generated reports.</div></div>
+        <div class="toggle"></div>
+      </div>
+      <div class="setting">
+        <div class="setting-info"><div class="setting-title">Session Auto-Delete</div><div class="setting-sub">Automatically remove sessions after 30 days.</div></div>
+        <div class="toggle"></div>
+      </div>
+    </div>
+    <button class="save-btn">Save Settings</button>
+  </div>
+</div>
+<script>
+document.querySelectorAll('.toggle').forEach(function(toggle){
+  toggle.addEventListener('click',function(){this.classList.toggle('active');});
+});
+</script>
+</body>
+</html>
