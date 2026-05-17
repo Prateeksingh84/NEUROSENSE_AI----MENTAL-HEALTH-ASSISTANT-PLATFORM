@@ -1,0 +1,1490 @@
+{
+  "prathamgsingh@gmail.com": {
+    "sessions": [
+      {
+        "date": "2026-05-07",
+        "mode": "normal_chat",
+        "emotions": [
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral"
+        ],
+        "ended": true,
+        "messages": [
+          {
+            "role": "user",
+            "content": "I'm feeling really sad today",
+            "time": "17:01"
+          },
+          {
+            "role": "assistant",
+            "content": "I'm so sorry to hear that you're feeling sad today. It can be really tough to navigate these emotions, but I'm here to listen and support you without judgment. Would you like to talk about what's been going on and how you've been feeling, or would you rather just take some time to express your emotions? Remember, it's okay to feel sad, and acknowledging your emotions is the first step towards healing.",
+            "time": "17:01"
+          }
+        ],
+        "ended_at": "2026-05-07T17:01:43.839953"
+      },
+      {
+        "date": "2026-05-07",
+        "mode": "normal_chat",
+        "emotions": [
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral"
+        ],
+        "ended": false,
+        "messages": [
+          {
+            "role": "user",
+            "content": "I need someone to talk to",
+            "time": "17:03"
+          },
+          {
+            "role": "assistant",
+            "content": "I'm here to listen and support you. It can be really helpful to talk about what's on your mind and in your heart. Would you like to share what's been going on and how you've been feeling, and I'll do my best to provide a supportive and non-judgmental space for you?",
+            "time": "17:03"
+          }
+        ]
+      }
+    ],
+    "emotion_log": [
+      {
+        "ts": "2026-05-07T16:43:13.949498",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:43:15.078660",
+        "emotion": "happy"
+      },
+      {
+        "ts": "2026-05-07T16:43:18.276879",
+        "emotion": "happy"
+      },
+      {
+        "ts": "2026-05-07T16:43:21.465950",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:43:23.065875",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:43:24.626990",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:51:37.306149",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:51:38.800617",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:51:40.295556",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:51:44.046872",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:51:46.939260",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:51:47.275171",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:51:49.293968",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:51:50.456132",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:02.214197",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:03.721074",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:05.325042",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:07.047411",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:08.569299",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:10.123194",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:11.746556",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:13.310030",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:14.938719",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:16.515437",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:18.113231",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:19.721260",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:21.295860",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:22.901033",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:24.465256",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:26.080184",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:27.720586",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:29.317608",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:30.894697",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:32.541993",
+        "emotion": "angry"
+      },
+      {
+        "ts": "2026-05-07T16:52:34.111786",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:35.725081",
+        "emotion": "angry"
+      },
+      {
+        "ts": "2026-05-07T16:52:37.297869",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:52:38.890632",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:40.509407",
+        "emotion": "angry"
+      },
+      {
+        "ts": "2026-05-07T16:52:42.116638",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:43.665273",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:45.314017",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:46.892294",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:48.533234",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:50.102158",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:51.694444",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:53.314535",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:52:54.910638",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:56.468368",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:58.141104",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:52:59.713272",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:53:01.320174",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:53:02.889115",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:53:04.541257",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:53:06.094188",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:53:07.701571",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:53:09.301395",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:53:10.901545",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:53:12.525200",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:53:14.115701",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:53:15.697965",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:53:17.303216",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:53:18.892547",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:53:20.508182",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:53:22.118874",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:53:23.717097",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:53:25.289998",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:53:26.906267",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:53:28.501806",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:53:30.098284",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:53:31.717712",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:53:33.306311",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:53:34.933325",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:53:36.500882",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:53:38.113050",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:53:39.705760",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:53:41.321226",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:53:42.893041",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:53:44.528724",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:53:46.106946",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:53:47.706291",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:53:49.327733",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:53:50.910738",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:53:52.503817",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:53:54.098480",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:53:55.720427",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-07T16:53:57.316008",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:53:58.928259",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:54:00.500073",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T16:54:02.154693",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:07.086526",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:08.694744",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:10.246289",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:11.806976",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:13.468395",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:15.024138",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:16.608502",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:18.280550",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:19.822691",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:21.412328",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:23.036306",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:24.678980",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:26.340479",
+        "emotion": "happy"
+      },
+      {
+        "ts": "2026-05-07T17:01:27.843362",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:29.383292",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:31.065201",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:32.686190",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:34.421357",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:35.877315",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:37.469841",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:39.065779",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:40.625271",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:42.296882",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:43.954805",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:45.484710",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:47.038945",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:01:48.672407",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:03:37.237297",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:03:38.968910",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:03:40.519601",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:03:42.166838",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:03:43.705115",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:03:45.348049",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:03:46.908635",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:03:48.467829",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:03:50.080402",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-07T17:03:51.720566",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T12:22:46.506664",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T12:30:11.082739",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-08T12:30:28.455501",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T12:30:30.083347",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T12:30:31.681360",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T12:42:50.020076",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-10T22:02:47.112321",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-10T22:02:48.214571",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-10T22:02:49.714722",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-10T23:43:24.262114",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-10T23:48:13.883925",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-10T23:53:34.339483",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-10T23:53:35.915376",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-10T23:53:37.526154",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-10T23:53:39.143831",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-11T00:07:09.664721",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-11T00:12:54.275936",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-11T00:23:02.271391",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-11T00:30:26.729167",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-13T23:37:54.166142",
+        "emotion": "neutral",
+        "confidence": 80.0
+      }
+    ],
+    "message_count": 4,
+    "streak_days": [
+      "2026-05-07"
+    ],
+    "reports": [
+      {
+        "id": "NS-202605071702-PRAT",
+        "generated_at": "2026-05-07T17:02:10.788753",
+        "report": {
+          "overall_assessment": "Prateek is experiencing a stable mood with a dominant neutral emotion, but has expressed feelings of sadness, indicating a need for further exploration and support. The patient's average mood score of 5.0/10 suggests a moderate level of distress.",
+          "mood_analysis": "Prateek's mood trend is stable, but the average mood score of 5.0/10 indicates a potential for improvement. The patient's recent expression of sadness suggests that they may be experiencing underlying emotional distress. Further assessment is needed to understand the underlying causes of their mood patterns.",
+          "emotional_patterns": "Prateek's emotional profile is characterized by a dominant neutral emotion, with a significant proportion of sad emotions. The presence of happy and angry emotions, although minimal, suggests that the patient is capable of experiencing a range of emotions. The patient's emotional profile may indicate a need for support in developing emotional awareness and regulation skills.",
+          "strengths": [
+            "expressing emotions",
+            "seeking support",
+            "engaging in therapy"
+          ],
+          "areas_for_growth": [
+            "emotional awareness",
+            "emotional regulation",
+            "coping skills"
+          ],
+          "top5_practices": [
+            {
+              "title": "Mindfulness Meditation",
+              "description": "To increase emotional awareness and regulation",
+              "frequency": "Daily",
+              "icon": "🙏"
+            },
+            {
+              "title": "Gratitude Journaling",
+              "description": "To cultivate positive emotions and reframe negative thoughts",
+              "frequency": "Weekly",
+              "icon": "📝"
+            },
+            {
+              "title": "Physical Exercise",
+              "description": "To improve mood and reduce stress",
+              "frequency": "Daily",
+              "icon": "🏋️"
+            },
+            {
+              "title": "Social Connection",
+              "description": "To build support networks and reduce feelings of loneliness",
+              "frequency": "Weekly",
+              "icon": "👫"
+            },
+            {
+              "title": "Cognitive Restructuring",
+              "description": "To challenge negative thoughts and develop more balanced thinking",
+              "frequency": "Daily",
+              "icon": "💡"
+            }
+          ],
+          "immediate_actions": [
+            "schedule a follow-up session",
+            "practice mindfulness meditation",
+            "engage in physical exercise"
+          ],
+          "professional_referral": "no, as the patient's risk level is low and they are engaging in therapy",
+          "quality_score": 7,
+          "engagement_score": 7,
+          "progress_score": 7,
+          "risk_level": "low",
+          "next_session_focus": "Exploring the underlying causes of Prateek's sadness and developing strategies to improve emotional regulation and coping skills.",
+          "generated_at": "2026-05-07T17:02:10.788753",
+          "report_id": "NS-202605071702-PRAT",
+          "avg_mood": 5.0,
+          "mood_trend": "stable",
+          "top_emotion": "neutral"
+        }
+      }
+    ],
+    "wellbeing_checkins": [
+      {
+        "id": "ce50dcfc-4ae9-4669-a3bd-371d5019378b",
+        "created_at": "2026-05-07T16:41:31.964676",
+        "mood": "neutral",
+        "stress": 5,
+        "social_connection": 4,
+        "sleep": "okay",
+        "concerns": [
+          "academic_pressure",
+          "relationship"
+        ],
+        "emotional_safety": 3,
+        "support_available": "no",
+        "current_thoughts": "",
+        "wellbeing_score": 4,
+        "risk_level": "high"
+      },
+      {
+        "id": "abf8e09c-74d4-4a66-baf6-120c21f66d67",
+        "created_at": "2026-05-07T17:00:33.801088",
+        "mood": "calm",
+        "stress": 3,
+        "social_connection": 3,
+        "sleep": "good",
+        "concerns": [
+          "academic_pressure",
+          "relationship"
+        ],
+        "emotional_safety": 3,
+        "support_available": "no",
+        "current_thoughts": "I AM NOT FEELING WELL BECAUSE OF MY CURRENT LIFESTYLE ",
+        "wellbeing_score": 14,
+        "risk_level": "high"
+      },
+      {
+        "id": "726020fb-758a-4239-9cf3-b399c2c06d67",
+        "created_at": "2026-05-07T17:00:35.762602",
+        "mood": "calm",
+        "stress": 3,
+        "social_connection": 3,
+        "sleep": "good",
+        "concerns": [
+          "academic_pressure",
+          "relationship"
+        ],
+        "emotional_safety": 3,
+        "support_available": "no",
+        "current_thoughts": "I AM NOT FEELING WELL BECAUSE OF MY CURRENT LIFESTYLE ",
+        "wellbeing_score": 14,
+        "risk_level": "high"
+      },
+      {
+        "id": "e81e127b-b15f-49fa-bf5e-5c8f8e66d590",
+        "created_at": "2026-05-07T17:00:36.474275",
+        "mood": "calm",
+        "stress": 3,
+        "social_connection": 3,
+        "sleep": "good",
+        "concerns": [
+          "academic_pressure",
+          "relationship"
+        ],
+        "emotional_safety": 3,
+        "support_available": "no",
+        "current_thoughts": "I AM NOT FEELING WELL BECAUSE OF MY CURRENT LIFESTYLE ",
+        "wellbeing_score": 14,
+        "risk_level": "high"
+      },
+      {
+        "id": "eaffc7e5-677a-4168-97a6-f16c7726e178",
+        "created_at": "2026-05-07T17:00:36.654741",
+        "mood": "calm",
+        "stress": 3,
+        "social_connection": 3,
+        "sleep": "good",
+        "concerns": [
+          "academic_pressure",
+          "relationship"
+        ],
+        "emotional_safety": 3,
+        "support_available": "no",
+        "current_thoughts": "I AM NOT FEELING WELL BECAUSE OF MY CURRENT LIFESTYLE ",
+        "wellbeing_score": 14,
+        "risk_level": "high"
+      },
+      {
+        "mood": "happy",
+        "stress": 3,
+        "social_connection": 3,
+        "sleep": "good",
+        "concerns": [
+          "family_issues"
+        ],
+        "emotional_safety": 3,
+        "support_available": "yes",
+        "current_thoughts": "",
+        "created_at": "2026-05-10T16:48:48.099Z",
+        "wellbeing_score": 33,
+        "risk_level": "medium",
+        "score_explanation": {
+          "starting_score": 100,
+          "deductions": [
+            {
+              "factor": "stress",
+              "value": 3,
+              "deduction": 24,
+              "reason": "Higher stress reduces wellbeing score."
+            },
+            {
+              "factor": "social_connection",
+              "value": 3,
+              "deduction": 18,
+              "reason": "Lower social connection increases support need."
+            },
+            {
+              "factor": "emotional_safety",
+              "value": 3,
+              "deduction": 21,
+              "reason": "Lower emotional safety increases concern level."
+            },
+            {
+              "factor": "concerns",
+              "value": [
+                "family_issues"
+              ],
+              "deduction": 4,
+              "reason": "Multiple active concerns increase emotional load."
+            }
+          ],
+          "total_deduction": 67,
+          "final_score": 33,
+          "note": "This score is a supportive wellbeing indicator, not a medical or diagnostic score."
+        },
+        "risk_explanation": "Medium support need was detected because the check-in shows moderate stress, low social connection, difficult mood, poor sleep, or reduced score.",
+        "id": "3014ed92-28f3-4b18-97b5-66df819df533",
+        "saved_at": "2026-05-10T22:18:48.106905",
+        "supabase_id": "232c93c4-6600-4691-a0f7-25d6abd8546d",
+        "db_id": "232c93c4-6600-4691-a0f7-25d6abd8546d"
+      }
+    ],
+    "avatar_url": "/static/uploads/avatars/02f5b404-2ca0-43dc-8ef1-5abb32337df8_1778444307.png",
+    "crisis_actions": [
+      {
+        "id": "161a610e-35f9-44af-933c-da2939e635fd",
+        "action": "page_opened",
+        "details": {
+          "source": "support_page"
+        },
+        "created_at": "2026-05-10T18:24:55.956464",
+        "date": "2026-05-10"
+      },
+      {
+        "id": "c6c9de8a-433c-4ecf-95a0-2661305ac3a4",
+        "action": "intensity_change",
+        "details": {
+          "value": 5
+        },
+        "created_at": "2026-05-10T18:24:56.523751",
+        "date": "2026-05-10"
+      },
+      {
+        "id": "1fd19fff-8a71-4221-ad18-0985620cd756",
+        "action": "page_opened",
+        "details": {
+          "source": "support_page"
+        },
+        "created_at": "2026-05-10T19:01:04.795517",
+        "date": "2026-05-11"
+      },
+      {
+        "id": "f21edb8c-1377-4752-815d-2d5515ec8951",
+        "action": "intensity_change",
+        "details": {
+          "value": 5
+        },
+        "created_at": "2026-05-10T19:01:05.373588",
+        "date": "2026-05-11"
+      },
+      {
+        "id": "18a92df2-5d1a-4056-a086-1a85f0a9469f",
+        "action": "page_opened",
+        "details": {
+          "source": "support_page"
+        },
+        "created_at": "2026-05-11T04:44:10.470213",
+        "date": "2026-05-11"
+      },
+      {
+        "id": "2efe5c86-8b7c-4414-9a52-7c8bb8caa0ad",
+        "action": "intensity_change",
+        "details": {
+          "value": 5
+        },
+        "created_at": "2026-05-11T04:44:11.133681",
+        "date": "2026-05-11"
+      },
+      {
+        "id": "b5447354-b44c-4eb4-88c3-0d1f87fee7ac",
+        "action": "page_opened",
+        "details": {
+          "source": "support_page"
+        },
+        "created_at": "2026-05-13T18:09:00.668151",
+        "date": "2026-05-13"
+      },
+      {
+        "id": "20cd11f0-95d1-4001-b987-b73de8d4abd7",
+        "action": "intensity_change",
+        "details": {
+          "value": 5
+        },
+        "created_at": "2026-05-13T18:09:01.262598",
+        "date": "2026-05-13"
+      },
+      {
+        "id": "7fec9181-18a7-4797-8c4a-bc6eddfafc09",
+        "action": "page_opened",
+        "details": {
+          "source": "support_page"
+        },
+        "created_at": "2026-05-13T18:09:08.332977",
+        "date": "2026-05-13"
+      },
+      {
+        "id": "a729047b-f73a-491d-803b-b32c1b3b6975",
+        "action": "intensity_change",
+        "details": {
+          "value": 5
+        },
+        "created_at": "2026-05-13T18:09:08.909509",
+        "date": "2026-05-13"
+      }
+    ],
+    "safety_plan": {
+      "warning_signs": [],
+      "coping_steps": [],
+      "safe_places": [],
+      "trusted_people": [],
+      "things_to_avoid": [],
+      "professional_resources": [],
+      "updated_at": ""
+    },
+    "practice_logs": [],
+    "feedback_logs": []
+  },
+  "02f5b404-2ca0-43dc-8ef1-5abb32337df8": {
+    "sessions": [
+      {
+        "date": "2026-05-08",
+        "mode": "normal_chat",
+        "emotions": [
+          "sad",
+          "sad",
+          "happy",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral",
+          "neutral"
+        ],
+        "ended": false,
+        "messages": [
+          {
+            "role": "user",
+            "content": "i am not feeling well due to lot of work pressure",
+            "time": "16:10"
+          },
+          {
+            "role": "assistant",
+            "content": "It can be really overwhelming to deal with a heavy workload. Remember that taking care of yourself is essential, and it's okay to prioritize your well-being. Can you think of one small thing you can do today to take a break and relax, like taking a short walk or practicing some deep breathing exercises? This might help you feel a bit more grounded and focused.",
+            "time": "16:10"
+          },
+          {
+            "role": "user",
+            "content": "can u suggest me some methods so that i can remove my stress?",
+            "time": "16:11"
+          },
+          {
+            "role": "assistant",
+            "content": "Here are a few methods that might help: take a few minutes to practice deep breathing exercises, focusing on the sensation of the breath moving in and out of your body. You could also try progressive muscle relaxation, tensing and relaxing different muscle groups. Additionally, engaging in a physical activity you enjoy, like a short walk or some stretching, can help release tension. Would you like to try one of these methods now?",
+            "time": "16:11"
+          },
+          {
+            "role": "user",
+            "content": "yeah",
+            "time": "16:11"
+          },
+          {
+            "role": "assistant",
+            "content": "Let's start with deep breathing. Find a comfortable and quiet spot to sit, close your eyes, and take a slow breath in through your nose, counting to 4. Hold it for a second, and then breathe out through your mouth, counting to 4 again. Repeat this a few times, focusing on the sensation of the breath. As you breathe, allow any tension or stress to release from your body. How do you feel after trying this?",
+            "time": "16:11"
+          }
+        ]
+      },
+      {
+        "date": "2026-05-08",
+        "mode": "voice",
+        "emotions": [],
+        "ended": false,
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi",
+            "time": "16:12"
+          },
+          {
+            "role": "assistant",
+            "content": "Hello, it's nice to connect with you. I'm here to listen and support you in a non-judgmental space. How are you feeling today, is there something on your mind that you'd like to talk about? I'm here to help.",
+            "time": "16:12"
+          },
+          {
+            "role": "user",
+            "content": "hello",
+            "time": "18:41"
+          },
+          {
+            "role": "assistant",
+            "content": "Hello again, it's nice to see you here. I'm here to listen and support you in a non-judgmental space. Is there something on your mind that you'd like to talk about or explore today?",
+            "time": "18:41"
+          },
+          {
+            "role": "user",
+            "content": "I need your help",
+            "time": "18:41"
+          },
+          {
+            "role": "user",
+            "content": "can you change the language to Hindi",
+            "time": "18:41"
+          },
+          {
+            "role": "assistant",
+            "content": "It seems like you're reaching out for support, and I'm here to listen. You may be feeling a sense of uncertainty or have something on your mind that you'd like to talk about. It can feel helpful to share what's been going on, and I'm here to provide a supportive and non-judgmental space for you to express yourself.",
+            "time": "18:42"
+          },
+          {
+            "role": "assistant",
+            "content": "मैं आपकी भाषा में बात करने की कोशिश करूंगा, लेकिन मेरी क्षमताएं सीमित हो सकती हैं। कृपया मुझे बताएं कि आपको किस तरह की मदद चाहिए।",
+            "time": "18:42"
+          }
+        ]
+      }
+    ],
+    "emotion_log": [
+      {
+        "ts": "2026-05-08T16:10:25.733140",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:10:26.881148",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:10:28.444915",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:10:30.013110",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:10:31.692046",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:10:33.301049",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:10:34.897741",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:10:36.473603",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:10:38.123527",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:10:39.653860",
+        "emotion": "happy"
+      },
+      {
+        "ts": "2026-05-08T16:10:41.244779",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-08T16:10:42.926493",
+        "emotion": "sad"
+      },
+      {
+        "ts": "2026-05-08T16:10:44.535191",
+        "emotion": "happy"
+      },
+      {
+        "ts": "2026-05-08T16:10:46.017961",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:10:47.659058",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:10:49.259541",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:10:50.826058",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:10:52.465852",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:10:54.002143",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:10:55.683327",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:10:57.207263",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:10:58.843605",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:00.465474",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:02.042046",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:03.653556",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:05.245224",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:06.834638",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:08.513420",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:10.047718",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:11.664070",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:13.279571",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:14.829246",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:16.540823",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:18.006079",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:19.688683",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:21.247652",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:22.848296",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:24.411297",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:26.022158",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:27.684015",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:29.325066",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:30.842270",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:32.435191",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:34.072251",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:35.689668",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-08T16:11:37.325149",
+        "emotion": "neutral"
+      },
+      {
+        "ts": "2026-05-10T17:29:03.906090",
+        "emotion": "neutral"
+      }
+    ],
+    "message_count": 14,
+    "streak_days": [
+      "2026-05-08"
+    ],
+    "reports": [],
+    "wellbeing_checkins": [],
+    "avatar_url": "/static/uploads/avatars/02f5b404-2ca0-43dc-8ef1-5abb32337df8_1778244983.jpeg",
+    "crisis_actions": [
+      {
+        "id": "ea1d35d3-86f5-49cc-b4fe-b1d439ca7596",
+        "action": "page_opened",
+        "details": {
+          "source": "support_page"
+        },
+        "created_at": "2026-05-08T12:56:07.644154",
+        "date": "2026-05-08"
+      },
+      {
+        "id": "bae8240d-9ed1-49a2-80e2-c2e4b070c32f",
+        "action": "intensity_change",
+        "details": {
+          "value": 5
+        },
+        "created_at": "2026-05-08T12:56:08.223280",
+        "date": "2026-05-08"
+      },
+      {
+        "id": "4a06658c-fca4-42bc-85ae-ff1154f1ba52",
+        "action": "page_opened",
+        "details": {
+          "source": "support_page"
+        },
+        "created_at": "2026-05-08T13:34:50.791214",
+        "date": "2026-05-08"
+      },
+      {
+        "id": "e3caae25-c0e5-4a39-834d-621c25e069f3",
+        "action": "intensity_change",
+        "details": {
+          "value": 5
+        },
+        "created_at": "2026-05-08T13:34:51.451289",
+        "date": "2026-05-08"
+      },
+      {
+        "id": "6a7629f9-83bd-4f47-8689-0e1d6c1f3b71",
+        "action": "page_opened",
+        "details": {
+          "source": "support_page"
+        },
+        "created_at": "2026-05-08T13:35:46.468626",
+        "date": "2026-05-08"
+      },
+      {
+        "id": "36bc5b29-420b-433f-8c07-a34c056b8a18",
+        "action": "intensity_change",
+        "details": {
+          "value": 5
+        },
+        "created_at": "2026-05-08T13:35:47.157691",
+        "date": "2026-05-08"
+      },
+      {
+        "id": "4cfc0d9e-366a-4b7c-bca1-66be3681fa0e",
+        "action": "page_opened",
+        "details": {
+          "source": "support_page"
+        },
+        "created_at": "2026-05-10T11:59:14.342649",
+        "date": "2026-05-10"
+      },
+      {
+        "id": "e03b9440-ef59-48a7-89d9-edde00af2960",
+        "action": "intensity_change",
+        "details": {
+          "value": 5
+        },
+        "created_at": "2026-05-10T11:59:14.962269",
+        "date": "2026-05-10"
+      },
+      {
+        "id": "5b40efed-4be6-494d-8003-404f63c1556d",
+        "action": "page_opened",
+        "details": {
+          "source": "support_page"
+        },
+        "created_at": "2026-05-10T11:59:22.022347",
+        "date": "2026-05-10"
+      },
+      {
+        "id": "f2fe292e-cf09-4b41-85fc-d9a1adba20a9",
+        "action": "intensity_change",
+        "details": {
+          "value": 5
+        },
+        "created_at": "2026-05-10T11:59:22.613799",
+        "date": "2026-05-10"
+      }
+    ],
+    "safety_plan": {
+      "warning_signs": [],
+      "coping_steps": [],
+      "safe_places": [],
+      "trusted_people": [],
+      "things_to_avoid": [],
+      "professional_resources": [],
+      "updated_at": ""
+    },
+    "practice_logs": [],
+    "feedback_logs": []
+  },
+  "57251049-d81a-4adc-be9b-c5eb008533d8": {
+    "sessions": [
+      {
+        "date": "2026-05-10",
+        "mode": "voice_chat",
+        "emotions": [],
+        "ended": false,
+        "messages": [
+          {
+            "role": "user",
+            "content": "hello",
+            "time": "17:36"
+          },
+          {
+            "role": "assistant",
+            "content": "Hello, it's nice to meet you. I'm here to listen and support you in a non-judgmental space. How are you feeling today?",
+            "time": "17:36"
+          },
+          {
+            "role": "user",
+            "content": "मुझे आपकी मदद चाहिए",
+            "time": "17:37"
+          },
+          {
+            "role": "assistant",
+            "content": "मुझे आपकी मदद करने में खुशी होगी। क्या आप मुझे बता सकते हैं कि आपको किस तरह की मदद चाहिए? आप कैसा महसूस कर रहे हैं और क्या चल रहा है जिसके बारे में आप बात करना चाहते हैं?",
+            "time": "17:37"
+          },
+          {
+            "role": "user",
+            "content": "আপনি কেমন আছেন",
+            "time": "17:38"
+          },
+          {
+            "role": "assistant",
+            "content": "আপনি কেমন আছেন? আজকে আপনার দিন কেমন কাটছে? আপনার সাথে কথা বলার জন্য আমি এখানে আছি।",
+            "time": "17:38"
+          },
+          {
+            "role": "user",
+            "content": "कैसे हैं आप",
+            "time": "17:38"
+          },
+          {
+            "role": "assistant",
+            "content": "आपका स्वागत है! मैं आपकी बात सुनने और आपका समर्थन करने के लिए यहाँ हूँ। आज आपका दिन कैसा गुजर रहा है? क्या आपको कुछ परेशान कर रहा है जिसके बारे में आप बात करना चाहते हैं?",
+            "time": "17:38"
+          },
+          {
+            "role": "user",
+            "content": "रोटी बनाने के लिए क्या तरीका है",
+            "time": "17:39"
+          },
+          {
+            "role": "assistant",
+            "content": "रोटी बनाने के लिए, आपको आटा, पानी, और नमक की आवश्यकता होगी। आटे को गूंथने के लिए, पानी और नमक मिलाएं, और फिर आटे को गोल आकार में बेलें। तवे पर रोटी को सेंकें और दोनों तरफ से पकाएं। यह एक बुनियादी तरीका है, और आप अपनी पसंद के अनुसार विभिन्न मसालों और जड़ी-बूटियों का उपयोग कर सकते हैं।",
+            "time": "17:39"
+          }
+        ]
+      }
+    ],
+    "emotion_log": [],
+    "message_count": 10,
+    "streak_days": [
+      "2026-05-10"
+    ],
+    "reports": [],
+    "wellbeing_checkins": [],
+    "avatar_url": "",
+    "crisis_actions": [],
+    "safety_plan": {
+      "warning_signs": [],
+      "coping_steps": [],
+      "safe_places": [],
+      "trusted_people": [],
+      "things_to_avoid": [],
+      "professional_resources": [],
+      "updated_at": ""
+    },
+    "practice_logs": [
+      {
+        "id": "b414566b-0e8c-41b6-8f51-378cec9def15",
+        "date": "2026-05-10",
+        "time": "17:40",
+        "created_at": "2026-05-10T17:40:42.834182",
+        "practice": "Stress Before/After Check",
+        "mood": "neutral",
+        "stress_before": 5,
+        "stress_after": 5,
+        "duration_seconds": 0,
+        "notes": "Stress reduced by 0 points.",
+        "reflection": "",
+        "completed": true,
+        "source": "best_practices"
+      }
+    ],
+    "feedback_logs": []
+  }
+}
