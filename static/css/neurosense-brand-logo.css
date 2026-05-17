@@ -1,0 +1,212 @@
+/* ==========================================================================
+   NeuroSense AI — Global Logo Injector
+   Use this one file across the whole project.
+   Logo path expected:
+   /static/images/brand/neurosense-logo-64.png
+   /static/images/brand/neurosense-logo-full.png
+   ========================================================================== */
+
+:root{
+  --ns-logo-icon:url("/static/images/brand/neurosense-logo-64.png");
+  --ns-logo-full:url("/static/images/brand/neurosense-logo-full.png");
+
+  --ns-green:#2d7a3a;
+  --ns-green-2:#3fa050;
+  --ns-mint:#e8f5e3;
+  --ns-border:#c3e6b8;
+  --ns-white:#ffffff;
+}
+
+/* ==========================================================================
+   Small icon logo boxes
+   Covers: dashboard, profile, admin, auth, reports, mode, templates, etc.
+   ========================================================================== */
+
+.brand-icon,
+.logo-icon,
+.brain-logo,
+.brand-logo-box{
+  width:48px !important;
+  height:48px !important;
+  min-width:48px !important;
+  min-height:48px !important;
+
+  border-radius:15px !important;
+  padding:5px !important;
+
+  display:grid !important;
+  place-items:center !important;
+
+  background:
+    var(--ns-white)
+    var(--ns-logo-icon)
+    center / contain
+    no-repeat !important;
+
+  border:1.5px solid var(--ns-border) !important;
+  box-shadow:0 8px 24px rgba(45,122,58,.16) !important;
+
+  color:transparent !important;
+  font-size:0 !important;
+  line-height:0 !important;
+
+  overflow:hidden !important;
+}
+
+/* If an img already exists inside logo box */
+.brand-icon img,
+.logo-icon img,
+.brain-logo img,
+.brand-logo-box img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain !important;
+  display:block !important;
+}
+
+/* Hide old emoji/text inside logo boxes */
+.brand-icon::first-letter,
+.logo-icon::first-letter,
+.brain-logo::first-letter{
+  color:transparent !important;
+}
+
+/* ==========================================================================
+   Hand chat / text chat nav logo pseudo-icon override
+   Some files use .nav-logo::before with emoji content.
+   ========================================================================== */
+
+.nav-logo::before{
+  content:"" !important;
+
+  width:44px !important;
+  height:44px !important;
+  min-width:44px !important;
+  min-height:44px !important;
+
+  border-radius:14px !important;
+  padding:5px !important;
+
+  display:grid !important;
+  place-items:center !important;
+
+  background:
+    var(--ns-white)
+    var(--ns-logo-icon)
+    center / contain
+    no-repeat !important;
+
+  border:1.5px solid var(--ns-border) !important;
+  box-shadow:0 8px 24px rgba(45,122,58,.16) !important;
+}
+
+/* ==========================================================================
+   Existing brand img support
+   ========================================================================== */
+
+.brand img,
+.logo img,
+.nav-logo img{
+  max-height:52px !important;
+  object-fit:contain !important;
+  display:block !important;
+}
+
+/* ==========================================================================
+   Full logo utility for landing/auth/navbar if needed
+   Use class="brand-full-logo"
+   ========================================================================== */
+
+.brand-full-logo{
+  width:220px !important;
+  max-width:100% !important;
+  height:auto !important;
+  display:block !important;
+  object-fit:contain !important;
+}
+
+/* ==========================================================================
+   Better brand text spacing with logo
+   ========================================================================== */
+
+.brand,
+.logo,
+.nav-logo{
+  display:flex !important;
+  align-items:center !important;
+  gap:.75rem !important;
+}
+
+/* ==========================================================================
+   Fallback: if a brand has no .brand-icon/.logo-icon but uses text only,
+   adding class="ns-auto-logo" will show the logo before text.
+   ========================================================================== */
+
+.ns-auto-logo{
+  display:flex !important;
+  align-items:center !important;
+  gap:.75rem !important;
+}
+
+.ns-auto-logo::before{
+  content:"" !important;
+
+  width:48px !important;
+  height:48px !important;
+  min-width:48px !important;
+
+  border-radius:15px !important;
+
+  background:
+    var(--ns-white)
+    var(--ns-logo-icon)
+    center / contain
+    no-repeat !important;
+
+  border:1.5px solid var(--ns-border) !important;
+  box-shadow:0 8px 24px rgba(45,122,58,.16) !important;
+}
+
+/* ==========================================================================
+   Favicon-like tiny logo utility
+   ========================================================================== */
+
+.ns-logo-mini{
+  width:32px !important;
+  height:32px !important;
+  min-width:32px !important;
+  border-radius:10px !important;
+  background:
+    var(--ns-white)
+    var(--ns-logo-icon)
+    center / contain
+    no-repeat !important;
+  border:1.5px solid var(--ns-border) !important;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media(max-width:640px){
+  .brand-icon,
+  .logo-icon,
+  .brain-logo,
+  .brand-logo-box{
+    width:42px !important;
+    height:42px !important;
+    min-width:42px !important;
+    min-height:42px !important;
+  }
+
+  .nav-logo::before{
+    width:40px !important;
+    height:40px !important;
+    min-width:40px !important;
+    min-height:40px !important;
+  }
+
+  .brand-full-logo{
+    width:180px !important;
+  }
+}

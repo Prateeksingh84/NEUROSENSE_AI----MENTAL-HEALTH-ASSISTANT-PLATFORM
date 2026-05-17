@@ -1,0 +1,655 @@
+/* ==========================================================================
+   NeuroSense AI — Authentication
+   ========================================================================== */
+
+:root{
+  --bg:#07070f;
+  --bg2:#0f1220;
+
+  --card:#141827;
+  --card2:#1b2033;
+
+  --border:#2b3147;
+
+  --text:#f5f7ff;
+  --text2:#aeb6d4;
+  --muted:#7f88aa;
+
+  --accent:#7c6fff;
+  --accent2:#9f8dff;
+
+  --green:#00e5aa;
+  --cyan:#4fd1ff;
+  --pink:#ff6fa5;
+  --red:#ff5d7a;
+
+  --shadow:0 30px 80px rgba(0,0,0,.5);
+
+  --r:28px;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  min-height:100vh;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  overflow:hidden;
+
+  font-family:'Inter',sans-serif;
+
+  background:
+    radial-gradient(circle at top left,
+      rgba(124,111,255,.14),
+      transparent 30%),
+
+    radial-gradient(circle at bottom right,
+      rgba(0,229,170,.08),
+      transparent 35%),
+
+    linear-gradient(
+      180deg,
+      var(--bg),
+      var(--bg2)
+    );
+
+  color:var(--text);
+
+  position:relative;
+}
+
+/* ==========================================================================
+   BACKGROUND EFFECTS
+   ========================================================================== */
+
+.bg-blur{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(90px);
+  opacity:.4;
+  pointer-events:none;
+}
+
+.blur-1{
+  width:300px;
+  height:300px;
+
+  background:var(--accent);
+
+  top:-120px;
+  left:-120px;
+}
+
+.blur-2{
+  width:260px;
+  height:260px;
+
+  background:var(--green);
+
+  bottom:-100px;
+  right:-100px;
+}
+
+.grid-bg{
+  position:absolute;
+  inset:0;
+
+  background-image:
+    linear-gradient(
+      rgba(255,255,255,.03) 1px,
+      transparent 1px
+    ),
+
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.03) 1px,
+      transparent 1px
+    );
+
+  background-size:50px 50px;
+
+  mask-image:
+    radial-gradient(circle at center,
+      rgba(0,0,0,1),
+      transparent 75%);
+}
+
+/* ==========================================================================
+   AUTH WRAPPER
+   ========================================================================== */
+
+.auth-wrapper{
+  position:relative;
+  z-index:10;
+
+  width:100%;
+  max-width:1180px;
+
+  display:grid;
+  grid-template-columns:1fr 480px;
+
+  overflow:hidden;
+
+  border-radius:36px;
+
+  background:rgba(15,18,32,.75);
+
+  border:1px solid rgba(255,255,255,.05);
+
+  backdrop-filter:blur(20px);
+
+  box-shadow:var(--shadow);
+}
+
+/* ==========================================================================
+   LEFT SIDE
+   ========================================================================== */
+
+.auth-left{
+  padding:4rem;
+
+  position:relative;
+
+  overflow:hidden;
+}
+
+.auth-left::before{
+  content:'';
+
+  position:absolute;
+  inset:0;
+
+  background:
+    radial-gradient(circle at top left,
+      rgba(124,111,255,.18),
+      transparent 35%);
+
+  pointer-events:none;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:.8rem;
+
+  margin-bottom:4rem;
+}
+
+.logo-icon{
+  width:56px;
+  height:56px;
+
+  border-radius:18px;
+
+  display:grid;
+  place-items:center;
+
+  background:linear-gradient(
+    135deg,
+    var(--accent),
+    var(--green)
+  );
+
+  font-size:1.6rem;
+}
+
+.logo-text{
+  font-family:'Outfit',sans-serif;
+
+  font-size:1.6rem;
+  font-weight:800;
+}
+
+.hero-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+
+  padding:.6rem 1rem;
+
+  border-radius:999px;
+
+  background:rgba(124,111,255,.12);
+
+  border:1px solid rgba(124,111,255,.28);
+
+  color:var(--accent2);
+
+  font-size:.82rem;
+  font-weight:800;
+
+  margin-bottom:1.6rem;
+}
+
+.auth-left h1{
+  font-family:'Outfit',sans-serif;
+
+  font-size:clamp(3rem,5vw,5rem);
+
+  line-height:.95;
+
+  margin-bottom:1.5rem;
+
+  font-weight:900;
+}
+
+.gradient{
+  background:linear-gradient(
+    135deg,
+    #fff,
+    var(--accent2),
+    var(--green)
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.auth-left p{
+  max-width:600px;
+
+  color:var(--text2);
+
+  line-height:1.9;
+
+  font-size:1rem;
+}
+
+.feature-list{
+  margin-top:3rem;
+
+  display:grid;
+  gap:1rem;
+}
+
+.feature-item{
+  display:flex;
+  align-items:flex-start;
+  gap:1rem;
+}
+
+.feature-icon{
+  width:50px;
+  height:50px;
+
+  border-radius:16px;
+
+  display:grid;
+  place-items:center;
+
+  background:rgba(255,255,255,.04);
+
+  border:1px solid rgba(255,255,255,.05);
+
+  font-size:1.2rem;
+}
+
+.feature-text h4{
+  margin-bottom:.4rem;
+}
+
+.feature-text p{
+  color:var(--text2);
+  font-size:.92rem;
+  line-height:1.7;
+}
+
+/* ==========================================================================
+   RIGHT SIDE
+   ========================================================================== */
+
+.auth-right{
+  background:rgba(20,24,39,.92);
+
+  border-left:1px solid rgba(255,255,255,.05);
+
+  padding:3rem;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.auth-top{
+  margin-bottom:2rem;
+}
+
+.auth-top h2{
+  font-family:'Outfit',sans-serif;
+
+  font-size:2rem;
+
+  margin-bottom:.5rem;
+}
+
+.auth-top p{
+  color:var(--text2);
+  line-height:1.7;
+}
+
+/* ==========================================================================
+   FORM
+   ========================================================================== */
+
+.auth-form{
+  display:grid;
+  gap:1.2rem;
+}
+
+.input-group{
+  display:flex;
+  flex-direction:column;
+  gap:.6rem;
+}
+
+.input-group label{
+  color:var(--text2);
+
+  font-size:.84rem;
+
+  font-weight:700;
+}
+
+.input-wrap{
+  position:relative;
+}
+
+.input-icon{
+  position:absolute;
+
+  left:1rem;
+  top:50%;
+
+  transform:translateY(-50%);
+
+  color:var(--text2);
+
+  font-size:1rem;
+}
+
+.auth-input{
+  width:100%;
+
+  padding:1rem 1rem 1rem 3rem;
+
+  border-radius:18px;
+
+  border:1px solid rgba(255,255,255,.06);
+
+  background:#0d101c;
+
+  color:#fff;
+
+  outline:none;
+
+  transition:.25s ease;
+}
+
+.auth-input:focus{
+  border-color:rgba(124,111,255,.45);
+
+  box-shadow:
+    0 0 0 4px rgba(124,111,255,.12);
+}
+
+.auth-input::placeholder{
+  color:#6f7898;
+}
+
+/* ==========================================================================
+   SELECT
+   ========================================================================== */
+
+.auth-select{
+  width:100%;
+
+  padding:1rem;
+
+  border-radius:18px;
+
+  border:1px solid rgba(255,255,255,.06);
+
+  background:#0d101c;
+
+  color:#fff;
+
+  outline:none;
+
+  cursor:pointer;
+}
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+
+.auth-btn{
+  margin-top:.6rem;
+
+  width:100%;
+
+  padding:1rem;
+
+  border:none;
+
+  border-radius:18px;
+
+  background:linear-gradient(
+    135deg,
+    var(--accent),
+    var(--accent2)
+  );
+
+  color:#fff;
+
+  font-size:1rem;
+  font-weight:800;
+
+  cursor:pointer;
+
+  transition:.25s ease;
+}
+
+.auth-btn:hover{
+  transform:translateY(-2px);
+
+  box-shadow:
+    0 12px 30px rgba(124,111,255,.28);
+}
+
+.secondary-btn{
+  width:100%;
+
+  padding:1rem;
+
+  border-radius:18px;
+
+  border:1px solid rgba(255,255,255,.06);
+
+  background:rgba(255,255,255,.03);
+
+  color:#fff;
+
+  font-weight:700;
+
+  cursor:pointer;
+}
+
+/* ==========================================================================
+   DIVIDER
+   ========================================================================== */
+
+.divider{
+  display:flex;
+  align-items:center;
+
+  gap:1rem;
+
+  margin:1.4rem 0;
+}
+
+.divider::before,
+.divider::after{
+  content:'';
+
+  flex:1;
+
+  height:1px;
+
+  background:rgba(255,255,255,.08);
+}
+
+.divider span{
+  color:var(--text2);
+
+  font-size:.82rem;
+}
+
+/* ==========================================================================
+   SOCIAL
+   ========================================================================== */
+
+.social-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+
+  gap:1rem;
+}
+
+.social-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  gap:.7rem;
+
+  padding:1rem;
+
+  border-radius:18px;
+
+  background:rgba(255,255,255,.03);
+
+  border:1px solid rgba(255,255,255,.06);
+
+  color:#fff;
+
+  cursor:pointer;
+
+  transition:.25s ease;
+
+  font-weight:700;
+}
+
+.social-btn:hover{
+  background:rgba(255,255,255,.06);
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.auth-footer{
+  margin-top:2rem;
+
+  text-align:center;
+
+  color:var(--text2);
+
+  font-size:.9rem;
+}
+
+.auth-footer a{
+  color:var(--accent2);
+
+  text-decoration:none;
+
+  font-weight:700;
+}
+
+/* ==========================================================================
+   ALERT
+   ========================================================================== */
+
+.alert{
+  padding:1rem;
+
+  border-radius:18px;
+
+  background:rgba(255,93,122,.08);
+
+  border:1px solid rgba(255,93,122,.2);
+
+  color:#ff92a7;
+
+  font-size:.92rem;
+
+  display:none;
+}
+
+.alert.show{
+  display:block;
+}
+
+/* ==========================================================================
+   LOADER
+   ========================================================================== */
+
+.loader{
+  width:20px;
+  height:20px;
+
+  border:2px solid rgba(255,255,255,.2);
+
+  border-top-color:#fff;
+
+  border-radius:50%;
+
+  animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media(max-width:1100px){
+
+  .auth-wrapper{
+    grid-template-columns:1fr;
+    max-width:680px;
+  }
+
+  .auth-left{
+    display:none;
+  }
+}
+
+@media(max-width:760px){
+
+  body{
+    padding:1rem;
+  }
+
+  .auth-right{
+    padding:2rem;
+  }
+
+  .social-grid{
+    grid-template-columns:1fr;
+  }
+
+  .auth-top h2{
+    font-size:1.7rem;
+  }
+}

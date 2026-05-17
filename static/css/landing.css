@@ -1,0 +1,573 @@
+/* ==========================================================================
+   NeuroSense AI — Landing Page
+   ========================================================================== */
+
+:root{
+  --bg:#07070f;
+  --bg2:#0f1220;
+  --card:#141827;
+  --card2:#1b2033;
+  --border:#2b3147;
+  --text:#f5f7ff;
+  --text2:#aeb6d4;
+  --muted:#7f88aa;
+
+  --accent:#7c6fff;
+  --accent2:#9f8dff;
+
+  --green:#00e5aa;
+  --cyan:#4fd1ff;
+  --pink:#ff6fa5;
+  --danger:#ff5d7a;
+
+  --shadow:0 25px 70px rgba(0,0,0,.45);
+
+  --r:24px;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(124,111,255,.12), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(0,229,170,.08), transparent 35%),
+    linear-gradient(180deg,var(--bg),var(--bg2));
+  color:var(--text);
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* ==========================================================================
+   GLOBAL
+   ========================================================================== */
+
+.container{
+  width:100%;
+  max-width:1280px;
+  margin:auto;
+  padding:0 1.5rem;
+}
+
+.section{
+  padding:6rem 0;
+}
+
+.section-title{
+  text-align:center;
+  max-width:760px;
+  margin:auto;
+  margin-bottom:4rem;
+}
+
+.section-title small{
+  display:inline-block;
+  padding:.5rem 1rem;
+  border-radius:999px;
+  background:rgba(124,111,255,.12);
+  border:1px solid rgba(124,111,255,.35);
+  color:var(--accent2);
+  font-weight:800;
+  margin-bottom:1rem;
+}
+
+.section-title h2{
+  font-family:'Outfit',sans-serif;
+  font-size:clamp(2rem,5vw,4rem);
+  line-height:1.05;
+  margin-bottom:1rem;
+  font-weight:900;
+}
+
+.section-title p{
+  color:var(--text2);
+  line-height:1.9;
+  font-size:1rem;
+}
+
+/* ==========================================================================
+   NAVBAR
+   ========================================================================== */
+
+.navbar{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:999;
+  backdrop-filter:blur(18px);
+  background:rgba(7,7,15,.72);
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.nav-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:82px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:.8rem;
+  text-decoration:none;
+}
+
+.logo-icon{
+  width:48px;
+  height:48px;
+  border-radius:16px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,var(--accent),var(--green));
+  color:#fff;
+  font-size:1.4rem;
+}
+
+.logo-text{
+  font-family:'Outfit',sans-serif;
+  font-size:1.4rem;
+  font-weight:800;
+  color:#fff;
+}
+
+.nav-links{
+  display:flex;
+  gap:2rem;
+}
+
+.nav-links a{
+  color:var(--text2);
+  text-decoration:none;
+  font-size:.95rem;
+  font-weight:700;
+  transition:.25s;
+}
+
+.nav-links a:hover{
+  color:#fff;
+}
+
+.nav-actions{
+  display:flex;
+  gap:1rem;
+}
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+
+.btn{
+  border:none;
+  outline:none;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.5rem;
+  transition:.25s ease;
+  font-weight:800;
+}
+
+.btn-primary{
+  padding:1rem 1.4rem;
+  border-radius:18px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;
+  box-shadow:0 12px 30px rgba(124,111,255,.28);
+}
+
+.btn-primary:hover{
+  transform:translateY(-2px);
+}
+
+.btn-secondary{
+  padding:1rem 1.4rem;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.03);
+  color:#fff;
+}
+
+.btn-secondary:hover{
+  background:rgba(255,255,255,.08);
+}
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+
+.hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  padding-top:7rem;
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:3rem;
+  align-items:center;
+}
+
+.hero-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  padding:.55rem 1rem;
+  border-radius:999px;
+  background:rgba(0,229,170,.1);
+  border:1px solid rgba(0,229,170,.35);
+  color:var(--green);
+  font-size:.82rem;
+  font-weight:800;
+  margin-bottom:1.5rem;
+}
+
+.hero h1{
+  font-family:'Outfit',sans-serif;
+  font-size:clamp(3rem,6vw,6rem);
+  line-height:.95;
+  font-weight:900;
+  margin-bottom:1.5rem;
+}
+
+.gradient{
+  background:linear-gradient(
+    135deg,
+    #fff,
+    var(--accent2),
+    var(--green)
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+  color:var(--text2);
+  line-height:1.9;
+  font-size:1.05rem;
+  margin-bottom:2rem;
+  max-width:620px;
+}
+
+.hero-actions{
+  display:flex;
+  gap:1rem;
+  flex-wrap:wrap;
+}
+
+.hero-card{
+  position:relative;
+  padding:1.5rem;
+  border-radius:32px;
+  background:rgba(20,24,39,.92);
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.hero-card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at top left,
+      rgba(124,111,255,.18),
+      transparent 35%);
+  pointer-events:none;
+}
+
+.dashboard-preview{
+  border-radius:24px;
+  overflow:hidden;
+  background:#0d111b;
+  border:1px solid rgba(255,255,255,.06);
+}
+
+.preview-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:1rem;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.preview-dots{
+  display:flex;
+  gap:.4rem;
+}
+
+.preview-dots span{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#3a425f;
+}
+
+.preview-body{
+  padding:1rem;
+}
+
+.preview-stat{
+  padding:1rem;
+  border-radius:18px;
+  background:rgba(255,255,255,.03);
+  margin-bottom:1rem;
+}
+
+.preview-stat small{
+  color:var(--text2);
+}
+
+.preview-stat h3{
+  font-size:2rem;
+  margin-top:.5rem;
+  font-family:'Outfit',sans-serif;
+}
+
+.mood-bars{
+  display:grid;
+  gap:.8rem;
+}
+
+.bar{
+  display:grid;
+  grid-template-columns:70px 1fr 40px;
+  gap:.7rem;
+  align-items:center;
+  color:var(--text2);
+  font-size:.82rem;
+}
+
+.bar-track{
+  height:8px;
+  border-radius:999px;
+  background:#2d3550;
+  overflow:hidden;
+}
+
+.bar-fill{
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(
+    90deg,
+    var(--accent),
+    var(--green)
+  );
+}
+
+/* ==========================================================================
+   FEATURES
+   ========================================================================== */
+
+.features-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.2rem;
+}
+
+.feature-card{
+  padding:2rem;
+  border-radius:var(--r);
+  background:rgba(20,24,39,.88);
+  border:1px solid var(--border);
+  transition:.3s ease;
+}
+
+.feature-card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(124,111,255,.35);
+}
+
+.feature-icon{
+  width:60px;
+  height:60px;
+  border-radius:18px;
+  display:grid;
+  place-items:center;
+  background:rgba(124,111,255,.12);
+  color:var(--accent2);
+  font-size:1.5rem;
+  margin-bottom:1.2rem;
+}
+
+.feature-card h3{
+  font-size:1.2rem;
+  margin-bottom:.8rem;
+  font-family:'Outfit',sans-serif;
+}
+
+.feature-card p{
+  color:var(--text2);
+  line-height:1.8;
+}
+
+/* ==========================================================================
+   HOW IT WORKS
+   ========================================================================== */
+
+.steps{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1rem;
+}
+
+.step-card{
+  padding:2rem;
+  border-radius:var(--r);
+  background:rgba(20,24,39,.9);
+  border:1px solid var(--border);
+}
+
+.step-number{
+  font-family:'Outfit',sans-serif;
+  font-size:3rem;
+  font-weight:900;
+  color:rgba(124,111,255,.28);
+  margin-bottom:1rem;
+}
+
+.step-card h3{
+  margin-bottom:.8rem;
+  font-size:1.15rem;
+}
+
+.step-card p{
+  color:var(--text2);
+  line-height:1.8;
+}
+
+/* ==========================================================================
+   CTA
+   ========================================================================== */
+
+.cta{
+  padding:5rem;
+  border-radius:36px;
+  background:
+    radial-gradient(circle at top left,
+      rgba(124,111,255,.2),
+      transparent 30%),
+
+    radial-gradient(circle at bottom right,
+      rgba(0,229,170,.12),
+      transparent 35%),
+
+    rgba(20,24,39,.92);
+
+  border:1px solid var(--border);
+
+  text-align:center;
+}
+
+.cta h2{
+  font-size:clamp(2rem,5vw,4rem);
+  font-family:'Outfit',sans-serif;
+  line-height:1.05;
+  margin-bottom:1rem;
+}
+
+.cta p{
+  max-width:700px;
+  margin:auto;
+  color:var(--text2);
+  line-height:1.9;
+  margin-bottom:2rem;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.footer{
+  padding:2rem 0;
+  border-top:1px solid rgba(255,255,255,.05);
+}
+
+.footer-inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:1rem;
+  flex-wrap:wrap;
+}
+
+.footer small{
+  color:var(--text2);
+}
+
+.footer-links{
+  display:flex;
+  gap:1.5rem;
+}
+
+.footer-links a{
+  color:var(--text2);
+  text-decoration:none;
+  font-size:.92rem;
+}
+
+.footer-links a:hover{
+  color:#fff;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media(max-width:1100px){
+
+  .hero-grid,
+  .features-grid,
+  .steps{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:760px){
+
+  .hero-grid,
+  .features-grid,
+  .steps{
+    grid-template-columns:1fr;
+  }
+
+  .nav-links{
+    display:none;
+  }
+
+  .hero{
+    text-align:center;
+  }
+
+  .hero-actions{
+    justify-content:center;
+  }
+
+  .section{
+    padding:4rem 0;
+  }
+
+  .cta{
+    padding:3rem 1.5rem;
+  }
+
+  .footer-inner{
+    flex-direction:column;
+    text-align:center;
+  }
+}
