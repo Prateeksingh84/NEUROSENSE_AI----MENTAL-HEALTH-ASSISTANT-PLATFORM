@@ -1,0 +1,41 @@
+# Python
+venv/
+venv310/
+.venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Logs & temp
+logs/
+*.log
+reports/generated/
+reports/temp/
+
+# Uploads (user data - never commit)
+static/uploads/avatars/
+static/uploads/emotions/
+static/uploads/reports/
+static/uploads/voice/
+
+# Secrets & config
+instance/config.py
+.env
+*.env
+
+# Data exports (may contain sensitive info)
+data/hs_data_export.xlsx
+data/knowledge_chat_history.json
+data/research_chat_history.json
+
+# Model binaries (large files)
+models/hand_landmarker.task
+data/word_model.pkl
+
+# OS
+.DS_Store
+Thumbs.db
