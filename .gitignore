@@ -39,3 +39,4 @@ data/word_model.pkl
 # OS
 .DS_Store
 Thumbs.db
+neurosense_data.json
