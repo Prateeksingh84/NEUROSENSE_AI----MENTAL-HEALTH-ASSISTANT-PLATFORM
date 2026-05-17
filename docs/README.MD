@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/Prateeksingh84/NEUROSENSE_AI----MENTAL-HEALTH-ASSISTANT-PLATFORM/main/static/images/brand/project_logo.png" alt="NeuroSense AI Logo" width="120"/>
+<img src="https://raw.githubusercontent.com/Prateeksingh84/NEUROSENSE_AI----MENTAL-HEALTH-ASSISTANT-PLATFORM/main/static/images/brand/project_logo.png" alt="NeuroSense AI Logo" width="600"/>
 
 # 🧠 NeuroSense AI
 ### A Multimodal Mental Health Assistant
