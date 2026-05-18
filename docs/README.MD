@@ -16,7 +16,7 @@
 
 ---
 
-**Gesture Accuracy** `96.7%` · **Speech Accuracy** `95.2%` · **FER Accuracy** `92.9%` · **User Satisfaction** `4.7 / 5.0` · **Response Latency** `2.3s`
+**Gesture Accuracy** `96.7%` · **Speech Accuracy** `95.2%` · **FER Accuracy** `92.9%` · **Response Latency** `2.3s`
 
 ---
 
