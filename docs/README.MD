@@ -1,10 +1,12 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/Prateeksingh84/NEUROSENSE_AI----MENTAL-HEALTH-ASSISTANT-PLATFORM/main/static/images/brand/project_logo.png" alt="NeuroSense AI Logo" width="600"/>
+<img src="https://raw.githubusercontent.com/Prateeksingh84/NEUROSENSE_AI----MENTAL-HEALTH-ASSISTANT-PLATFORM/main/static/images/brand/project_logo.png" alt="NeuroSense AI Logo" width="550"/>
+<br/>
 
 <h1>🧠 NeuroSense AI</h1>
 
-<img src="https://readme-typing-svg.demolab.com?font=Outfit&size=22&pause=1000&color=2EA043&center=true&vCenter=true&width=700&lines=Multimodal+Mental+Health+Assistant;Real-Time+Emotion+Detection+%F0%9F%A7%A0;Voice+%C2%B7+Text+%C2%B7+Hand+Sign+Chat;Privacy-First+%C2%B7+44+Languages+%C2%B7+Offline-Ready" alt="Typing SVG"/>
+<img src="https://readme-typing-svg.demolab.com?font=Outfit&size=24&duration=3000&pause=800&color=2EA043&center=true&vCenter=true&multiline=false&width=750&height=45&lines=Multimodal+Mental+Health+Assistant+%F0%9F%A7%A0;Real-Time+Emotion+Detection+%E2%80%A2+Voice+%E2%80%A2+Hand+Signs;Privacy-First+%C2%B7+44+Languages+%C2%B7+Offline-Ready;Guided+by+Science.+Driven+by+Care." alt="Typing SVG"/>
+<br/>
 <h3>A Multimodal Mental Health Assistant</h3>
 
 **Real-time emotion detection · Voice chat · Hand sign recognition · Agentic AI pipeline · Supabase persistence**
