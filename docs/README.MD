@@ -2,10 +2,10 @@
 
 <img src="https://raw.githubusercontent.com/Prateeksingh84/NEUROSENSE_AI----MENTAL-HEALTH-ASSISTANT-PLATFORM/main/static/images/brand/project_logo.png" alt="NeuroSense AI Logo" width="600"/>
 
-# 🧠 NeuroSense AI
+<h1>🧠 NeuroSense AI</h1>
 
 <img src="https://readme-typing-svg.demolab.com?font=Outfit&size=22&pause=1000&color=2EA043&center=true&vCenter=true&width=700&lines=Multimodal+Mental+Health+Assistant;Real-Time+Emotion+Detection+%F0%9F%A7%A0;Voice+%C2%B7+Text+%C2%B7+Hand+Sign+Chat;Privacy-First+%C2%B7+44+Languages+%C2%B7+Offline-Ready" alt="Typing SVG"/>
-### A Multimodal Mental Health Assistant
+<h3>A Multimodal Mental Health Assistant</h3>
 
 **Real-time emotion detection · Voice chat · Hand sign recognition · Agentic AI pipeline · Supabase persistence**
 
