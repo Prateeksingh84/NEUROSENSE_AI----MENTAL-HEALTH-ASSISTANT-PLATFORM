@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/Prateeksingh84/NEUROSENSE_AI----MENTAL-HEALTH-ASSISTANT-PLATFORM/main/static/images/brand/project_logo.png" alt="NeuroSense AI Logo" width="550"/>
+<img src="../static/images/brand/project_logo.png" alt="NeuroSense AI Logo" width="550"/>
 <br/>
 
 <h1>🧠 NeuroSense AI</h1>
